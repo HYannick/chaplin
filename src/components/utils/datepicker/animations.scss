@@ -1,0 +1,51 @@
+.slidev {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transition: all 0.3s;
+    opacity: 1;
+    transform: translateX(0);
+    &.off {
+        transition-duration: 0s;
+    }
+}
+
+.slidev-enter-active,
+.slidev-leave-active {
+    transition: all 0.5s;
+}
+
+.slidev-enter,
+.slidev-leave-to {
+    opacity: 0;
+}
+
+.slidev-enter,
+.direction-prev.slidev-enter {
+    transform: translateX(-30px);
+}
+
+.direction-next.slidev-enter {
+    transform: translateX(30px);
+}
+
+.slideh-enter-active,
+.slideh-leave-active {
+    transition: all 0.5s;
+}
+
+.slideh-enter,
+.slideh-leave-to {
+    opacity: 0;
+}
+
+.slideh-enter,
+.direction-prev.slideh-enter {
+    transform: translateY(10px);
+}
+
+.direction-next.slideh-enter {
+    transform: translateY(-10px);
+}

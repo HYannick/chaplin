@@ -1,0 +1,169 @@
+<template>
+    <transition name="el-fade-in-linear">
+        <div>
+    
+            <el-menu theme="light" :default-active="activeIndex" class="el-menu-demo" mode="vertical" @select="handleSelect">
+                <router-link class="little__chaplin" to="/">
+                    <img src="../../static/img/mini_logo.png" />
+                </router-link>
+                <el-menu-item index="1">
+                    <router-link to="/">
+                        Accueil
+                    </router-link>
+                </el-menu-item>
+                <el-menu-item index="2">
+                    <router-link to="/movies">
+                        En Salle
+                    </router-link>
+                </el-menu-item>
+                <el-menu-item index="3">
+                    <router-link to="/movies">
+                        Prochainement
+                    </router-link>
+                </el-menu-item>
+                <el-menu-item index="4">
+                    <router-link to="/infos">
+                        Infos pratiques
+                    </router-link>
+                </el-menu-item>
+                <el-menu-item index="5">
+                    <router-link to="/contact">
+                        Contact
+                    </router-link>
+                </el-menu-item>
+                <transition name="el-fade-in-linear">
+                    <div v-if="!auth.logged">
+                        <el-menu-item index="6">
+                            <router-link to="/signin">
+                                Se connecter
+                            </router-link>
+                        </el-menu-item>
+                    </div>
+    
+                    <div v-else>
+                        <el-menu-item index="6">
+                            <router-link :to="`/users/${auth.userId}`">
+                                Profil
+                            </router-link>
+                        </el-menu-item>
+                        <el-menu-item index="7">
+                            <a @click="disconnect">Logout</a>
+                        </el-menu-item>
+                    </div>
+                </transition>
+    
+            </el-menu>
+        </div>
+    
+    </transition>
+</template>
+<script>
+import { mapGetters, mapActions } from 'vuex';
+import Services from '../services/services';
+export default {
+    data() {
+        return {
+            activeIndex: '1',
+            activeIndex2: '1',
+            user: {},
+            token: ''
+        };
+    },
+    computed: {
+        ...mapGetters([
+            'auth'
+        ]),
+
+    },
+
+    created() {
+        if (this.auth.logged) {
+            Services.getUser(this.auth.userId, this.token).then(res => {
+                this.user = res.data;
+            }).catch(err => {
+                console.log(err)
+            })
+        }
+
+    },
+    beforeUpdate() {
+        this.token = this.auth.token;
+    },
+    methods: {
+        ...mapActions(['logout']),
+        disconnect() {
+            this.logout();
+        },
+        handleSelect(key, keyPath) {
+       
+        }
+    }
+}
+</script>
+<style scoped lang="scss">
+@import url('https://fonts.googleapis.com/css?family=Cutive+Mono|Dosis|Exo+2|Inconsolata|Josefin+Sans|Roboto+Mono');
+.el-menu {
+    background: #fff;
+    margin-top: 50px;
+    width: 230px;
+    float: right;
+}
+
+.little__chaplin {
+    display: table;
+    position: absolute;
+    z-index: 99;
+    top: -30px;
+    left: 30px;
+}
+
+.el-menu-item {
+    text-align: right;
+    height: initial;
+    line-height: 1;
+    padding: 0;
+    &:hover,
+    &.is-active {
+        background: transparent;
+        a {
+            transform: translateX(10px);
+            &:before {
+                width: 40%;
+            }
+        }
+    }
+    a {
+        transition: 0.3s;
+        display: block;
+        font-size: 24px;
+        color: #333;
+        padding-top: 15px;
+        text-decoration: none;
+        font-family: 'Inconsolata', monospace;
+        &:before {
+            content: '';
+            background: #696969;
+            position: absolute;
+            top: 30px;
+            right: -5px;
+            opacity: 0.5;
+            z-index: 99;
+            width: 0;
+            transition: 0.3s;
+            height: 20px;
+        }
+    }
+}
+
+
+.logo {
+    text-decoration: none;
+    span {
+        font-family: 'Inconsolata', monospace;
+        font-size: 48px;
+        text-transform: uppercase;
+        line-height: 1.4;
+        color: #fff;
+    }
+}
+</style>

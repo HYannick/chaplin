@@ -1,0 +1,10 @@
+{
+    "name": "blog",
+    "version": "1.0.0",
+    "description": "Cinema de montmelian",
+    "author": "gravy_9",
+    "private": true,
+    "scripts": {
+        "postinstall": "npm install express"
+    }
+}
