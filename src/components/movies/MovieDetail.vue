@@ -12,10 +12,8 @@
                         </transition>
                         <youtube v-show="trailerEnabled" @ready="ready" :video-id="movie.trailer" player-height="400px" player-width="100%" :player-vars="trailerOptions" @playing="animateTitle('playing')" @ended="animateTitle('stopped')"></youtube>
                     </div>
-                    <div class="lazy__bg" :class="{loaded : loadedImage}" v-images-loaded:on.progress="imageProgress">
-                        <img :src="bgCover">
-                    </div>
     
+                    <image-loader classname="lazy__bg" :imageUrl="bgCover"></image-loader>
                     <transition name="el-fade-in-linear">
                         <div class="background__details" v-show="displayTitle">
                             <p class="movie__release">{{movie.releaseDate}}</p>
@@ -37,9 +35,7 @@
                             <div class="main__desc">
                                 <el-col :span="6">
                                     <div class="cover">
-                                        <div class="lazy" :class="{loaded : loadedImage}" v-images-loaded:on.progress="imageProgress">
-                                            <img width="100%" :src="cover">
-                                        </div>
+                                        <image-loader classname="lazy" :imageUrl="cover"></image-loader>
                                         <router-link v-show="auth.logged && auth.role == 'admin'" :to="`/movies/${movie._id}/edit`">
                                             <el-button type="primary">Edit</el-button>
                                         </router-link>
@@ -73,25 +69,19 @@
                     <el-row :gutter="15">
                         <el-col :span="24">
                             <div class="movie__gallery movie__gallery-first">
-                                <div class="lazy__set" :class="{loaded : loadedImage}" v-images-loaded:on.progress="imageProgress">
-                                    <img :src="imageSet[0]" />
-                                </div>
+                                <image-loader classname="lazy__set" :imageUrl="imageSet[0]"></image-loader>
                             </div>
     
                         </el-col>
     
                         <el-col :span="12">
                             <div class="movie__gallery">
-                                <div class="lazy__set" :class="{loaded : loadedImage}" v-images-loaded:on.progress="imageProgress">
-                                    <img :src="imageSet[1]" />
-                                </div>
+                                <image-loader classname="lazy__set" :imageUrl="imageSet[1]"></image-loader>
                             </div>
                         </el-col>
                         <el-col :span="12">
                             <div class="movie__gallery">
-                                <div class="lazy__set" :class="{loaded : loadedImage}" v-images-loaded:on.progress="imageProgress">
-                                    <img :src="imageSet[2]" />
-                                </div>
+                                <image-loader classname="lazy__set" :imageUrl="imageSet[2]"></image-loader>
                             </div>
                         </el-col>
                     </el-row>
@@ -104,13 +94,13 @@
 </template>
 <script>
 import Service from '../../services/services.js';
-import imagesLoaded from 'vue-images-loaded';
+import ImageLoader from '../utils/imageLoader/ImageLoader';
 import { mapGetters, mapActions } from 'vuex';
 import api from '../../../config/api';
 export default {
     props: ['id'],
-    directives: {
-        imagesLoaded
+    components: {
+        'image-loader': ImageLoader
     },
     created() {
         Service.getMovie(this.id).then(res => {
@@ -119,9 +109,6 @@ export default {
             this.imageSet = this.movie.imageSet.map(image => `${api.rootUrl}/uploads/${image}`)
             this.bgCover = `${api.rootUrl}/uploads/${res.data.imageSet[0]}`;
             this.cover = `${api.rootUrl}/uploads/${res.data.cover}`;
-
-
-
         });
     },
 
@@ -132,7 +119,6 @@ export default {
         }
         this.checkSubscription(data);
         this.isSubscribed = this.auth.subscribed;
-        console.log(this.isSubscribed)
     },
 
     data() {
@@ -157,17 +143,13 @@ export default {
                 iv_load_policy: 3,  // Hide the Video Annotations
                 autohide: 0,
             },
-            isSubscribed: false,
-            loadedImage: false
+            isSubscribed: false
         }
     },
     computed: {
         ...mapGetters(['auth'])
     },
     methods: {
-        imageProgress(instance, image) {
-            this.loadedImage = image.isLoaded;
-        },
         ...mapActions(['checkSubscription']),
         ready(player) {
             this.player = player;
@@ -218,85 +200,6 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Cutive+Mono|Dosis|Exo+2|Inconsolata|Josefin+Sans|Roboto+Mono');
 * {
     font-family: 'inconsolata', monospace;
-}
-
-.lazy {
-    padding-bottom: 150%;
-    img {
-        transform: translate(-60%, -50%);
-    }
-    &.loaded {
-        img {
-            transform: translate(50%, -50%);
-        }
-        &:before {
-            left: 100%;
-            opacity: 1;
-        }
-    }
-}
-
-.lazy__set {
-    padding-bottom: 50%;
-    &.loaded {
-        img {
-            transform: translate(50%, -50%);
-        }
-        &:before {
-            left: 100%;
-            opacity: 1;
-        }
-    }
-}
-
-.lazy__bg {
-    padding-bottom: 50%;
-    img {
-        transform: translate(60%, -50%);
-    }
-    &.loaded {
-        img {
-            transform: translate(50%, -50%);
-        }
-        &:before {
-            left: -100%;
-            opacity: 1;
-        }
-    }
-}
-
-.lazy,
-.lazy__set,
-.lazy__bg {
-    position: relative;
-    overflow: hidden;
-    img {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-60%, -50%);
-        transition: 0.5s ease-in-out;
-        opacity: 0;
-    }
-    &:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        background: #eef1f6;
-        z-index: 99;
-        width: 100%;
-        height: 100%;
-        transition: 0.5s ease-in-out;
-    }
-
-    &.loaded {
-        img {
-            transform: translate(-50%, -50%);
-            opacity: 1;
-        }
-        
-    }
 }
 
 .player__button {

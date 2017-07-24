@@ -1,24 +1,22 @@
 <template>
     <div class="movie__card">
         <router-link :to="`/movies/${movie._id}`" class="caption" tag="a">
-            <div class="lazy" :class="{loaded : loadedImage}" v-images-loaded:on.progress="imageProgress">
-                <img width="100%" :src="cover" class="image" ref="picture">
-            </div>
-    
+            <image-loader classname="lazy" :imageUrl="cover"></image-loader>
         </router-link>
     
     </div>
 </template>
 <script>
 import moment from 'moment';
-import imagesLoaded from 'vue-images-loaded';
 import api from '../../../config/api';
+import ImageLoader from '../utils/imageLoader/ImageLoader';
 console.log(api.rootUrl)
 export default {
     props: ['movie'],
-    directives: {
-        imagesLoaded
+    components: {
+        'image-loader': ImageLoader
     },
+      
     computed: {
         availabilities() {
             const now = moment();
@@ -34,13 +32,8 @@ export default {
     data() {
         return {
             cover: `${api.rootUrl}/uploads/${this.movie.cover}`,
-            loadedImage : false
+            loadedImage: false
         }
-    },
-    methods: {
-        imageProgress(instance, image) {
-            this.loadedImage = image.isLoaded;
-        },
     }
 }
 </script>
