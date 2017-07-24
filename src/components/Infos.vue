@@ -54,27 +54,4 @@ export default {
 * {
     font-family: 'inconsolata', monospace;
 }
-
-.background__cover {
-    height: 400px;
-    overflow: hidden;
-    position: relative;
-    &__overlay {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        top: 0;
-        left: 0;
-        z-index: 1;
-    }
-    img {
-        width: 100%;
-        position: absolute;
-        top: 0%;
-        left: 50%;
-        transform: translate(-50%, -20%);
-        opacity: 0.8;
-    }
-}
 </style>
