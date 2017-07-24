@@ -10,7 +10,7 @@
                                 <i class="player__icon el-icon-caret-right"></i>
                             </div>
                         </transition>
-                        <youtube v-show="trailerEnabled" @ready="ready" :video-id="movie.trailer" player-height="400px" player-width="100%" :player-vars="trailerOptions" @playing="animateTitle('playing')" @ended="animateTitle('stopped')"></youtube>
+                        <youtube class="yt__frame" v-show="trailerEnabled" @ready="ready" :video-id="movie.trailer" player-height="100%" player-width="100%" :player-vars="trailerOptions" @playing="animateTitle('playing')" @ended="animateTitle('stopped')"></youtube>
                     </div>
     
                     <image-loader classname="lazy__bg" :imageUrl="bgCover"></image-loader>
@@ -196,7 +196,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import url('https://fonts.googleapis.com/css?family=Cutive+Mono|Dosis|Exo+2|Inconsolata|Josefin+Sans|Roboto+Mono');
 * {
     font-family: 'inconsolata', monospace;
@@ -231,8 +231,13 @@ export default {
     z-index: 1;
     width: 100%;
     height: 100%;
-    video.video-stream.html5-main-video {
-        transform: scale(1.4);
+    
+    .yt__frame {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
     }
 }
 
@@ -328,13 +333,14 @@ export default {
 }
 
 .background__cover {
-    height: 400px;
+    padding-bottom: 50%;
     overflow: hidden;
     position: relative;
+    height: 0;
     cursor: pointer;
     &:hover {
         img {
-            transform: translate(-50%, -50%) scale(1.3);
+            transform: translate(-50%, -50%) scale(1.3) !important;
         }
         .player__button {
             transform: translate(-50%, -50%) scale(1);

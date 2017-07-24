@@ -37,42 +37,7 @@ export default {
     }
 }
 </script>
-<style lang="scss" scoped>
-.lazy {
-    position: relative;
-    overflow: hidden;
-    padding-bottom: 150%;
-    img {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-60%, -50%);
-        transition: 0.5s ease-in-out;
-        opacity: 0;
-    }
-    &:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        background: #eef1f6;
-        z-index: 99;
-        width: 100%;
-        height: 100%;
-        transition: 0.5s ease-in-out;
-    }
-
-    &.loaded {
-        img {
-            transform: translate(-50%, -50%);
-            opacity: 1;
-        }
-        &:before {
-            left: 100%;
-            opacity: 1;
-        }
-    }
-}
+<style lang="scss">
 
 .infos {
     &__title {
@@ -122,7 +87,7 @@ export default {
     margin-bottom: 20px;
     &:hover {
         .caption {
-            img {
+            .image {
                 transform: translate(-50%, -50%) scale(1.1);
                 opacity: 0.8;
             }
