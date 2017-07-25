@@ -39,9 +39,7 @@
                                         <router-link v-show="auth.logged && auth.role == 'admin'" :to="`/movies/${movie._id}/edit`">
                                             <el-button type="primary">Edit</el-button>
                                         </router-link>
-                                        <el-button v-show="auth.logged" v-if="isSubscribed" @click="subscribe">Unsubscribe</el-button>
-                                        <el-button v-show="auth.logged" v-else @click="subscribe">Subscribe</el-button>
-                                    </div>
+                                                                           </div>
                                 </el-col>
                                 <el-col :span="18">
                                     <ul class="movie__actors">
