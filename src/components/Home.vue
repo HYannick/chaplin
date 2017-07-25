@@ -1,7 +1,7 @@
 <template>
     <transition name="el-fade-in-linear">
         <div>
-            <el-carousel :interval="6000" height="450px">
+            <el-carousel :interval="6000" height="0">
                 <el-carousel-item v-for="movie in carouselMovies" :key="movie._id">
                     <div class="slide__overlay"></div>
                     <image-loader classname="lazy__bg" :imageUrl="`${apiRoot}/uploads/${movie.imageSet[0]}`"></image-loader>
@@ -65,10 +65,10 @@ export default {
     position: absolute;
     max-width: 400px;
     width: 100%;
-    bottom: 50px;
+    bottom: 10%;
     right: 0;
     z-index: 9;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.55);
     padding: 10px 40px 10px 15px;
     h3 {
         font-weight: bold;
@@ -159,7 +159,10 @@ export default {
     color: #fff;
     text-align: center;
 }
-
+.el-carousel__container {
+    position: relative;
+    padding-bottom: 50%;
+}
 .el-carousel__item {
     opacity: 0.5;
     img {

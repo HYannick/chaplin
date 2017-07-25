@@ -236,9 +236,9 @@ export default {
         Services.getMovie(this.id).then(res => {
             this.form = res.data;
             res.data.imageSet.forEach(image => {
-                this.fileList.push({ 'name': image, 'url': `${api.rootUrl}/uploads/${image}` })
+                this.fileList.push({ 'name': image, 'url': `${api.ftpUrl}/${image}` })
             });
-            this.cover = `${api.rootUrl}/uploads/${res.data.cover}`;
+            this.cover = `${api.ftpUrl}/${res.data.cover}`;
         });
     },
     methods: {

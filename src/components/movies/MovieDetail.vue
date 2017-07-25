@@ -107,8 +107,8 @@ export default {
             this.movie = res.data
             this.dates = res.data.dates;
             this.imageSet = this.movie.imageSet.map(image => `${api.rootUrl}/uploads/${image}`)
-            this.bgCover = `${api.rootUrl}/uploads/${res.data.imageSet[0]}`;
-            this.cover = `${api.rootUrl}/uploads/${res.data.cover}`;
+            this.bgCover = `${api.ftpUrl}/${res.data.imageSet[0]}`;
+            this.cover = `${api.ftpUrl}/${res.data.cover}`;
         });
     },
 

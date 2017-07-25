@@ -31,7 +31,7 @@ export default {
 
     data() {
         return {
-            cover: `${api.rootUrl}/uploads/${this.movie.cover}`,
+            cover: `${api.ftpUrl}/${this.movie.cover}`,
             loadedImage: false
         }
     }
