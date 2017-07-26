@@ -7,7 +7,7 @@
             </div>
             <div class="datepicker__controls">
                 <transition name="el-zoom-in-top">
-                    <div class="datepicker__controls__label" v-for="month in [month]" :key="month" :class="classDirection">{{month.getFormatted()}}</div>
+                    <div class="datepicker__controls__label" v-for="(month, index) in [month]" :key="index" :class="classDirection">{{month.getFormatted()}}</div>
                 </transition>
                 <button class="datepicker__next" @click.prevent="nextMonth()">
                     <i class="el-icon-arrow-right"></i>
@@ -17,14 +17,14 @@
                 </button>
             </div>
             <div class="datepicker__week">
-                <div v-for="day in weekDays" :key="day" class="datepicker__weekdays">{{day}}</div>
+                <div v-for="(day, index) in weekDays" :key="index" class="datepicker__weekdays">{{day}}</div>
             </div>
             <div class="datepicker__days" :class="classWeeks">
                 <transition-group name="el-fade-in-linear" tag="div">
-                    <div v-for="month in [month]" :key="month" :class="classDirection">
+                    <div v-for="(month, index) in [month]" :key="index" :class="classDirection">
                         <div class="datepicker__day" :style="{width:  (month.getWeekStart() * 41) + 'px'}">
                         </div>
-                        <div class="datepicker__day" @click="selectDate(day)" v-for="day in month.getDays()" :key="day" :class="{today: isSelected(day) && isToday,selected: isInArray(day) }">
+                        <div class="datepicker__day" @click="selectDate(day)" v-for="(day, index) in month.getDays()" :key="index" :class="{today: isSelected(day) && isToday,selected: isInArray(day) }">
                             <span class="datepicker__day__effect"></span>
                             <span class="datepicker__day__text">{{day.format('D')}}</span>
                         </div>
@@ -33,6 +33,22 @@
                 </transition-group>
     
             </div>
+    
+            <div class="datepicker__date--list">
+                <transition-group name="el-fade-in-linear" tag="div">
+                    <div class="list__item" v-for="(date, index) in multi" :key="index">
+                        {{date}}
+                        <el-time-select v-model="value" :picker-options="{
+                                        start: '08:30',
+                                        step: '00:15',
+                                        end: '18:30'
+                                      }" placeholder="Select time">
+                                      
+                        </el-time-select>
+                    </div>
+                </transition-group>
+            </div>
+            {{testing}}
             <div class="datepicker__actions">
                 <el-button @click="cancel">Annuler</el-button>
                 <el-button @click="submit">Ok</el-button>
@@ -56,6 +72,8 @@ export default {
             mutatedDate: this.date,
             multi: [],
             isToday: true,
+            value: '',
+            testing: moment().startOf('day').add(3,'h').add(20,'m')
         }
     },
     computed: {
@@ -185,7 +203,8 @@ $day-size: 41px;
     text-align: center;
     transition: color 450ms cubic-bezier(0.07, 1.04, 0.07, 0.99);
     &:hover,
-    &.selected, &.today {
+    &.selected,
+    &.today {
         color: #fff;
         .datepicker__day__effect {
             transform: scale(1);
