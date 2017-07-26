@@ -23,6 +23,7 @@ export default {
             this.date = date;
             this.inputVal = date.map(date => moment.unix(date).format('LLLL'));
             this.hideAgenda();
+            console.log('updating')
             this.$emit('change', this.date);
         },
         showAgenda() {

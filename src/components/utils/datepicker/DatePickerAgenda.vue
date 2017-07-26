@@ -34,21 +34,7 @@
     
             </div>
     
-            <div class="datepicker__date--list">
-                <transition-group name="el-fade-in-linear" tag="div">
-                    <div class="list__item" v-for="(date, index) in multi" :key="index">
-                        {{date}}
-                        <el-time-select v-model="value" :picker-options="{
-                                        start: '08:30',
-                                        step: '00:15',
-                                        end: '18:30'
-                                      }" placeholder="Select time">
-                                      
-                        </el-time-select>
-                    </div>
-                </transition-group>
-            </div>
-            {{testing}}
+          
             <div class="datepicker__actions">
                 <el-button @click="cancel">Annuler</el-button>
                 <el-button @click="submit">Ok</el-button>
@@ -73,7 +59,7 @@ export default {
             multi: [],
             isToday: true,
             value: '',
-            testing: moment().startOf('day').add(3,'h').add(20,'m')
+          
         }
     },
     computed: {
@@ -85,7 +71,9 @@ export default {
         },
         classWeeks() {
             return `has-${this.month.getWeeks()}-weeks`;
-        }
+        },
+        
+        
     },
     methods: {
         isSelected(day) {

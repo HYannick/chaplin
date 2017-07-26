@@ -48,6 +48,13 @@
                                 </el-col>
                             </el-row>
                             <el-row :gutter="20">
+                                <el-col :span="24">
+                                    <div class="datepicker__date--list">
+                                        <date-item :dateObj="item" v-for="(item,index) in form.dates" :key="index" @transform="transformDates"></date-item>
+                                    </div>
+                                </el-col>
+                            </el-row>
+                            <el-row :gutter="20">
                                 <el-col :xs="12" :sm="12" :md="12" :lg="12">
                                     <el-form-item label="Durée">
                                         <el-input v-model="form.duration"></el-input>
@@ -123,6 +130,7 @@
 <script>
 import axios from 'axios';
 import DatePicker from '../utils/datepicker/DatePicker';
+import DateItem from '../utils/datepicker/DateItem';
 import Tags from '../utils/tags/Tags';
 import TagsList from '../utils/tags/TagsList';
 import moment from 'moment';
@@ -201,6 +209,7 @@ export default {
             bgCover: '',
             imageSet: [],
             dates: [],
+            formaD: [],
             authentification: false,
             now: moment().format()
         }
@@ -210,7 +219,8 @@ export default {
     components: {
         'cs-datepicker': DatePicker,
         'cs-tags': Tags,
-        'cs-tagslist': TagsList
+        'cs-tagslist': TagsList,
+        'date-item': DateItem
     },
     computed: {
         getTrailerUrl() {
@@ -294,8 +304,24 @@ export default {
             return isJPG && isLt2M;
         },
         updateDate(date) {
-            this.form.dates = date;
-            console.log(this.form.dates);
+            this.form.dates = date.map(item => {
+                return {
+                    date: item,
+                    time: '00:00'
+                }
+            });
+        },
+        transformDates(epoch) {
+            const { date, time } = epoch;
+            const temp = []
+            const arr = this.form.dates.map(item => {
+                if (item.date == date) {
+                    return item = epoch;
+                } else {
+                    return item;
+                }
+            })
+            console.log(this.form.dates)
         },
         back() {
             this.$router.push('/movies');
