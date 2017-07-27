@@ -5,7 +5,7 @@
                 <el-carousel-item v-for="movie in carouselMovies" :key="movie._id">
                     <div class="slide__overlay"></div>
                     <image-loader classname="lazy__bg" :imageUrl="`${apiRoot}/uploads/${movie.imageSet[0]}`"></image-loader>
-                   
+    
                     <div class="slide__desc">
                         <span>{{movie.releaseDate}}</span>
                         <h3>{{movie.title}}</h3>
@@ -19,6 +19,11 @@
                 <div class="movie__list">
                     <movie-list-popular></movie-list-popular>
                 </div>
+                <div class="movie__planning">
+                    <!--<i class="el-icon-upload2"></i>-->
+                    <h2>Au Programme</h2>
+                    <movie-table></movie-table>
+                </div>
             </el-col>
     
         </div>
@@ -30,12 +35,14 @@
 import Service from '../services/services';
 import ImageLoader from './utils/imageLoader/ImageLoader';
 import MovieCard from './movies/MovieCard';
+import MovieTable from './movies/MovieTable';
 import MovieListPopular from './movies/MovieListPopular';
 import api from '../../config/api';
 export default {
     components: {
         'movie-card': MovieCard,
         'movie-list-popular': MovieListPopular,
+        'movie-table': MovieTable,
         'image-loader': ImageLoader
     },
     created() {
@@ -60,7 +67,20 @@ export default {
 * {
     font-family: 'inconsolata', monospace;
 }
-
+.movie__planning{
+    position: relative;
+    margin-top: 70px;
+    h2 {
+        text-align: left;
+        position: absolute;
+        font-family: 'inconsolata', monospace;
+        font-weight: bold;
+        right: -15px;
+        top: -50px;
+        z-index: 999;
+        opacity: 0.9;
+    }
+}
 .slide__desc {
     position: absolute;
     max-width: 400px;
@@ -159,10 +179,12 @@ export default {
     color: #fff;
     text-align: center;
 }
+
 .el-carousel__container {
     position: relative;
     padding-bottom: 50%;
 }
+
 .el-carousel__item {
     opacity: 0.5;
     img {

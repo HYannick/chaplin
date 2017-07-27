@@ -18,15 +18,15 @@
                     </el-row>
                 </template>
             </el-table-column>
-            <el-table-column prop="date" label="Séance" width="150" sortable :formatter="formatDate">
+            <el-table-column prop="date" label="Séance" :width="150" sortable :formatter="formatDate">
             </el-table-column>
-            <el-table-column prop="time" label="Horaire" width="120" sortable>
+            <el-table-column prop="time" label="Horaire" :width="120" sortable>
             </el-table-column>
-            <el-table-column prop="title" label="Film" width="200">
+            <el-table-column prop="title" label="Film">
             </el-table-column>
-            <el-table-column v-show="auth.logged" prop="volunteer" label="Adhérent">
+            <el-table-column v-if="auth.logged" prop="volunteer" label="Adhérent">
             </el-table-column>
-            <el-table-column v-show="auth.logged" fixed="right" label="S'inscrire" width="120">
+            <el-table-column v-if="auth.logged" label="" width="120">
                 <template scope="scope">
                     <el-button @click="handleClick(scope.$index, tableData)" size="small">S'inscrire</el-button>
                 </template>
@@ -47,6 +47,7 @@ export default {
     },
     props: ['userLogged'],
     created() {
+        console.log(this.auth);
         const now = moment().unix();
         Services.getMovies(this.auth.userId, this.auth.token).then(res => {
             this.movies = res.data;
@@ -86,11 +87,7 @@ export default {
         })
 
     },
-    beforeUpdate() {
-        if (!this.auth.logged) {
-            this.$router.push('/signin');
-        }
-    },
+    
     computed: {
         ...mapGetters(['auth']),
 
