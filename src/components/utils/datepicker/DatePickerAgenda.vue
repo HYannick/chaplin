@@ -24,17 +24,22 @@
                     <div v-for="(month, index) in [month]" :key="index" :class="classDirection">
                         <div class="datepicker__day" :style="{width:  (month.getWeekStart() * 41) + 'px'}">
                         </div>
-                        <div class="datepicker__day" @click="selectDate(day)" v-for="(day, index) in month.getDays()" :key="index" :class="{today: isSelected(day) && isToday,selected: isInArray(day) }">
-                            <span class="datepicker__day__effect"></span>
-                            <span class="datepicker__day__text">{{day.format('D')}}</span>
+                        <div class="datepicker__day" v-for="(day, index) in month.getDays()" :key="index" :class="{today: isSelected(day) && isToday,selected: isInArray(day) }">
+                            <div class="datepicker__block" @click="selectDate(day)">
+                                <span class="datepicker__day__effect"></span>
+                                <span class="datepicker__day__text">{{day.format('D')}}</span>
+                            </div>
+                            <div class="time__select" v-show="isSelected(day) && showPop">
+    
+                                <date-item class="time__select--selector" :dateAt="day" @change="pushDateSet" @cancel="hideTimeSelect">
+                                </date-item>
+                                <div class="time__select--overlay"></div>
+                            </div>
                         </div>
     
                     </div>
                 </transition-group>
-    
             </div>
-    
-          
             <div class="datepicker__actions">
                 <el-button @click="cancel">Annuler</el-button>
                 <el-button @click="submit">Ok</el-button>
@@ -45,7 +50,12 @@
 <script>
 import moment from 'moment';
 import Month from './modules/month.js';
+import DateItem from './DateItem';
+import _ from 'lodash';
 export default {
+    components: {
+        'date-item': DateItem
+    },
     props: {
         date: {},
         visible: { type: Boolean, default: true }
@@ -56,10 +66,12 @@ export default {
             month: new Month(this.date.month(), this.date.year()),
             classDirection: 'off',
             mutatedDate: this.date,
-            multi: [],
+            temp: [],
             isToday: true,
             value: '',
-          
+            dateSet: [],
+            showPop: false,
+
         }
     },
     computed: {
@@ -72,26 +84,41 @@ export default {
         classWeeks() {
             return `has-${this.month.getWeeks()}-weeks`;
         },
-        
-        
+
+
     },
     methods: {
+        hideTimeSelect(day) {
+            let index = this.temp.indexOf(day.unix());
+                this.temp.splice(index, 1);
+                this.dateSet.splice(index, 1);
+                this.showPop = false;
+        },
+        pushDateSet(item) {
+            if (_.findIndex(this.dateSet, item) === -1) {
+                this.dateSet.push(item);
+            }
+            this.showPop = false;
+        },
         isSelected(day) {
             return this.mutatedDate.unix() === day.unix();
         },
         selectDate(day) {
             this.isToday = false;
+            this.showPop = true;
             if (this.isInArray(day)) {
-                let index = this.multi.indexOf(day.unix());
-                this.multi.splice(index, 1);
+                let index = this.temp.indexOf(day.unix());
+                this.temp.splice(index, 1);
+                this.dateSet.splice(index, 1);
+                this.showPop = false;
             } else {
                 this.mutatedDate = day.clone();
-                this.multi.push(this.mutatedDate.unix());
+                this.temp.push(this.mutatedDate.unix());
             }
         },
         isInArray(day) {
             const checkDay = day.unix();
-            if (this.multi.indexOf(checkDay) !== -1) {
+            if (this.temp.indexOf(checkDay) !== -1) {
                 return true;
             } else {
                 return false;
@@ -118,7 +145,7 @@ export default {
             this.month = new Month(month, year);
         },
         submit() {
-            this.$emit('change', this.multi);
+            this.$emit('change', this.dateSet);
         },
         cancel() {
             this.$emit('cancel');
@@ -130,6 +157,15 @@ export default {
 <style scoped lang="scss">
 $header-height: 100px;
 $day-size: 41px;
+.time__select {
+    background: #324157;
+    position: absolute;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
 
 .datepicker {
     position: absolute;
@@ -183,7 +219,9 @@ $day-size: 41px;
 }
 
 .datepicker__day {
-    position: relative;
+    .datepicker__block {
+        position: relative;
+    }
     width: $day-size;
     height: $day-size;
     float: left;

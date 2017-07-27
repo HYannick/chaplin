@@ -21,7 +21,7 @@ export default {
     methods: {
         selectDate(date) {
             this.date = date;
-            this.inputVal = date.map(date => moment.unix(date).format('LLLL'));
+            this.inputVal = date.map(({date}) => moment.unix(date).format('LLLL'));
             this.hideAgenda();
             console.log('updating')
             this.$emit('change', this.date);

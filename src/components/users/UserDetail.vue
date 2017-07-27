@@ -24,9 +24,11 @@
             </el-table-column>
             <el-table-column prop="date" label="Date" width="180" sortable>
             </el-table-column>
-            <el-table-column prop="title" label="Name" width="200">
+            <el-table-column prop="time" label="Hour" width="180" sortable>
             </el-table-column>
-            <el-table-column prop="volunteer" label="Address">
+            <el-table-column prop="title" label="Titre" width="200">
+            </el-table-column>
+            <el-table-column prop="volunteer" label="Bénévoles">
             </el-table-column>
             <el-table-column fixed="right" label="Operations" width="120">
                 <template scope="scope">
@@ -66,8 +68,8 @@ export default {
                 return movie.dates
             })
             this.tableData = [].concat(...mapped).map(item => {
-                const date = moment.unix(item).format('DD-MM-YYYY');
-
+                const date = moment(item.fullDate).format('DD-MM-YYYY');
+                const {time} = item;
                 const data = this.movies.filter(movie => {
                     return movie.dates.indexOf(item) !== -1;
                 }).map(({ title, _id, cover, desc }) => {
@@ -82,6 +84,7 @@ export default {
 
                 return {
                     date,
+                    time,
                     title: data[0].title,
                     id: data[0]._id,
                     cover: data[0].cover,

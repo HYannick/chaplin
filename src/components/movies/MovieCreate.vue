@@ -47,13 +47,7 @@
                                     </el-form-item>
                                 </el-col>
                             </el-row>
-                            <el-row :gutter="20">
-                                <el-col :span="24">
-                                    <div class="datepicker__date--list">
-                                        <date-item :dateObj="item" v-for="(item,index) in form.dates" :key="index" @transform="transformDates"></date-item>
-                                    </div>
-                                </el-col>
-                            </el-row>
+                           {{form.dates}}
                             <el-row :gutter="20">
                                 <el-col :xs="12" :sm="12" :md="12" :lg="12">
                                     <el-form-item label="Durée">
@@ -304,25 +298,9 @@ export default {
             return isJPG && isLt2M;
         },
         updateDate(date) {
-            this.form.dates = date.map(item => {
-                return {
-                    date: item,
-                    time: '00:00'
-                }
-            });
+            this.form.dates = date;
         },
-        transformDates(epoch) {
-            const { date, time } = epoch;
-            const temp = []
-            const arr = this.form.dates.map(item => {
-                if (item.date == date) {
-                    return item = epoch;
-                } else {
-                    return item;
-                }
-            })
-            console.log(this.form.dates)
-        },
+      
         back() {
             this.$router.push('/movies');
         },
