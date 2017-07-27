@@ -70,19 +70,19 @@
                     <el-row :gutter="15">
                         <el-col :span="24">
                             <div class="movie__gallery movie__gallery-first">
-                                <image-loader classname="lazy__set" :imageUrl="imageSet[3]"></image-loader>
-                            </div>
-    
-                        </el-col>
-    
-                        <el-col :span="12">
-                            <div class="movie__gallery">
                                 <image-loader classname="lazy__set" :imageUrl="imageSet[1]"></image-loader>
                             </div>
+    
                         </el-col>
+    
                         <el-col :span="12">
                             <div class="movie__gallery">
                                 <image-loader classname="lazy__set" :imageUrl="imageSet[2]"></image-loader>
+                            </div>
+                        </el-col>
+                        <el-col :span="12">
+                            <div class="movie__gallery">
+                                <image-loader classname="lazy__set" :imageUrl="imageSet[0]"></image-loader>
                             </div>
                         </el-col>
                     </el-row>

@@ -31,7 +31,7 @@ export default new Router({
             meta: { requiresAuth: true, requiresAdmin: false },
             props: true,
             children: [
-                { path: 'detail', component: UserDetails, props: true },
+                { path: '', component: UserDetails, props: true },
                 { path: 'perms', component: Perms },
                 { path: 'propal', component: Propal },
                 { path: 'chat', component: Chat }
