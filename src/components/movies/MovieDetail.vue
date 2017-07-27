@@ -39,7 +39,7 @@
                                         <router-link v-show="auth.logged && auth.role == 'admin'" :to="`/movies/${movie._id}/edit`">
                                             <el-button type="primary">Edit</el-button>
                                         </router-link>
-                                                                           </div>
+                                    </div>
                                 </el-col>
                                 <el-col :span="18">
                                     <ul class="movie__actors">
@@ -58,16 +58,19 @@
                             </div>
     
                             <el-col :span="18">
-                                <ul>
-                                    <li v-for="(date, index) in movie.dates" :key="index"> {{date}}</li>
-                                </ul>
+                                <el-table :data="dates" style="width: 100%">
+                                    <el-table-column prop="date" label="Date">
+                                    </el-table-column>
+                                    <el-table-column prop="time" label="Time">
+                                    </el-table-column>
+                                </el-table>
                             </el-col>
                         </el-col>
                     </el-row>
                     <el-row :gutter="15">
                         <el-col :span="24">
                             <div class="movie__gallery movie__gallery-first">
-                                <image-loader classname="lazy__set" :imageUrl="imageSet[0]"></image-loader>
+                                <image-loader classname="lazy__set" :imageUrl="imageSet[3]"></image-loader>
                             </div>
     
                         </el-col>
@@ -95,6 +98,7 @@ import Service from '../../services/services.js';
 import ImageLoader from '../utils/imageLoader/ImageLoader';
 import { mapGetters, mapActions } from 'vuex';
 import api from '../../../config/api';
+import moment from 'moment';
 export default {
     props: ['id'],
     components: {
@@ -102,8 +106,10 @@ export default {
     },
     created() {
         Service.getMovie(this.id).then(res => {
-            this.movie = res.data
-            this.dates = res.data.dates;
+            this.movie = res.data;
+            this.dates = res.data.dates.map(({fullDate, time}) => {
+                return { 'date' : moment(fullDate).format('dddd DD MMM YYYY'), time}
+            })
             this.imageSet = this.movie.imageSet.map(image => `${api.rootUrl}/uploads/${image}`)
             this.bgCover = `${api.ftpUrl}/${res.data.imageSet[0]}`;
             this.cover = `${api.ftpUrl}/${res.data.cover}`;
@@ -229,7 +235,7 @@ export default {
     z-index: 1;
     width: 100%;
     height: 100%;
-    
+
     .yt__frame {
         position: absolute;
         top: 0;

@@ -1,7 +1,7 @@
 <template>
     <transition name="el-fade-in-linear">
         <div>
-            UsersList
+            Propals
         </div>
     </transition>
 </template>
