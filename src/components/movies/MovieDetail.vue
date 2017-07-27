@@ -107,6 +107,7 @@ export default {
     created() {
         Service.getMovie(this.id).then(res => {
             this.movie = res.data;
+            console.log(this.movie)
             this.dates = res.data.dates.map(({fullDate, time}) => {
                 return { 'date' : moment(fullDate).format('dddd DD MMM YYYY'), time}
             })
