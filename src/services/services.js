@@ -28,8 +28,8 @@ export default {
         return axios.post(`${rootUrl}/subscribe`, data, setHeader(token))
     },
 
-    getSubscriptions() {
-        return axios.get(`${rootUrl}/subscribe`, data, setHeader(token))
+    getSubscriptions(token) {
+        return axios.get(`${rootUrl}/subscriptions`, setHeader(token))
     },
 
     getUserSubscription(id, token) {

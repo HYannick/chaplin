@@ -6,7 +6,7 @@
     </transition>
 </template>
 <script>
-import MovieTable from '../../movies/MovieTable';
+import MovieTable from '../../movies/schedule/MovieTable';
 export default {
     components: {
         'movie-table': MovieTable

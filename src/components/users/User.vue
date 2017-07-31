@@ -21,17 +21,9 @@
 </template>
 <script>
 import Services from '../../services/services';
-import moment from 'moment';
-import api from '../../../config/api';
-import ImageLoader from '../utils/imageLoader/ImageLoader';
-import MovieTable from '../movies/MovieTable';
 import { mapGetters } from 'vuex';
-import Month from '../utils/datepicker/modules/month';
 export default {
-    components: {
-        'image-loader': ImageLoader,
-        'movie-table': MovieTable
-    },
+
     created() {
         Services.getUser(this.auth.userId, this.auth.token).then(res => {
             this.user = res.data;
@@ -53,7 +45,6 @@ export default {
     },
     data() {
         return {
-            imgUrl: api.ftpUrl,
             user: {},
             activeIndex: '1',
             activeIndex2: '1',

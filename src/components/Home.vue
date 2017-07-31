@@ -38,7 +38,7 @@
 import Service from '../services/services';
 import ImageLoader from './utils/imageLoader/ImageLoader';
 import MovieCard from './movies/MovieCard';
-import MovieTable from './movies/MovieTable';
+import MovieTable from './movies/schedule/MovieTable';
 import MovieListPopular from './movies/MovieListPopular';
 import api from '../../config/api';
 export default {
