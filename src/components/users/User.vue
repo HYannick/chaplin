@@ -10,6 +10,7 @@
                     <router-link :to="`/users/${auth.userId}/perms`">Permanences</router-link>
                     <router-link :to="`/users/${auth.userId}/propal`">Propositions</router-link>
                     <router-link :to="`/users/${auth.userId}/chat`">Chat</router-link>
+                    <router-link v-show="auth.logged && auth.role == 'admin'" :to="`/users/${auth.userId}/movies`">Films</router-link>
                 </el-menu>
             </el-col>
         </el-row>

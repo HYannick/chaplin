@@ -34,6 +34,10 @@
                                 <el-switch v-model="form.diffused" on-text="Oui" off-text="Non" on-color="#13ce66" off-color="#ff4949">
                                 </el-switch>
                             </el-form-item>
+                            <el-form-item label="A afficher prochainement ?">
+                                <el-switch v-model="form.upcoming" on-text="Oui" off-text="Non" on-color="#13ce66" off-color="#ff4949">
+                                </el-switch>
+                            </el-form-item>
                         </el-col>
                         <el-col :xs="24" :sm="24" :md="16" :lg="16">
                             <el-row :gutter="20">
@@ -47,8 +51,17 @@
                                         <cs-datepicker @change='updateDate' :value="now" format="DD/MM/YYYY" name="Dates"></cs-datepicker>
                                     </el-form-item>
                                 </el-col>
+                                <el-col :span="24">
+                                    <el-table :data="form.dates" style="width: 100%; margin-bottom: 15px">
+                                        <el-table-column prop="date" label="Date">
+                                        </el-table-column>
+                                        <el-table-column prop="time" label="Time">
+                                        </el-table-column>
+                                    </el-table>
+                                </el-col>
+    
                             </el-row>
-                        
+    
                             <el-row :gutter="20">
                                 <el-col :xs="12" :sm="12" :md="12" :lg="12">
                                     <el-form-item label="Durée">
@@ -71,10 +84,7 @@
                                 </el-col>
                                 <el-col :xs="24" :sm="24" :md="12" :lg="12">
                                     <el-form-item label="Langues">
-                                        <el-select v-model="form.language" placeholder="Select">
-                                            <el-option v-for="item in languages" :key="item.value" :label="item.label" :value="item.value">
-                                            </el-option>
-                                        </el-select>
+                                        <el-input v-model="form.language"></el-input>
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="24">
@@ -134,11 +144,12 @@ import Services from '../../services/services';
 import { getIdFromURL, getTimeFromURL } from 'vue-youtube-embed';
 import api from '../../../config/api';
 import { mapGetters } from 'vuex';
+import genres from './datas/genres.json';
 export default {
     props: ['id'],
     data() {
         return {
-            apiRoot : api.rootUrl,
+            apiRoot: api.rootUrl,
             form: {
                 title: '',
                 synopsis: '',
@@ -155,6 +166,7 @@ export default {
                 authors: [],
                 trailer: '',
                 diffused: false,
+                upcoming: false
             },
             rules: {
                 title: [
@@ -163,42 +175,7 @@ export default {
             },
             dialogImageUrl: '',
             trailerId: '',
-            languages: [{
-                value: 'Anglais',
-                label: 'Anglais'
-            }, {
-                value: 'Français',
-                label: 'Français'
-            }, {
-                value: 'Espagnol',
-                label: 'Espagnol'
-            }, {
-                value: 'Allemand',
-                label: 'Allemand'
-            }, {
-                value: 'Italien',
-                label: 'Italien'
-            }],
-
-            genres: [{
-                value: 'Action/Aventure',
-                label: 'Action/Aventure'
-            }, {
-                value: 'Science Fiction',
-                label: 'Science Fiction'
-            }, {
-                value: 'Romance',
-                label: 'Romance'
-            }, {
-                value: 'Thriller',
-                label: 'Thriller'
-            }, {
-                value: 'Biopic',
-                label: 'Biopic'
-            }, {
-                value: 'Comédie',
-                label: 'Comédie'
-            }],
+            genres,
             fileList: [],
             dialogVisible: false,
             cover: '',
@@ -240,6 +217,9 @@ export default {
                 this.fileList.push({ 'name': image, 'url': `${api.ftpUrl}/${image}` })
             });
             this.cover = `${api.ftpUrl}/${res.data.cover}`;
+            this.form.dates = res.data.dates.map(({ fullDate, time }) => {
+                return { 'date': moment(fullDate).format('dddd DD MMM YYYY'), time }
+            })
         });
     },
     methods: {

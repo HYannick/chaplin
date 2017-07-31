@@ -22,10 +22,6 @@ import DatePickerAgenda from './DatePickerAgenda';
 moment.locale('fr');
 export default {
     props: ['dateAt'],
-
-    computed: {
-        
-    },
     data() {
         return {
             time: ''

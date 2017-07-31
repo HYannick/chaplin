@@ -125,7 +125,7 @@ export default {
             this.imageSet = this.movie.imageSet.map(image => `${api.rootUrl}/uploads/${image}`)
             this.bgCover = `${api.ftpUrl}/${res.data.imageSet[0]}`;
             this.cover = `${api.ftpUrl}/${res.data.cover}`;
-            
+
         });
     },
 
@@ -134,8 +134,6 @@ export default {
             userId: this.auth.userId,
             movieId: this.movie._id
         }
-        this.checkSubscription(data);
-        this.isSubscribed = this.auth.subscribed;
     },
 
     data() {
@@ -160,8 +158,7 @@ export default {
                 cc_load_policy: 0,  // Hide closed captions
                 iv_load_policy: 3,  // Hide the Video Annotations
                 autohide: 0,
-            },
-            isSubscribed: false
+            }
         }
     },
     computed: {
@@ -185,30 +182,6 @@ export default {
                 this.downWrapper = false;
                 this.trailerEnabled = false;
             }
-        },
-
-        subscribe() {
-            let data = {
-                userId: this.auth.userId,
-                movieId: this.movie._id
-            }
-
-            Service.subscribeTo(data, this.auth.token).then(res => {
-                this.isSubscribed = !this.isSubscribed;
-                this.$notify({
-                    title: 'Subscribed!',
-                    message: 'Tu as bien été enregistré!',
-                    type: 'success'
-                });
-            }).catch(err => {
-                this.$notify({
-                    title: ':(',
-                    message: 'Tu est déjà inscrit !',
-                    type: 'error'
-                });
-            })
-
-
         }
     }
 }

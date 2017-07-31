@@ -12,12 +12,12 @@
                     </router-link>
                 </el-menu-item>
                 <el-menu-item index="2">
-                    <router-link to="/movies">
+                    <router-link to="/diffused">
                         En Salle
                     </router-link>
                 </el-menu-item>
                 <el-menu-item index="3">
-                    <router-link to="/movies">
+                    <router-link to="/upcoming">
                         Prochainement
                     </router-link>
                 </el-menu-item>
@@ -26,11 +26,7 @@
                         Infos pratiques
                     </router-link>
                 </el-menu-item>
-                <el-menu-item index="5">
-                    <router-link to="/contact">
-                        Contact
-                    </router-link>
-                </el-menu-item>
+               
                 <transition name="el-fade-in-linear">
                     <div v-if="!auth.logged">
                         <el-menu-item index="6">
@@ -41,12 +37,12 @@
                     </div>
     
                     <div v-else>
-                        <el-menu-item index="6">
+                        <el-menu-item index="7">
                             <router-link :to="`/users/${auth.userId}`">
                                 Profil
                             </router-link>
                         </el-menu-item>
-                        <el-menu-item index="7">
+                        <el-menu-item index="8">
                             <a @click="disconnect">Logout</a>
                         </el-menu-item>
                     </div>

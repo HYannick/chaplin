@@ -16,6 +16,10 @@ const setHeader = (token) => {
 };
 
 export default {
+    //UserServices
+    signin(data) {
+        return axios.post(`${rootUrl}/signin`, data, autho)
+    },
     getUsers() {
         return axios.get(`${rootUrl}/users`, autho)
     },
@@ -24,6 +28,7 @@ export default {
         return axios.get(`${rootUrl}/users/${id}`, setHeader(token))
     },
 
+    //SubscriptionServices
     subscribeTo(data, token) {
         return axios.post(`${rootUrl}/subscribe`, data, setHeader(token))
     },
@@ -38,14 +43,19 @@ export default {
     getMovieSubscription(id, date, time, token) {
         return axios.get(`${rootUrl}/movie/${id}/subscription?date=${date}&time=${time}`, setHeader(token))
     },
-    getMovieSubscriptions(id, date, time, token) {
+    getMovieSubscriptions(id, token) {
         return axios.get(`${rootUrl}/movie/${id}/subscriptions`, setHeader(token))
     },
+
+    //MovieServices
     getMovies() {
         return axios.get(`${rootUrl}/movies`, autho)
     },
     getDiffusedMovies() {
         return axios.get(`${rootUrl}/movies/popular`, autho)
+    },
+    getUpcomingMovies() {
+        return axios.get(`${rootUrl}/movies/upcoming`, autho)
     },
 
     getMovie(id) {
@@ -62,9 +72,6 @@ export default {
         return axios.delete(`${rootUrl}/movies/${id}`, autho)
     },
 
-    signin(data) {
-        return axios.post(`${rootUrl}/signin`, data, autho)
-    }
 
 
 }

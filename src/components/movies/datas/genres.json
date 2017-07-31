@@ -1,0 +1,58 @@
+[{
+    "value": "Action",
+    "label": "Action"
+}, {
+    "value": "Aventure",
+    "label": "Aventure"
+}, {
+    "value": "Science Fiction",
+    "label": "Science Fiction"
+}, {
+    "value": "Animation",
+    "label": "Animation"
+}, {
+    "value": "Guerre",
+    "label": "Guerre"
+}, {
+    "value": "Documentaire",
+    "label": "Documentaire"
+}, {
+    "value": "Indépendant",
+    "label": "Indépendant"
+}, {
+    "value": "Post-Apocalyptique",
+    "label": "Post-Apocalyptique"
+}, {
+    "value": "Romance",
+    "label": "Romance"
+}, {
+    "value": "Fantastique",
+    "label": "Fantastique"
+}, {
+    "value": "Western",
+    "label": "Western"
+}, {
+    "value": "Horreur",
+    "label": "Horreur"
+}, {
+    "value": "Historique",
+    "label": "Historique"
+}, {
+    "value": "Thriller",
+    "label": "Thriller"
+}, {
+    "value": "Drame",
+    "label": "Drame"
+}, {
+    "value": "Politique",
+    "label": "Politique"
+}, {
+    "value": "Politique",
+    "label": "Politique"
+}, {
+    "value": "Biopic",
+    "label": "Biopic"
+}, {
+    "value": "Comédie",
+    "label": "Comédie"
+}]

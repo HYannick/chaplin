@@ -1,11 +1,12 @@
 <template>
     <transition name="el-fade-in-linear">
         <div>
-            UserDetails {{user.email}}
+            <p>Pseudonyme | {{user.username}} </p>
+            <p>Mail | {{user.email}}</p>
             <el-row :gutter="20">
-                <el-col :xs="24" :sm="12" :md="8" :lg="8" v-for="(sub, index) in subs" :key="sub.date">
-                    {{dateInCard(sub.date)}} | <b>{{sub.time}}</b>
-                
+                <el-col :xs="24" :sm="12" :md="6" :lg="6" v-for="(sub, index) in subs" :key="sub.date">
+                    {{dateInCard(sub.date)}} |
+                    <b>{{sub.time}}</b>
                     <movie-card :movie="sub.movies[0]"></movie-card>
                 </el-col>
             </el-row>
@@ -20,12 +21,12 @@ import moment from 'moment';
 import { mapGetters } from 'vuex';
 export default {
     components: {
-        'movie-card' : MovieCard
+        'movie-card': MovieCard
     },
     computed: {
         ...mapGetters(['auth']),
     },
-    methods : {
+    methods: {
         dateInCard(date) {
             return moment.unix(date).format('dddd DD MMMM YYYY')
         }
