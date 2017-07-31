@@ -1,30 +1,33 @@
 <template>
     <transition name="el-fade-in-linear">
         <div>
-            <el-carousel :interval="6000" height="0">
-                <el-carousel-item v-for="movie in carouselMovies" :key="movie._id">
-                    <div class="slide__overlay"></div>
-                    <image-loader classname="lazy__bg" :imageUrl="`${apiRoot}/uploads/${movie.imageSet[0]}`"></image-loader>
+            <div class="loader" v-show="!loaded">Loader</div>
+            <div v-show="loaded">
+                <el-carousel :interval="6000" height="0">
+                    <el-carousel-item v-for="movie in carouselMovies" :key="movie._id">
+                        <div class="slide__overlay"></div>
+                        <image-loader classname="lazy__bg" :imageUrl="`${apiRoot}/uploads/${movie.imageSet[0]}`"></image-loader>
     
-                    <div class="slide__desc">
-                        <span>{{movie.releaseDate}}</span>
-                        <h3>{{movie.title}}</h3>
-                        <p>{{movie.desc}}</p>
-                        <router-link :to="`/movies/${movie._id}`" class="goTo" tag="a">En savoir plus</router-link>
+                        <div class="slide__desc">
+                            <span>{{movie.releaseDate}}</span>
+                            <h3>{{movie.title}}</h3>
+                            <p>{{movie.desc}}</p>
+                            <router-link :to="`/movies/${movie._id}`" class="goTo" tag="a">En savoir plus</router-link>
+                        </div>
+    
+                    </el-carousel-item>
+                </el-carousel>
+                <el-col :span="24" class="wrapper">
+                    <div class="movie__list">
+                        <movie-list-popular></movie-list-popular>
                     </div>
-    
-                </el-carousel-item>
-            </el-carousel>
-            <el-col :span="24" class="wrapper">
-                <div class="movie__list">
-                    <movie-list-popular></movie-list-popular>
-                </div>
-                <div class="movie__planning">
-                    <!--<i class="el-icon-upload2"></i>-->
-                    <h2>Au Programme</h2>
-                    <movie-table></movie-table>
-                </div>
-            </el-col>
+                    <div class="movie__planning">
+                        <!--<i class="el-icon-upload2"></i>-->
+                        <h2>Au Programme</h2>
+                        <movie-table></movie-table>
+                    </div>
+                </el-col>
+            </div>
     
         </div>
     
@@ -47,14 +50,16 @@ export default {
     },
     created() {
         Service.getMovies().then(res => {
-            this.carouselMovies = res.data.splice(0, 3)
+            this.carouselMovies = res.data.splice(0, 3);
+            this.loaded = true;
         });
 
     },
     data() {
         return {
             carouselMovies: [],
-            apiRoot: api.rootUrl
+            apiRoot: api.rootUrl,
+            loaded: false
         }
     },
 }
@@ -67,7 +72,8 @@ export default {
 * {
     font-family: 'inconsolata', monospace;
 }
-.movie__planning{
+
+.movie__planning {
     position: relative;
     margin-top: 70px;
     h2 {
@@ -81,6 +87,7 @@ export default {
         opacity: 0.9;
     }
 }
+
 .slide__desc {
     position: absolute;
     max-width: 400px;

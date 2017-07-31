@@ -29,14 +29,14 @@
                                 <span class="datepicker__day__effect"></span>
                                 <span class="datepicker__day__text">{{day.format('D')}}</span>
                             </div>
-                            <div class="time__select" v-show="isSelected(day) && showPop">
-    
-                                <date-item class="time__select--selector" :dateAt="day" @change="pushDateSet" @cancel="hideTimeSelect">
-                                </date-item>
-                                <div class="time__select--overlay"></div>
-                            </div>
+                            <transition name="el-fade-in-linear">
+                                <div class="time__select" v-show="isSelected(day) && showPop">
+                                    <date-item class="time__select--selector" :dateAt="day" @change="pushDateSet" @cancel="hideTimeSelect">
+                                    </date-item>
+                                    <div class="time__select--overlay"></div>
+                                </div>
+                            </transition>
                         </div>
-    
                     </div>
                 </transition-group>
             </div>
@@ -90,9 +90,9 @@ export default {
     methods: {
         hideTimeSelect(day) {
             let index = this.temp.indexOf(day.unix());
-                this.temp.splice(index, 1);
-                this.dateSet.splice(index, 1);
-                this.showPop = false;
+            this.temp.splice(index, 1);
+            this.dateSet.splice(index, 1);
+            this.showPop = false;
         },
         pushDateSet(item) {
             if (_.findIndex(this.dateSet, item) === -1) {

@@ -8,14 +8,12 @@
                             <image-loader classname="lazy" :imageUrl="`${imgUrl}/${props.row.cover}`"></image-loader>
                         </el-col>
                         <el-col :span="12">
-                            {{props.row}}
                             <p>Date: {{ dateInCard(props.row.date) }}</p>
-                            <p>Titre: {{ props.row.title }}</p>
+                            <h5>{{ props.row.title }}</h5>
                             <p>Synopsis: {{ props.row.desc }}</p>
                             <router-link :to="`/movies/${props.row.id}`">
                                 <el-button>Voir fiche</el-button>
                             </router-link>
-                            <el-button @click="handleClickThere(props.row.date, props.row.time, props.row.id)">S'inscrire</el-button>
                         </el-col>
                     </el-row>
                 </template>
@@ -26,11 +24,14 @@
             </el-table-column>
             <el-table-column prop="title" label="Film">
             </el-table-column>
-            <el-table-column v-if="auth.logged" prop="volunteer" label="Adhérent">
+            <el-table-column v-if="auth.logged" label="Adhérent">
+                <template scope="props">
+                    <subscriber :row="props.row"></subscriber>
+                </template>
             </el-table-column>
             <el-table-column v-if="auth.logged" label="" width="120">
                 <template scope="props">
-                    <el-button @click="handleClick(props.row)" size="small">S'inscrire</el-button>
+                    <subscribe-button :row="props.row" :userId="userLogged"></subscribe-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -44,18 +45,20 @@ import ImageLoader from '../utils/imageLoader/ImageLoader';
 import { mapGetters } from 'vuex';
 import _ from 'lodash';
 import Month from '../utils/datepicker/modules/month';
+import SubscribeBtn from './SubscribeBtn';
+import Subscriber from './Subscriber';
 export default {
     components: {
-        'image-loader': ImageLoader
+        'image-loader': ImageLoader,
+        'subscribe-button': SubscribeBtn,
+        'subscriber': Subscriber
     },
     props: ['userLogged'],
     created() {
-        console.log(this.auth);
         const now = moment().unix();
-        
+
         Services.getMovies(this.auth.userId, this.auth.token).then(res => {
             this.movies = res.data;
-            console.log(res.data)
             const mapped = this.movies.filter(movie => {
                 return movie.diffused;
             }).map(movie => {
@@ -74,7 +77,8 @@ export default {
                         title,
                         _id,
                         cover,
-                        desc
+                        desc,
+                        volunteers
                     }
 
                 });
@@ -84,7 +88,8 @@ export default {
                     title: data[0].title,
                     id: data[0]._id,
                     cover: data[0].cover,
-                    desc: data[0].desc
+                    desc: data[0].desc,
+                    volunteers: data[0].volunteers
                 };
             });
 
@@ -104,32 +109,6 @@ export default {
         formatDate(row, column) {
             return moment.unix(row.date).format('ddd DD MMM YYYY');
         },
-
-        handleClickThere(date, time, movieId) {
-            const data = {
-                userId: this.userLogged,
-                date, time, movieId
-            }
-            console.log(data)
-        },
-        handleClick(row) {
-            const { id, time, date } = row;
-
-
-            const data = {
-                userId: this.userLogged,
-                date,
-                time,
-                movieId: id
-            }
-            Services.subscribeTo(data).then(res => {
-
-                console.log(res)
-
-            }).catch(err => {
-                console.log(err);
-            })
-        },
     },
     data() {
         return {
@@ -137,7 +116,6 @@ export default {
             user: {},
             movies: [],
             tableData: [],
-            isSub: false,
         }
     }
 }

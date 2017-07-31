@@ -48,7 +48,7 @@
                                     </el-form-item>
                                 </el-col>
                             </el-row>
-                                 {{form.dates}}
+                        
                             <el-row :gutter="20">
                                 <el-col :xs="12" :sm="12" :md="12" :lg="12">
                                     <el-form-item label="Durée">

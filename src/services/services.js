@@ -28,6 +28,19 @@ export default {
         return axios.post(`${rootUrl}/subscribe`, data, setHeader(token))
     },
 
+    getSubscriptions() {
+        return axios.get(`${rootUrl}/subscribe`, data, setHeader(token))
+    },
+
+    getUserSubscription(id, token) {
+        return axios.get(`${rootUrl}/user/${id}/subscriptions`, setHeader(token))
+    },
+    getMovieSubscription(id, date, time, token) {
+        return axios.get(`${rootUrl}/movie/${id}/subscription?date=${date}&time=${time}`, setHeader(token))
+    },
+    getMovieSubscriptions(id, date, time, token) {
+        return axios.get(`${rootUrl}/movie/${id}/subscriptions`, setHeader(token))
+    },
     getMovies() {
         return axios.get(`${rootUrl}/movies`, autho)
     },

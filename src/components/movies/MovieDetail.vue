@@ -36,45 +36,56 @@
                                 <el-col :span="6">
                                     <div class="cover">
                                         <image-loader classname="lazy" :imageUrl="cover"></image-loader>
-                                        <router-link v-show="auth.logged && auth.role == 'admin'" :to="`/movies/${movie._id}/edit`">
+                                         <router-link class="edit__button" v-show="auth.logged && auth.role == 'admin'" :to="`/movies/${movie._id}/edit`">
                                             <el-button type="primary">Edit</el-button>
                                         </router-link>
                                     </div>
                                 </el-col>
-                                <el-col :span="18">
-                                    <ul class="movie__actors">
-                                        <li>Acteurs |</li>
-                                        <li v-for="(actor, index) in movie.actors" :key="index">{{actor}}</li>
-                                    </ul>
-                                    <ul class="movie__authors">
-                                        <li>Auteurs |</li>
-                                        <li v-for="(author, index) in movie.authors" :key="index">{{author}}</li>
-                                    </ul>
-                                    <hr>
-                                    <h5>Synopsis</h5>
-                                    <p>{{movie.synopsis}}</p>
+                                <el-col :span="10">
+                                    <div class="short__desc">
+                                        <h5>Synopsis</h5>
+                                        <p>{{movie.desc}}</p>
+                                       
+                                    </div>
+                                </el-col>
+                                <el-col :span="8">
+                                    <div class="movie__details">
+                                        <h5>Détails</h5>
+                                        <ul class="movie__actors">
+                                            <li>Acteurs |</li>
+                                            <li v-for="(actor, index) in movie.actors" :key="index">{{actor}}</li>
+                                        </ul>
     
+                                        <ul class="movie__authors">
+                                            <li>Auteurs |</li>
+                                            <li v-for="(author, index) in movie.authors" :key="index">{{author}}</li>
+                                        </ul>
+                                        <ul class="movie__authors">
+                                            <li>Origine |</li>
+                                            <li>{{movie.language}}</li>
+                                        </ul>
+                                        <ul class="movie__authors">
+                                            <li>Langue |</li>
+                                            <li v-for="(check,index) in movie.checkList" :key="index">{{check}}</li>
+                                        </ul>
+                                    </div>
                                 </el-col>
                             </div>
-    
-                            <el-col :span="18">
-                                <el-table :data="dates" style="width: 100%">
-                                    <el-table-column prop="date" label="Date">
-                                    </el-table-column>
-                                    <el-table-column prop="time" label="Time">
-                                    </el-table-column>
-                                </el-table>
-                            </el-col>
                         </el-col>
                     </el-row>
+    
+                    <el-table :data="dates" style="width: 100%">
+                        <el-table-column prop="date" label="Date">
+                        </el-table-column>
+                        <el-table-column prop="time" label="Time">
+                        </el-table-column>
+                    </el-table>
                     <el-row :gutter="15">
                         <el-col :span="24">
                             <div class="movie__gallery movie__gallery-first">
                                 <image-loader classname="lazy__set" :imageUrl="imageSet[1]"></image-loader>
                             </div>
-    
                         </el-col>
-    
                         <el-col :span="12">
                             <div class="movie__gallery">
                                 <image-loader classname="lazy__set" :imageUrl="imageSet[2]"></image-loader>
@@ -108,12 +119,13 @@ export default {
         Service.getMovie(this.id).then(res => {
             this.movie = res.data;
             console.log(this.movie)
-            this.dates = res.data.dates.map(({fullDate, time}) => {
-                return { 'date' : moment(fullDate).format('dddd DD MMM YYYY'), time}
+            this.dates = res.data.dates.map(({ fullDate, time }) => {
+                return { 'date': moment(fullDate).format('dddd DD MMM YYYY'), time }
             })
             this.imageSet = this.movie.imageSet.map(image => `${api.rootUrl}/uploads/${image}`)
             this.bgCover = `${api.ftpUrl}/${res.data.imageSet[0]}`;
             this.cover = `${api.ftpUrl}/${res.data.cover}`;
+            
         });
     },
 
@@ -132,6 +144,7 @@ export default {
             bgCover: "",
             cover: "",
             imageSet: [],
+            volunteers : [],
             dates: [],
             trailerEnabled: false,
             displayTitle: true,
@@ -205,6 +218,18 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Cutive+Mono|Dosis|Exo+2|Inconsolata|Josefin+Sans|Roboto+Mono');
 * {
     font-family: 'inconsolata', monospace;
+}
+.edit__button{
+    display: block;
+    margin-top: -1px;
+    button{
+        width: 100%;
+        border-radius: 0;
+    }
+}
+.movie__details {
+    border-left: 1px solid rgba(170, 170, 170, 0.44);
+    padding-left: 15px;
 }
 
 .player__button {
