@@ -49,6 +49,7 @@ export default {
         },
         vote(id) {
             console.log('voting to :: ', id)
+       
             Services.likeProposal(id, this.auth.userId).then(res => {
                 Services.getProposals().then(movies => {
                     this.proposals = movies.data
@@ -98,6 +99,9 @@ export default {
 
 .avatar-uploader .el-upload:hover {
     border-color: #20a0ff;
+}
+.proposal{
+    transition: 0.3s;
 }
 
 .avatar-uploader-icon {

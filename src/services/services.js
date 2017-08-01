@@ -60,8 +60,9 @@ export default {
     postProposal(data) {
         return axios.post(`${rootUrl}/proposals`, data, autho);
     },
-    likeProposal(id, token) {
-        return axios.put(`${rootUrl}/proposals/${id}`, autho);
+    likeProposal(id, userId, token) {
+        console.log(userId)
+        return axios.put(`${rootUrl}/proposals/${id}`, { userId }, autho);
     },
     deleteProposal(id, userId) {
         return axios.delete(`${rootUrl}/proposals/${id}`, userId, autho);

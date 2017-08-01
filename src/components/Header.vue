@@ -26,7 +26,7 @@
                         Infos pratiques
                     </router-link>
                 </el-menu-item>
-               
+    
                 <transition name="el-fade-in-linear">
                     <div v-if="!auth.logged">
                         <el-menu-item index="6">
@@ -47,8 +47,13 @@
                         </el-menu-item>
                     </div>
                 </transition>
-    
+                <div class="social__network">
+                    <facebook-icon></facebook-icon>
+                    <twitter-icon></twitter-icon>
+                    <pinterest-icon></pinterest-icon>
+                </div>
             </el-menu>
+    
         </div>
     
     </transition>
@@ -56,7 +61,15 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import Services from '../services/services';
+import FacebookIcon from './utils/icons/Facebook';
+import TwitterIcon from './utils/icons/Twitter';
+import PinterestIcon from './utils/icons/Pinterest';
 export default {
+    components: {
+        'facebook-icon': FacebookIcon,
+        'twitter-icon': TwitterIcon,
+        'pinterest-icon': PinterestIcon
+    },
     data() {
         return {
             activeIndex: '1',
@@ -91,18 +104,27 @@ export default {
             this.logout();
         },
         handleSelect(key, keyPath) {
-       
+
         }
     }
 }
 </script>
 <style scoped lang="scss">
 @import url('https://fonts.googleapis.com/css?family=Cutive+Mono|Dosis|Exo+2|Inconsolata|Josefin+Sans|Roboto+Mono');
+
 .el-menu {
     background: #fff;
     margin-top: 50px;
     width: 230px;
     float: right;
+}
+
+.social__network {
+    display: table;
+    max-width: 30px;
+    width: 100%;
+    float: right;
+    margin: 20px 0;
 }
 
 .little__chaplin {

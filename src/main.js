@@ -2,17 +2,20 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import ElementUI from 'element-ui';
+
 import 'element-ui/lib/theme-default/index.css';
 import locale from 'element-ui/lib/locale/lang/fr';
 import App from './App'
 import router from './router'
-import VueYouTubeEmbed from 'vue-youtube-embed'
+import VueYouTubeEmbed from 'vue-youtube-embed';
 import { store } from './store/store';
+
 Vue.use(VueYouTubeEmbed);
+Vue.use(ElementUI, { locale });
+
 Vue.config.productionTip = false;
 
 
-Vue.use(ElementUI, { locale });
 
 const token = localStorage.getItem('token');
 
