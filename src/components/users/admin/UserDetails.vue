@@ -3,6 +3,9 @@
         <div>
             <p>Pseudonyme | {{user.username}} </p>
             <p>Mail | {{user.email}}</p>
+            <router-link v-show="auth.logged && auth.role == 'admin'" :to="`/users/${user._id}/edit`">
+                <el-button>Editer mon profil</el-button>
+            </router-link>
             <el-row :gutter="20">
                 <el-col :xs="24" :sm="12" :md="6" :lg="6" v-for="(sub, index) in subs" :key="sub.date">
                     {{dateInCard(sub.date)}} |

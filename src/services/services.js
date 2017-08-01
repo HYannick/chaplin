@@ -27,6 +27,9 @@ export default {
     getUser(id, token) {
         return axios.get(`${rootUrl}/users/${id}`, setHeader(token))
     },
+    updateUser(id, data) {
+        return axios.put(`${rootUrl}/users/${id}/edit`, data, autho)
+    },
 
     //SubscriptionServices
     subscribeTo(data, token) {

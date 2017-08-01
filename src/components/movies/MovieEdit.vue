@@ -53,7 +53,7 @@
                                 </el-col>
                                 <el-col :span="24">
                                     <el-table :data="form.dates" style="width: 100%; margin-bottom: 15px">
-                                        <el-table-column prop="date" label="Date">
+                                        <el-table-column prop="date" label="Date" :formatter="formatDate">
                                         </el-table-column>
                                         <el-table-column prop="time" label="Time">
                                         </el-table-column>
@@ -217,12 +217,13 @@ export default {
                 this.fileList.push({ 'name': image, 'url': `${api.ftpUrl}/${image}` })
             });
             this.cover = `${api.ftpUrl}/${res.data.cover}`;
-            this.form.dates = res.data.dates.map(({ fullDate, time }) => {
-                return { 'date': moment(fullDate).format('dddd DD MMM YYYY'), time }
-            })
+           
         });
     },
     methods: {
+        formatDate(row, column) {
+            return moment.unix(row.date).format('ddd DD MMM YYYY');
+        },
         submitCover() {
             this.$refs.upCover.submit();
         },

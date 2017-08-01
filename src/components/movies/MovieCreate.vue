@@ -48,7 +48,7 @@
                                 </el-col>
                                 <el-col :span="24">
                                     <el-table :data="form.dates" style="width: 100%; margin-bottom: 15px">
-                                        <el-table-column prop="date" label="Date">
+                                        <el-table-column prop="date" label="Date" :formatter="formatDate">
                                         </el-table-column>
                                         <el-table-column prop="time" label="Time">
                                         </el-table-column>
@@ -218,6 +218,9 @@ export default {
         }
     },
     methods: {
+        formatDate(row, column) {
+            return moment.unix(row.date).format('ddd DD MMM YYYY');
+        },
         submitCover() {
             this.$refs.upCover.submit();
         },
@@ -284,7 +287,7 @@ export default {
         updateDate(date) {
             this.form.dates = date;
         },
-      
+
         back() {
             this.$router.push('/movies');
         },
