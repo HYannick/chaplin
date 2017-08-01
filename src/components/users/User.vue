@@ -26,6 +26,7 @@ import { mapGetters } from 'vuex';
 export default {
 
     created() {
+    
         Services.getUser(this.auth.userId, this.auth.token).then(res => {
             this.user = res.data;
         });

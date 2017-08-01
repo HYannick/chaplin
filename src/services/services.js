@@ -54,6 +54,19 @@ export default {
     getMovies() {
         return axios.get(`${rootUrl}/movies`, autho)
     },
+    getProposals() {
+        return axios.get(`${rootUrl}/proposals`, autho);
+    },
+    postProposal(data) {
+        return axios.post(`${rootUrl}/proposals`, data, autho);
+    },
+    likeProposal(id, token) {
+        return axios.put(`${rootUrl}/proposals/${id}`, autho);
+    },
+    deleteProposal(id, userId) {
+        return axios.delete(`${rootUrl}/proposals/${id}`, userId, autho);
+    },
+
     getDiffusedMovies() {
         return axios.get(`${rootUrl}/movies/popular`, autho)
     },

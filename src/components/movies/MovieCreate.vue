@@ -295,8 +295,6 @@ export default {
             this.$refs[formName].resetFields();
         },
         onSubmit(formName) {
-            console.log(this.form);
-            console.log(formName)
             this.$refs[formName].validate((valid) => {
                 console.log(valid)
                 if (valid) {

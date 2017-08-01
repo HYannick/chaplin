@@ -49,6 +49,7 @@ export default {
         'image-loader': ImageLoader
     },
     created() {
+ 
         Service.getMovies().then(res => {
             this.carouselMovies = res.data.splice(0, 3);
             this.loaded = true;

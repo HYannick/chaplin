@@ -3,7 +3,6 @@ export const auth = ({ logged, role, userId, subscribed, token }) => {
         logged,
         role,
         userId,
-        subscribed,
         token
     };
 }

@@ -11,7 +11,6 @@ export const store = new Vuex.Store({
         logged: false,
         role: "",
         userId: "",
-        subscribed: false,
         token: ""
     },
     getters,

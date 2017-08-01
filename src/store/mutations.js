@@ -10,9 +10,6 @@ export const role = (state, payload) => {
     state.role = payload;
 }
 
-export const checkSub = (state, payload) => {
-    state.subscribed = payload;
-}
 
 export const token = (state, payload) => {
     state.token = payload;

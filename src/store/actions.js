@@ -33,16 +33,3 @@ export const logout = ({ commit }) => {
     commit('denied');
     localStorage.clear();
 };
-
-export const checkSubscription = ({ commit }, payload) => {
-    const { movieId, userId } = payload;
-    Services.getMovie(movieId)
-        .then(res => {
-            const { volunteers } = res.data
-            if (volunteers.indexOf(userId) !== -1) {
-                commit('checkSub', true);
-            } else {
-                commit('checkSub', false);
-            }
-        })
-}
