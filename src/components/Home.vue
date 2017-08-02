@@ -1,6 +1,7 @@
 <template>
     <transition name="el-fade-in-linear">
         <div>
+            <!--<preloader :toHide="loaded"></preloader>-->
             <div class="loader" v-show="!loaded">Loader</div>
             <div v-show="loaded">
                 <el-carousel :interval="6000" height="0">
@@ -40,13 +41,15 @@ import ImageLoader from './utils/imageLoader/ImageLoader';
 import MovieCard from './movies/MovieCard';
 import MovieTable from './movies/schedule/MovieTable';
 import MovieListPopular from './movies/MovieListPopular';
+import Preloader from './utils/Preloader';
 import api from '../../config/api';
 export default {
     components: {
         'movie-card': MovieCard,
         'movie-list-popular': MovieListPopular,
         'movie-table': MovieTable,
-        'image-loader': ImageLoader
+        'image-loader': ImageLoader,
+        'preloader': Preloader
     },
     created() {
  
