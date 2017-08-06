@@ -6,16 +6,15 @@
                 <h4>Propositions</h4>
                 <el-row :gutter="10">
                     <el-col :xs="24" :sm="12" :md="6" :lg="6" v-for="(propal, index) in proposals" :key="propal._id">
-                        <div class="proposal">
+                        <a :href="`${propal.url}`" target="_blank" class="proposal">
                             <span>
                                 <b>{{propal.submitter.username || propal.submitter.email}}</b>
                             </span>
                             <h5>{{propal.title}}</h5>
-                            <p>{{propal.url}}</p>
                             <p>{{propal.likes.length}}</p>
                             <image-loader classname="lazy" :imageUrl="`${apiFtp}/${propal.cover}`"></image-loader>
                             <el-button @click="vote(propal._id)">Voter</el-button>
-                        </div>
+                        </a>
                     </el-col>
                 </el-row>
             </el-row>

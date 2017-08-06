@@ -1,7 +1,7 @@
 <template>
     <transition name="el-fade-in-linear">
         <div>
-            <!--<preloader :toHide="loaded"></preloader>-->
+            <preloader :toHide="loaded"></preloader>
             <div class="loader" v-show="!loaded">Loader</div>
             <div v-show="loaded">
                 <el-carousel :interval="6000" height="0">
@@ -41,7 +41,7 @@ import ImageLoader from './utils/imageLoader/ImageLoader';
 import MovieCard from './movies/MovieCard';
 import MovieTable from './movies/schedule/MovieTable';
 import MovieListPopular from './movies/MovieListPopular';
-import Preloader from './utils/Preloader';
+import Preloader from './utils/icons/Loader';
 import api from '../../config/api';
 export default {
     components: {
