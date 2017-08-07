@@ -256,6 +256,7 @@ export default {
             console.log(res);
             this.cover = URL.createObjectURL(file.raw);
             this.form.cover = res.cover[0].filename;
+            console.log(res);
             this.$notify({
                 title: 'Success',
                 message: 'Images uploaded !',

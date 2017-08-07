@@ -6,7 +6,7 @@
                     loaderai
                 </title>
                 <circle cx="42.5" cy="42.5" r="42" class="cls-1">
-                    <animateTransform attributeName="transform" begin="0s" dur="10s" type="rotate" from="0 42.5 42.5" to="360 42.5 42.5" repeatCount="indefinite" />
+       
                 </circle>
                 <circle cx="42.6" cy="42.2" r="36.1" class="cls-2" />
                 <g id="clap-wrapper">
@@ -160,11 +160,11 @@ export default {
     transition: 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);
     .preloader-svg {
         position: fixed;
-        width: 150px;
+        width: 500px;
         top: 50%;
         left: 50%;
         transition: 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%) scale(1);
     }
     &.hidden {
         opacity: 0;
@@ -173,6 +173,7 @@ export default {
         pointer-events: none;
         .preloader-svg {
             top: 40%;
+            transform: translate(-50%, -50%) scale(0);
         }
     }
 }
@@ -181,6 +182,11 @@ export default {
     -webkit-animation: mymove 1s infinite cubic-bezier(0.785, 0.135, 0.15, 0.86);
     /* Safari 4.0 - 8.0 */
     animation: mymove 1s infinite cubic-bezier(0.785, 0.135, 0.15, 0.86);
+}
+.cls-1 {
+    -webkit-animation: rotation 2s infinite cubic-bezier(0.785, 0.135, 0.15, 0.86);
+    /* Safari 4.0 - 8.0 */
+    animation: rotation 2s infinite cubic-bezier(0.785, 0.135, 0.15, 0.86);
 }
 
 
@@ -226,4 +232,37 @@ export default {
         transform-origin: 23px 33px;
     }
 }
+/* Safari 4.0 - 8.0 */
+
+@-webkit-keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+        transform-origin: 42.5px 42.5px;
+    }
+   
+    100% {
+        transform: rotate(360deg);
+        transform-origin: 42.5px 42.5px;
+    }
+}
+
+
+
+
+
+
+/* Standard syntax */
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+        transform-origin: 42.5px 42.5px;
+    }
+
+    100% {
+        transform: rotate(360deg);
+        transform-origin: 42.5px 42.5px;
+    }
+}
+
 </style>
