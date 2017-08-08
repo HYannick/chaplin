@@ -122,7 +122,7 @@ export default {
             this.dates = res.data.dates.map(({ fullDate, time }) => {
                 return { 'date': moment(fullDate).format('dddd DD MMM YYYY'), time }
             })
-            this.imageSet = this.movie.imageSet.map(image => `${api.rootUrl}/uploads/${image}`)
+            this.imageSet = this.movie.imageSet.map(image => `${api.ftpUrl}/${image}`)
             this.bgCover = `${api.ftpUrl}/${res.data.imageSet[0]}`;
             this.cover = `${api.ftpUrl}/${res.data.cover}`;
 
@@ -318,7 +318,7 @@ export default {
     transform: translateY(-40px);
     background: #fff;
     position: relative;
-    z-index: 1;
+    z-index: 999;
     transition: 0.3s ease-out;
     &.slide-down {
         transform: translateY(0);

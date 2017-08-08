@@ -7,7 +7,7 @@
                 <el-carousel :interval="6000" height="0">
                     <el-carousel-item v-for="movie in carouselMovies" :key="movie._id">
                         <div class="slide__overlay"></div>
-                        <image-loader classname="lazy__bg" :imageUrl="`${apiRoot}/uploads/${movie.imageSet[0]}`"></image-loader>
+                        <image-loader classname="lazy__bg" :imageUrl="`${apiRoot}/${movie.imageSet[0]}`"></image-loader>
     
                         <div class="slide__desc">
                             <span>{{movie.releaseDate}}</span>
@@ -62,7 +62,7 @@ export default {
     data() {
         return {
             carouselMovies: [],
-            apiRoot: api.rootUrl,
+            apiRoot: api.ftpUrl,
             loaded: false
         }
     },

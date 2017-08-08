@@ -67,7 +67,9 @@ export default {
     deleteProposal(id, userId) {
         return axios.delete(`${rootUrl}/proposals/${id}`, userId, autho);
     },
-
+    deleteCover(filename) {
+        return axios.delete(`${rootUrl}/uploads/${filename}`, autho);
+    },
     getDiffusedMovies() {
         return axios.get(`${rootUrl}/movies/popular`, autho)
     },
