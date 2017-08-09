@@ -228,7 +228,21 @@ export default {
             this.$refs.upCover.submit();
         },
         changeCover() {
-            this.cover = '';
+            Services.deleteCover(this.form.cover).then(res => {
+                this.cover = '';
+                this.form.cover = '';
+                this.$notify({
+                    title: 'Success',
+                    message: 'Cover deleted!',
+                    type: 'success'
+                });
+            }).catch(err => {
+                this.$notify({
+                    title: 'Error',
+                    message: 'Something bad Happenned!',
+                    type: 'error'
+                });
+            })
         },
         submitImages() {
             if (this.form.imageSet.length != 0) {
