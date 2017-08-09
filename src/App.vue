@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <el-col :span="4">
+    <el-col :xs="24" :sm="24" :md="4" :lg="4">
       <ch-header></ch-header>
     </el-col>
-    <el-col :span="14" class="main__wrapper">
+    <el-col :xs="24" :sm="24" :md="14" :lg="14" class="main__wrapper">
       <router-view></router-view>
     </el-col>
     <el-col :span="6" class="fixed__side">
@@ -37,6 +37,9 @@ body {
     position: fixed;
     right: 0;
     top: 0;
+    @media screen and (max-width: 765px) {
+      display: none;
+    }
 }
 .title__cinema {
   text-align: center;

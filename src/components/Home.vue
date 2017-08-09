@@ -52,7 +52,7 @@ export default {
         'preloader': Preloader
     },
     created() {
- 
+
         Service.getMovies().then(res => {
             this.carouselMovies = res.data.splice(0, 3);
             this.loaded = true;
@@ -189,6 +189,12 @@ export default {
 .subtitle {
     color: #fff;
     text-align: center;
+}
+
+.el-carousel {
+    @media screen and (max-width: 768px) {
+        display: none;
+    }
 }
 
 .el-carousel__container {

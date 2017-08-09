@@ -1,54 +1,58 @@
 <template>
     <transition name="el-fade-in-linear">
         <el-row>
-            <el-col :span="24">
-                <div class="background__cover">
-                    <div class="background__cover__overlay"></div>
-                    <div class="movie__trailer" @click="playTrailer">
+            <el-row :gutter="15">
+                <el-col :span="24">
+                    <div class="background__cover">
+                        <div class="background__cover__overlay"></div>
+                        <div class="movie__trailer" @click="playTrailer">
+                            <transition name="el-fade-in-linear">
+                                <div v-show="displayTitle" class="player__button">
+                                    <i class="player__icon el-icon-caret-right"></i>
+                                </div>
+                            </transition>
+                            <youtube class="yt__frame" v-show="trailerEnabled" @ready="ready" :video-id="movie.trailer" player-height="100%" player-width="100%" :player-vars="trailerOptions" @playing="animateTitle('playing')" @ended="animateTitle('stopped')"></youtube>
+                        </div>
+    
+                        <image-loader classname="lazy__bg" :imageUrl="bgCover"></image-loader>
                         <transition name="el-fade-in-linear">
-                            <div v-show="displayTitle" class="player__button">
-                                <i class="player__icon el-icon-caret-right"></i>
+                            <div class="background__details" v-show="displayTitle">
+                                <p class="movie__release">{{movie.releaseDate}}</p>
+                                <h4 class="movie__title">{{movie.title}}</h4>
+    
+                                <p class="movie__infos">
+                                    <span class="movie__duration">{{movie.duration}}</span> |
+                                    <span class="movie__genre" v-for="(genre,index) in movie.genres" :key="index">{{genre}} </span> |
+                                    <span class="move__options">{{movie.checklist}}</span>
+                                </p>
                             </div>
                         </transition>
-                        <youtube class="yt__frame" v-show="trailerEnabled" @ready="ready" :video-id="movie.trailer" player-height="100%" player-width="100%" :player-vars="trailerOptions" @playing="animateTitle('playing')" @ended="animateTitle('stopped')"></youtube>
                     </div>
-    
-                    <image-loader classname="lazy__bg" :imageUrl="bgCover"></image-loader>
-                    <transition name="el-fade-in-linear">
-                        <div class="background__details" v-show="displayTitle">
-                            <p class="movie__release">{{movie.releaseDate}}</p>
-                            <h4 class="movie__title">{{movie.title}}</h4>
-    
-                            <p class="movie__infos">
-                                <span class="movie__duration">{{movie.duration}}</span> |
-                                <span class="movie__genre" v-for="(genre,index) in movie.genres" :key="index">{{genre}} </span> |
-                                <span class="move__options">{{movie.checklist}}</span>
-                            </p>
-                        </div>
-                    </transition>
-                </div>
-            </el-col>
+                </el-col>
+            </el-row>
             <el-row :gutter="15">
-                <el-col :span="22" :offset="1" class="wrapper__details" :class="{'slide-down': downWrapper}">
+                <el-col :xs="24" :sm="24" :md="{ 'span': 22, 'offset': 1 }" :lg="{ 'span': 22, 'offset': 1 }" class="wrapper__details" :class="{'slide-down': downWrapper}">
                     <el-row :gutter="15">
                         <el-col :span="24">
                             <div class="main__desc">
-                                <el-col :span="6">
+                                <el-col :xs="24" :sm="24" :md="6" :lg="6">
                                     <div class="cover">
                                         <image-loader classname="lazy" :imageUrl="cover"></image-loader>
-                                         <router-link class="edit__button" v-show="auth.logged && auth.role == 'admin'" :to="`/movies/${movie._id}/edit`">
+                                        <router-link class="edit__button" v-show="auth.logged && auth.role == 'admin'" :to="`/movies/${movie._id}/edit`">
                                             <el-button type="primary">Edit</el-button>
                                         </router-link>
+                                        <a class="viewTrailer__mobile" :href="`https://www.youtube.com/watch?v=${movie.trailer}`">
+                                            <el-button type="primary">Bande d'annonce</el-button>
+                                        </a>
                                     </div>
                                 </el-col>
-                                <el-col :span="10">
+                                <el-col :xs="24" :sm="24" :md="10" :lg="10">
                                     <div class="short__desc">
                                         <h5>Synopsis</h5>
                                         <p>{{movie.desc}}</p>
-                                       
                                     </div>
                                 </el-col>
-                                <el-col :span="8">
+                                <el-col :xs="24" :sm="24" :md="8" :lg="8">
                                     <div class="movie__details">
                                         <h5>Détails</h5>
                                         <ul class="movie__actors">
@@ -86,12 +90,12 @@
                                 <image-loader classname="lazy__set" :imageUrl="imageSet[1]"></image-loader>
                             </div>
                         </el-col>
-                        <el-col :span="12">
+                        <el-col :xs="24" :sm="24" :md="12" :lg="12">
                             <div class="movie__gallery">
                                 <image-loader classname="lazy__set" :imageUrl="imageSet[2]"></image-loader>
                             </div>
                         </el-col>
-                        <el-col :span="12">
+                        <el-col :xs="24" :sm="24" :md="12" :lg="12">
                             <div class="movie__gallery">
                                 <image-loader classname="lazy__set" :imageUrl="imageSet[0]"></image-loader>
                             </div>
@@ -117,6 +121,7 @@ export default {
     },
     created() {
         Service.getMovie(this.id).then(res => {
+            console.log(res.data)
             this.movie = res.data;
             console.log(this.movie)
             this.dates = res.data.dates.map(({ fullDate, time }) => {
@@ -142,7 +147,7 @@ export default {
             bgCover: "",
             cover: "",
             imageSet: [],
-            volunteers : [],
+            volunteers: [],
             dates: [],
             trailerEnabled: false,
             displayTitle: true,
@@ -192,17 +197,35 @@ export default {
 * {
     font-family: 'inconsolata', monospace;
 }
-.edit__button{
+
+.viewTrailer__mobile {
+    margin: 10px;
+    button {
+        width: 100%;
+        display: block;
+    }
+
+    @media screen and (min-width: 768px) {
+        display: none;
+    }
+}
+
+.edit__button {
     display: block;
     margin-top: -1px;
-    button{
+    button {
         width: 100%;
         border-radius: 0;
     }
 }
+
 .movie__details {
-    border-left: 1px solid rgba(170, 170, 170, 0.44);
-    padding-left: 15px;
+    margin-bottom: 30px;
+    @media screen and (min-width: 768px) {
+        border-left: 1px solid rgba(170, 170, 170, 0.44);
+        padding-left: 15px;
+        margin: 0;
+    }
 }
 
 .player__button {
@@ -242,6 +265,10 @@ export default {
         width: 100%;
         height: 100%;
     }
+
+    @media screen and (max-width: 768px) {
+        display: none;
+    }
 }
 
 .background__details {
@@ -257,6 +284,17 @@ export default {
     }
     p {
         font-weight: bold;
+    }
+    @media screen and (max-width: 768px) {
+        position: initial;
+        color: #333;
+        h4 {
+            color: #333;
+            font-size: 25px;
+        }
+        p {
+            color: #333;
+        }
     }
 }
 
@@ -326,21 +364,30 @@ export default {
             transform: translateY(0);
         }
     }
+    @media screen and (max-width: 768px) {
+        transform: translateY(0);
+    }
 }
 
 .main__desc {
     .cover {
         transform: translateY(-120px);
         transition: 0.3s ease-out;
+        @media screen and (max-width: 768px) {
+            transform: translateY(0);
+        }
     }
 }
 
 .background__cover {
-    padding-bottom: 50%;
-    overflow: hidden;
-    position: relative;
-    height: 0;
-    cursor: pointer;
+
+    @media screen and (min-width: 768px) {
+        padding-bottom: 50%;
+        overflow: hidden;
+        position: relative;
+        height: 0;
+        cursor: pointer;
+    }
     &:hover {
         img {
             transform: translate(-50%, -50%) scale(1.3) !important;
@@ -357,6 +404,14 @@ export default {
         top: 0;
         left: 0;
         z-index: 1;
+        @media screen and (max-width: 768px) {
+            display: none;
+        }
+    }
+    .lazy__bg {
+        @media screen and (max-width: 768px) {
+            display: none;
+        }
     }
     img {
         width: 100%;
@@ -366,6 +421,9 @@ export default {
         transform: translate(-50%, -50%) scale(1.1);
         opacity: 0.8;
         transition: 0.3s ease-out;
+        @media screen and (max-width: 768px) {
+            display: none;
+        }
     }
 }
 </style>

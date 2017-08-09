@@ -3,9 +3,12 @@
         <div>
     
             <el-menu theme="light" :default-active="activeIndex" class="el-menu-demo" mode="vertical" @select="handleSelect">
-                <router-link class="little__chaplin" to="/">
-                    <img src="../../static/img/mini_logo.png" />
-                </router-link>
+                <el-menu-item index="0">
+                    <router-link class="little__chaplin" to="/">
+                        <img src="../../static/img/mini_logo.png" />
+                    </router-link>
+                </el-menu-item>
+    
                 <el-menu-item index="1">
                     <router-link to="/">
                         Accueil
@@ -117,6 +120,24 @@ export default {
     margin-top: 50px;
     width: 230px;
     float: right;
+    @media screen and (max-width: 768px) {
+        float: none;
+        margin: 50px auto 0;
+        text-align: center;
+        li {
+            text-align: center;
+            padding-left: 0 !important;
+            a {
+                 &:before {
+                    right: initial;
+                }
+            }
+            &:first-child a {
+                position: initial;
+               
+            }
+        }
+    }
 }
 
 .social__network {
@@ -125,6 +146,18 @@ export default {
     width: 100%;
     float: right;
     margin: 20px 0;
+    @media screen and (max-width: 768px) { 
+        max-width: initial;
+        width: initial;
+        float: none;
+        margin: 20px auto;
+        a {
+            display: block;
+            float: left;
+            width: 40px;
+            margin: 0 5px;
+        }
+    }
 }
 
 .little__chaplin {

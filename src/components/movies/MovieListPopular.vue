@@ -11,7 +11,7 @@
                     </el-row>
                 </div>
             </el-col>
-            
+    
         </el-row>
     </transition>
 </template>
@@ -67,6 +67,10 @@ a {
         top: -40px;
         z-index: 999;
         opacity: 0.9;
+        @media screen and (max-width: 765px) {
+            position: initial;
+            text-align: center;
+        }
     }
 }
 </style>
