@@ -6,7 +6,7 @@
                     loaderai
                 </title>
                 <circle cx="42.5" cy="42.5" r="42" class="cls-1">
-       
+    
                 </circle>
                 <circle cx="42.6" cy="42.2" r="36.1" class="cls-2" />
                 <g id="clap-wrapper">
@@ -160,7 +160,9 @@ export default {
     transition: 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);
     .preloader-svg {
         position: fixed;
-        width: 500px;
+        max-width: 500px;
+        width: 100%;
+        padding: 50px;
         top: 50%;
         left: 50%;
         transition: 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);
@@ -183,11 +185,13 @@ export default {
     /* Safari 4.0 - 8.0 */
     animation: mymove 1s infinite cubic-bezier(0.785, 0.135, 0.15, 0.86);
 }
+
 .cls-1 {
     -webkit-animation: rotation 2s infinite cubic-bezier(0.785, 0.135, 0.15, 0.86);
     /* Safari 4.0 - 8.0 */
     animation: rotation 2s infinite cubic-bezier(0.785, 0.135, 0.15, 0.86);
 }
+
 
 
 
@@ -216,6 +220,7 @@ export default {
 
 
 
+
 /* Standard syntax */
 
 @keyframes mymove {
@@ -232,6 +237,8 @@ export default {
         transform-origin: 23px 33px;
     }
 }
+
+
 /* Safari 4.0 - 8.0 */
 
 @-webkit-keyframes rotation {
@@ -239,12 +246,13 @@ export default {
         transform: rotate(0deg);
         transform-origin: 42.5px 42.5px;
     }
-   
+
     100% {
         transform: rotate(360deg);
         transform-origin: 42.5px 42.5px;
     }
 }
+
 
 
 
@@ -264,5 +272,4 @@ export default {
         transform-origin: 42.5px 42.5px;
     }
 }
-
 </style>
