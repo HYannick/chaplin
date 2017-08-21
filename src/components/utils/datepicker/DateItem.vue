@@ -5,9 +5,9 @@
         </el-col>
         <el-col :span="24">
             <el-time-select class="timer__select" v-model="time" :picker-options="{
-                                                    start: '08:30',
-                                                    step: '00:15',
-                                                    end: '18:30'
+                                                    start: '16:00',
+                                                    step: '00:30',
+                                                    end: '21:00'
                                                   }" placeholder="Select time">
             </el-time-select>
         </el-col>

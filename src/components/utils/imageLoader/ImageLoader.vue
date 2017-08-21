@@ -24,7 +24,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .lazy {
-    padding-bottom: 150%;
+    padding-bottom: 130%;
     img {
         transform: translate(-60%, -50%);
     }
