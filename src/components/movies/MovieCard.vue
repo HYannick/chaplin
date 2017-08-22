@@ -3,28 +3,27 @@
         <router-link :to="`/movies/${movie._id}`" class="caption" tag="a">
             <image-loader classname="lazy" :imageUrl="cover"></image-loader>
         </router-link>
-    
+        {{availabilities}}
     </div>
 </template>
 <script>
 import moment from 'moment';
 import api from '../../../config/api';
 import ImageLoader from '../utils/imageLoader/ImageLoader';
-console.log(api.rootUrl)
 export default {
     props: ['movie'],
     components: {
         'image-loader': ImageLoader
     },
-      
+
     computed: {
         availabilities() {
             const now = moment();
             const { dates } = this.movie;
-            return dates.filter(date => {
-                return moment.unix(date) > now;
-            }).map(date => {
-                return moment.unix(date).format('dddd DD MMM YYYY');
+            return dates.filter(item => {
+                return moment(item.fullDate) >= now;
+            }).map(item => {
+                return moment.unix(item.date).format('dddd DD MMM YYYY');
             });
         }
     },
@@ -38,6 +37,7 @@ export default {
 }
 </script>
 <style lang="scss">
+
 
 .infos {
     &__title {
@@ -101,8 +101,6 @@ export default {
     }
     .caption {
         overflow: hidden;
-        border-radius: 5px;
-
         position: relative;
         display: block;
     }

@@ -35,13 +35,27 @@ export default {
         }
     },
     created() {
+        const now = moment().unix();
         Services.getUser(this.auth.userId, this.auth.token).then(res => {
             this.user = res.data;
             Services.getUserSubscription(this.user._id).then(subs => {
-                this.subs = subs.data;
+                console.log(subs.data)
+                this.subs = subs.data.filter(sub => {
+                    return sub.date >= now;
+                })
+
+                const legacySubs = subs.data.filter(sub => {
+                    return sub.date <= now;
+                }).map(toRemove => toRemove._id)
+
+                if (legacySubs.length !== 0) {
+                    Services.deleteSubs({ legacySubs }, this.auth.token).then(res => {
+                        console.log(res);
+                        
+                    })
+                }
             })
         });
-
     },
     data() {
         return {

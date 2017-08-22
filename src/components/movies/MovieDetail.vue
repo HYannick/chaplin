@@ -101,7 +101,7 @@
                             </div>
                         </el-col>
                     </el-row>
-    
+                    <movie-related :related="id"></movie-related>
                 </el-col>
             </el-row>
     
@@ -112,24 +112,25 @@
 import Service from '../../services/services.js';
 import ImageLoader from '../utils/imageLoader/ImageLoader';
 import { mapGetters, mapActions } from 'vuex';
+import MovieListRelated from './MovieListRelated';
 import api from '../../../config/api';
 import moment from 'moment';
 export default {
     props: ['id'],
     components: {
-        'image-loader': ImageLoader
+        'image-loader': ImageLoader,
+        'movie-related': MovieListRelated
     },
     created() {
         Service.getMovie(this.id).then(res => {
-            console.log(res.data)
             this.movie = res.data;
-            console.log(this.movie)
             this.dates = res.data.dates.map(({ fullDate, time }) => {
                 return { 'date': moment(fullDate).format('dddd DD MMM YYYY'), time }
             })
             this.imageSet = this.movie.imageSet.map(image => `${api.ftpUrl}/${image}`)
             this.bgCover = `${api.ftpUrl}/${res.data.imageSet[0]}`;
             this.cover = `${api.ftpUrl}/${res.data.cover}`;
+            this.related = this.movie.genres;
 
         });
     },
@@ -146,6 +147,7 @@ export default {
             movie: {},
             bgCover: "",
             cover: "",
+            related: [],
             imageSet: [],
             volunteers: [],
             dates: [],
@@ -170,13 +172,15 @@ export default {
         ...mapGetters(['auth'])
     },
     methods: {
-        ...mapActions(['checkSubscription']),
         ready(player) {
             this.player = player;
         },
         playTrailer() {
             this.trailerEnabled = true;
             this.player.playVideo();
+        },
+        beforeRouteUpdate() {
+            console.log('new route')
         },
         animateTitle(state) {
             if (state == 'playing') {

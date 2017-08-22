@@ -11,7 +11,7 @@ export const store = new Vuex.Store({
         logged: false,
         role: "",
         userId: "",
-        token: ""
+        token: "",
     },
     getters,
     mutations,

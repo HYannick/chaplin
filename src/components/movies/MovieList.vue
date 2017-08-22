@@ -13,10 +13,12 @@
                             </router-link>
                         </div>
                     </el-col>
-    
+                    <el-col :span="6">
+                        <el-autocomplete class="inline-input" v-model="search" :fetch-suggestions="querySearch" placeholder="Please Input" :trigger-on-focus="false" @select="handleSelect"></el-autocomplete>
+                    </el-col>
                 </el-row>
                 <el-row :gutter="20">
-                    <el-col :xs="24" :sm="12" :md="8" :lg="8" v-for="(movie, index) in movies   " :key="movie._id">
+                    <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(movie, index) in searchRes   " :key="movie._id">
                         <movie-card :movie="movie"></movie-card>
                     </el-col>
                 </el-row>
@@ -33,17 +35,45 @@ export default {
     components: {
         'movie-card': MovieCard
     },
-    created() {
-        Service.getMovies().then(movies => this.movies = movies.data);
+    data() {
+        return {
+            movies: [],
+            searchRes: [],
+            search: ''
+        }
     },
     computed: {
         ...mapGetters(['auth'])
     },
-    data() {
-        return {
-            movies: []
+    created() {
+        Service.getMovies().then(movies => {
+            this.movies = movies.data
+            this.searchRes = movies.data
+        });
+    },
+    methods: {
+        querySearch(queryString, cb) {
+            var movies = this.movies;
+            var results = queryString ? movies.filter(this.createFilter(queryString)) : movies;
+            // call callback function to return suggestions
+            this.searchRes = this.search !== '' ? movies.filter(this.createFilter(queryString)) : movies;
+            var res = results.map(result => {
+                result.value = result.title;
+                return result;
+            });
+            cb(res);
+        },
+        createFilter(queryString) {
+            return (movie) => {
+                return (movie.title.toLowerCase().includes(queryString.toLowerCase()));
+            };
+        },
+
+        handleSelect(item) {
+            console.log(item)
         }
     }
+
 }
 </script>
 

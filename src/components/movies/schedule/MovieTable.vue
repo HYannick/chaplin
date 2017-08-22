@@ -49,9 +49,7 @@ export default {
         'subscribe-button': SubscribeBtn,
     },
     props: ['userLogged'],
-    beforeUpdate() {
-        console.log('updated')
-    },
+    
     created() {
         this.refreshTable();
     },
@@ -78,7 +76,7 @@ export default {
                 });
 
                 this.tableData = [].concat(...mapped).filter(item => {
-                    return item.date > now;
+                    return moment(item.fullDate).unix() >= now;
                 }).map(item => {
                     const date = moment(item.fullDate).unix();
                     const { time } = item;
@@ -109,9 +107,6 @@ export default {
                         volunteer: (vol.length === 0) ? '' : vol[0].enrolled[0].username
                     };
                 });
-
-                console.log(this.tableData)
-
             })
         }
     },

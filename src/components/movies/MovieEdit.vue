@@ -136,15 +136,16 @@
 
 <script>
 import axios from 'axios';
-import DatePicker from '../utils/datepicker/DatePicker';
+import { mapGetters } from 'vuex';
+import api from '../../../config/api';
+import genres from './datas/genres.json';
 import Tags from '../utils/tags/Tags';
 import TagsList from '../utils/tags/TagsList';
+import DatePicker from '../utils/datepicker/DatePicker';
 import moment from 'moment';
 import Services from '../../services/services';
 import { getIdFromURL, getTimeFromURL } from 'vue-youtube-embed';
-import api from '../../../config/api';
-import { mapGetters } from 'vuex';
-import genres from './datas/genres.json';
+
 export default {
     props: ['id'],
     data() {

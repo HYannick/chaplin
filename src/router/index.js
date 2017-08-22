@@ -22,6 +22,7 @@ import Signin from '@/components/Auth';
 Vue.use(Router);
 
 export default new Router({
+    mode: 'history',
     routes: [
         { path: '/', name: 'Home', component: Home },
         { path: '/signin', name: 'Signin', component: Signin },

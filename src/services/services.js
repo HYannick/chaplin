@@ -50,6 +50,10 @@ export default {
         return axios.get(`${rootUrl}/movie/${id}/subscriptions`, setHeader(token))
     },
 
+    deleteSubs(legacySubs, token) {
+        return axios.post(`${rootUrl}/subscriptions/delete`, legacySubs, setHeader(token))
+    },
+
     //MovieServices
     getMovies() {
         return axios.get(`${rootUrl}/movies`, autho)
@@ -75,6 +79,9 @@ export default {
     },
     getUpcomingMovies() {
         return axios.get(`${rootUrl}/movies/upcoming`, autho)
+    },
+    getRelatedMovies(related, genres) {
+        return axios.get(`${rootUrl}/movies/${related}/related?genre[]=${genres}`, autho)
     },
 
     getMovie(id) {

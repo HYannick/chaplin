@@ -27,7 +27,6 @@ export default {
             if (mySubs.length !== 0) {
                 this.isSub = true;
             }
-            console.log(otherSubs)
         })
     },
 
