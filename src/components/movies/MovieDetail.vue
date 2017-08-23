@@ -1,6 +1,6 @@
 <template>
     <transition name="el-fade-in-linear">
-        <el-row>
+        <el-row  v-if="show">
             <el-row :gutter="15">
                 <el-col :span="24">
                     <div class="background__cover">
@@ -101,7 +101,18 @@
                             </div>
                         </el-col>
                     </el-row>
-                    <movie-related :related="id"></movie-related>
+                    <el-row>
+                        <el-col :span="24">
+                            <div class="related__movies">
+                                <h2>Vous aimerez aussi ...</h2>
+                                <el-row :gutter="10">
+                                    <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(movie, index) in related" :key="movie._id">
+                                        <movie-card :movie="movie"></movie-card>
+                                    </el-col>
+                                </el-row>
+                            </div>
+                        </el-col>
+                    </el-row>
                 </el-col>
             </el-row>
     
@@ -110,40 +121,25 @@
 </template>
 <script>
 import Service from '../../services/services.js';
+import MovieCard from './MovieCard';
 import ImageLoader from '../utils/imageLoader/ImageLoader';
 import { mapGetters, mapActions } from 'vuex';
-import MovieListRelated from './MovieListRelated';
 import api from '../../../config/api';
 import moment from 'moment';
 export default {
     props: ['id'],
     components: {
         'image-loader': ImageLoader,
-        'movie-related': MovieListRelated
+        'movie-card': MovieCard
     },
     created() {
-        Service.getMovie(this.id).then(res => {
-            this.movie = res.data;
-            this.dates = res.data.dates.map(({ fullDate, time }) => {
-                return { 'date': moment(fullDate).format('dddd DD MMM YYYY'), time }
-            })
-            this.imageSet = this.movie.imageSet.map(image => `${api.ftpUrl}/${image}`)
-            this.bgCover = `${api.ftpUrl}/${res.data.imageSet[0]}`;
-            this.cover = `${api.ftpUrl}/${res.data.cover}`;
-            this.related = this.movie.genres;
-
-        });
-    },
-
-    beforeUpdate() {
-        let data = {
-            userId: this.auth.userId,
-            movieId: this.movie._id
-        }
+        this.getMovieReady(this.id)
     },
 
     data() {
         return {
+            show: true,
+            related: [],
             movie: {},
             bgCover: "",
             cover: "",
@@ -171,16 +167,39 @@ export default {
     computed: {
         ...mapGetters(['auth'])
     },
+    beforeRouteUpdate (to, from, next) {
+        this.getMovieReady(to.params.id)
+        next()
+    },
     methods: {
+        getMovieReady(id) {
+            this.show = false
+
+            this.$nextTick(() => {
+                
+                 Service.getMovie(id).then(res => {
+                this.movie = res.data;
+                this.dates = this.movie.dates.map(({ fullDate, time }) => {
+                    return { 'date': moment(fullDate).format('dddd DD MMM YYYY'), time }
+                })
+                this.imageSet = this.movie.imageSet.map(image => `${api.ftpUrl}/${image}`)
+                this.bgCover = `${api.ftpUrl}/${this.movie.imageSet[0]}`;
+                this.cover = `${api.ftpUrl}/${this.movie.cover}`;
+                Service.getRelatedMovies(id, this.movie.genres).then(movies => {
+                    this.show = true
+                    this.related = movies.data.slice(0,4)
+                } );
+            });
+                
+            })
+           
+        },
         ready(player) {
             this.player = player;
         },
         playTrailer() {
             this.trailerEnabled = true;
             this.player.playVideo();
-        },
-        beforeRouteUpdate() {
-            console.log('new route')
         },
         animateTitle(state) {
             if (state == 'playing') {

@@ -26,6 +26,7 @@ if (token) {
 }
 
 router.beforeEach((to, from, next) => {
+    window.scrollTo(0, 0)
     if (to.matched.some(record => record.meta.requiresAuth) && to.matched.some(record => record.meta.requiresAdmin)) {
         // this route requires auth, check if logged in
         // if not, redirect to login page.
