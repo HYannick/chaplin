@@ -99,7 +99,7 @@ export default {
     bottom: 10%;
     right: 0;
     z-index: 9;
-    background: rgba(255, 255, 255, 0.55);
+    background: rgba(255, 255, 255, 0.8);
     padding: 10px 40px 10px 15px;
     h3 {
         font-weight: bold;

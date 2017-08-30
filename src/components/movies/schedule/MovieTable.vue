@@ -18,15 +18,15 @@
                     </el-row>
                 </template>
             </el-table-column>
-            <el-table-column prop="date" label="Séance" :width="150" :formatter="formatDate">
+            <el-table-column prop="date" label="Séance" :width="160" :formatter="formatDate">
             </el-table-column>
-            <el-table-column prop="time" label="Horaire" :width="120">
+            <el-table-column prop="time" label="Horaire" :width="100">
             </el-table-column>
             <el-table-column prop="title" label="Film">
             </el-table-column>
-            <el-table-column v-if="auth.logged" prop="volunteer" label="Adhérent">
+            <el-table-column v-if="auth.logged" prop="volunteer" label="Adhérent" :width="140">
             </el-table-column>
-            <el-table-column v-if="auth.logged" label="" width="140">
+            <el-table-column v-if="auth.logged" label="" :width="140">
                 <template scope="props">
                     <subscribe-button :row="props.row" :userId="userLogged" @change="refreshTable"></subscribe-button>
                 </template>
@@ -62,7 +62,7 @@ export default {
             return moment.unix(date).format('dddd DD MMMM YYYY')
         },
         formatDate(row, column) {
-            return moment.unix(row.date).format('ddd DD MMM YYYY');
+            return moment.unix(row.date).format('dddd DD MMM');
         },
         refreshTable() {
              const now = moment().unix();
