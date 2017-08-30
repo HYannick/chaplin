@@ -8,30 +8,31 @@
                     <el-carousel-item v-for="movie in carouselMovies" :key="movie._id">
                         <div class="slide__overlay"></div>
                         <image-loader classname="lazy__bg" :imageUrl="`${apiRoot}/${movie.imageSet[0]}`"></image-loader>
-    
                         <div class="slide__desc">
                             <span>{{movie.releaseDate}}</span>
                             <h3>{{movie.title}}</h3>
                             <p>{{movie.desc}}</p>
                             <router-link :to="`/movies/${movie._id}`" class="goTo" tag="a">En savoir plus</router-link>
                         </div>
-    
                     </el-carousel-item>
                 </el-carousel>
                 <el-col :span="24" class="wrapper">
                     <div class="movie__list">
-                        <movie-list-popular></movie-list-popular>
+                        <big-title title="A l'affiche"></big-title>
+                        <movie-list-popular :limit="4"></movie-list-popular>
                     </div>
-                    <div class="movie__planning">
-                        <!--<i class="el-icon-upload2"></i>-->
-                        <h2>Au Programme</h2>
-                        <movie-table></movie-table>
+                    <div class="timeline__schedule">
+                        <big-title title="Au Programme"></big-title>
+                        <div class="movie__planning">
+                            <movie-timeline></movie-timeline>
+                        </div>
                     </div>
+
                 </el-col>
             </div>
-    
+
         </div>
-    
+
     </transition>
 </template>
 
@@ -41,15 +42,18 @@ import ImageLoader from './utils/imageLoader/ImageLoader';
 import MovieCard from './movies/MovieCard';
 import MovieTable from './movies/schedule/MovieTable';
 import MovieListPopular from './movies/MovieListPopular';
+import MovieSched from './movies/MovieSched';
 import Preloader from './utils/icons/Loader';
+import BigTitle from './utils/TitlesComponent';
 import api from '../../config/api';
 export default {
     components: {
         'movie-card': MovieCard,
         'movie-list-popular': MovieListPopular,
-        'movie-table': MovieTable,
+        'movie-timeline': MovieSched,
         'image-loader': ImageLoader,
-        'preloader': Preloader
+        'preloader': Preloader,
+        'big-title': BigTitle
     },
     created() {
 
@@ -72,24 +76,32 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
 @import "../assets/fonts/font-face.css";
-@import url('https://fonts.googleapis.com/css?family=Cutive+Mono|Dosis|Exo+2|Inconsolata|Josefin+Sans|Roboto+Mono');
 * {
-    font-family: 'inconsolata', monospace;
+    font-family: 'inconsolataRegular', monospace;
 }
 
+h1,
+h2,
+h3,
+h4 {
+    font-family: 'inconsolataBold', monospace;
+}
+.timeline__schedule{
+ margin-top: 70px;
+}
 .movie__planning {
     position: relative;
-    margin-top: 70px;
+    margin-top: 40px;
     h2 {
         text-align: left;
         position: absolute;
-        font-family: 'inconsolata', monospace;
         font-weight: bold;
         right: -15px;
         top: -50px;
         z-index: 999;
         opacity: 0.9;
     }
+    display: table;
 }
 
 .slide__desc {
@@ -132,7 +144,6 @@ export default {
     text-transform: uppercase;
     transition: 0.3s;
     &:hover {
-
         &:before {
             width: 90%;
         }
@@ -162,6 +173,7 @@ export default {
 
 .movie__list {
     padding-top: 50px;
+    margin-top: 70px;
 }
 
 .links__dir {

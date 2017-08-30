@@ -24,13 +24,13 @@ export default {
 </script>
 <style lang="scss" scoped>
 .lazy {
-    padding-bottom: 130%;
+    padding-bottom: 150%;
     img {
-        transform: translate(-60%, -50%);
+        transform: translate(-60%, -50%) scale(1.1);
     }
     &.loaded {
         img {
-            transform: translate(50%, -50%);
+            transform: translate(50%, -50%) scale(1.1);
         }
         &:before {
             left: 100%;
@@ -77,7 +77,7 @@ export default {
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-60%, -50%);
+        transform: translate(-60%, -50%) scale(1.1);
         transition: 0.5s ease-in-out;
         opacity: 0;
     }
@@ -95,7 +95,7 @@ export default {
 
     &.loaded {
         img {
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%) scale(1.1);
             opacity: 1;
         }
     }

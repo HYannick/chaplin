@@ -76,11 +76,7 @@ export default {
 }
 </script>
 <style lang="scss">
-
-@font-face {
- font-family: "Mistral";
- src: url("/static/fonts/mistral.ttf") format("ttf");
-}
+@import "../../../assets/fonts/font-face.css";
 .cls-1,
 .cls-2,
 .cls-5,

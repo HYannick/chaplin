@@ -2,3 +2,18 @@
     font-family: 'chaplin';
     src: url('./Chaplinfont.ttf');
 }
+
+@font-face {
+    font-family: "Mistral";
+    src: url("./mistral.ttf");
+}
+
+@font-face {
+    font-family: "inconsolataRegular";
+    src: url("./Inconsolata-Regular.ttf");
+}
+
+@font-face {
+    font-family: "inconsolataBold";
+    src: url("./Inconsolata-Bold.ttf");
+}
