@@ -76,6 +76,11 @@ export default {
 }
 </script>
 <style lang="scss">
+
+@font-face {
+ font-family: "Mistral";
+ src: url("/static/fonts/mistral.ttf") format("ttf");
+}
 .cls-1,
 .cls-2,
 .cls-5,
@@ -135,7 +140,7 @@ export default {
 .cls-8,
 .cls-9 {
     font-size: 8px;
-    font-family: Mistral;
+    font-family: "Mistral", sans-serif;
 }
 
 .cls-9 {
