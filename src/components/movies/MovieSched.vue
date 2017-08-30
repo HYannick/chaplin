@@ -68,9 +68,46 @@ export default {
         }
     },
     created() {
-        Service.getMovies().then(movies => {
-            this.movies = movies.data
-        });
+        Service.getMovies().then(res => {
+             const now = moment().unix()
+                this.movies = res.data;
+                const mapped = this.movies.filter(movie => {
+                    return movie.diffused;
+                }).map(movie => {
+                    return movie.dates
+                });
+
+                this.movies = [].concat(...mapped).filter(item => {
+                    return moment(item.fullDate).unix() >= now;
+                }).map(item => {
+                    const date = moment(item.fullDate).unix();
+                    const { time } = item;
+                    const data = this.movies.filter(movie => {
+                        return movie.dates.indexOf(item) !== -1;
+                    }).map(({ title, _id, cover, desc, imageSet, dates }) => {
+                        return {
+                            title,
+                            _id,
+                            cover,
+                            imageSet,
+                            desc,
+                            dates
+                        }
+
+                    });
+                    return {
+                        dates : data[0].dates,
+                        time,
+                        imageSet : data[0].imageSet,
+                        title: data[0].title,
+                        id: data[0]._id,
+                        cover: data[0].cover,
+                        desc: data[0].desc
+                    };
+                });
+        
+            })
+     
     },
     filters: {
         capitalize: function(value) {
