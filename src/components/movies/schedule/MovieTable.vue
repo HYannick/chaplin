@@ -107,6 +107,7 @@ export default {
                         volunteer: (vol.length === 0) ? '' : vol[0].enrolled[0].username
                     };
                 });
+                console.log(this.tableData)
             })
         }
     },
