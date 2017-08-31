@@ -4,7 +4,7 @@
             <el-col :span="24">
                 <el-row :gutter="20">
                     <div id="timeline" class="timeline">
-                        <div class="timeline__left">
+                        <div class="timeline__left"  v-show="display === 'diffusion'">
                             <span class="next__diffusion">Prochaine<br>Séance</span>
                         </div>
                         <div class="timeline__right">
@@ -15,7 +15,7 @@
                                 <img :src="transformUrl(movie)" />
                             </div>
                             <div class="row_content">
-                                <div class="side__date">
+                                <div class="side__date" v-show="display === 'diffusion'">
                                     <p>
                                         <span class="side__day">{{availabilities(movie, 'side')[0].day}}</span>
                                         <span class="side__month">{{availabilities(movie, 'side')[0].month | capitalize}}</span>
@@ -42,7 +42,7 @@
 
                         </el-col>
                     </div>
-                    <div class="foot__view-more" v-show="!isMax">
+                    <div class="foot__view-more" v-show="!maxRow">
                         <button class="view__more" @click="refresh()">View More</button>
                     </div>
                 </el-row>
@@ -60,6 +60,7 @@ import moment from 'moment';
 import api from '../../../config/api';
 import _ from 'lodash';
 export default {
+    props: ['maxRow', 'movies', 'display'],
     components: {
         'movie-card': MovieCard,
         'image-loader': ImageLoader,
@@ -67,13 +68,9 @@ export default {
     },
     data() {
         return {
-            movies: [],
-            limit: 1,
+            limit: 4,
             isMax: false,
         }
-    },
-    created() {
-        this.pushMovies(this.limit)
     },
     filters: {
         capitalize: function(value) {
@@ -84,16 +81,11 @@ export default {
     },
 
     methods: {
-        refresh(){
-            this.limit += 1;
-            this.pushMovies(this.limit);  
+        refresh() {
+            this.limit += 2;
+            this.$emit('refresh', this.limit);
         },
-        pushMovies(limit){
-            Service.getDiffusedMovies(limit).then(res => {   
-                this.movies = res.data.movieList;
-                this.isMax = res.data.max;
-            })
-        },
+        
         transformUrl(movie) {
             return `${api.ftpUrl}/${movie.imageSet[1]}`
         },
@@ -127,14 +119,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.foot__view-more{
+.foot__view-more {
     position: relative;
     width: 115%;
     height: 200px;
     z-index: 4;
     background: #fff;
     transform: translateX(-15%);
-    display:flex;
+    display: flex;
     justify-content: center;
     align-items: start;
     button {
@@ -143,17 +135,17 @@ export default {
         font-size: 18px;
         transition: 0.3s;
         padding: 10px 55px;
-        z-index:1;
+        z-index: 1;
         outline: none;
         box-shadow: inset 0 0 0 2px #000;
         &:hover {
-             color: #fff;
-            &:before{
+            color: #fff;
+            &:before {
                 transform: translate(-50%, -50%) scale(1);
                 opacity: 1;
             }
         }
-        &:before{
+        &:before {
             content: '';
             position: absolute;
             top: 50%;
@@ -167,28 +159,30 @@ export default {
             transition: 0.3s;
         }
     }
-    &:before{
-        content:'';
+    &:before {
+        content: '';
         position: absolute;
         top: -100px;
         left: 0;
         background: #fff;
         width: 100%;
         height: 100px;
-        background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
-        background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);
-        background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 );
+        background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+        background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+        background: linear-gradient(to top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff', GradientType=0);
     }
 }
+
 .row_content {
     position: relative;
     z-index: 2;
     width: 100%;
     display: table;
 }
+
 .timeline__item {
-    .m-title{
+    .m-title {
         font-family: 'inconsolataBold', monospace;
         font-weight: bold;
         font-size: 30px;
@@ -201,6 +195,7 @@ export default {
         font-weight: bold;
     }
 }
+
 .row__schedule {
     position: relative;
     &:hover {
@@ -209,8 +204,8 @@ export default {
             transform: translateY(-50%) scale(1.1);
         }
         .next__schedule {
-                box-shadow: inset 0 0 0 2px #000;
-            &:before{
+            box-shadow: inset 0 0 0 2px #000;
+            &:before {
                 opacity: 1;
                 top: -42px;
             }
@@ -356,8 +351,8 @@ export default {
     transform: translateY(-50%);
     position: absolute;
     left: -100px;
-    &:before{
-        content:'';
+    &:before {
+        content: '';
         position: absolute;
         top: 0;
         width: 5px;

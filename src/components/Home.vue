@@ -24,7 +24,7 @@
                     <div class="timeline__schedule">
                         <big-title title="Au Programme"></big-title>
                         <div class="movie__planning">
-                            <movie-timeline></movie-timeline>
+                            <movie-timeline :movies="movies" :maxRow="isMax" display="diffusion" @refresh="loadMovies"></movie-timeline>
                         </div>
                     </div>
 
@@ -56,21 +56,29 @@ export default {
         'big-title': BigTitle
     },
     created() {
-
-        Service.getDiffusedMovies(3).then(res => {
-            console.log(res.data)
+        Service.getDiffusedMovies(4).then(res => {
+            this.movies = res.data.movieList;
             this.carouselMovies = res.data.movieList;
             this.loaded = true;
         });
-
     },
     data() {
         return {
+            movies: [],
             carouselMovies: [],
             apiRoot: api.ftpUrl,
-            loaded: false
+            loaded: false,
+            isMax: false
         }
     },
+    methods: {
+        loadMovies(limit) {
+            Service.getDiffusedMovies(limit).then(res => {
+                this.movies = res.data.movieList;
+                this.isMax = res.data.max;
+            })
+        }
+    }
 }
 </script>
 
@@ -87,9 +95,11 @@ h3,
 h4 {
     font-family: 'inconsolataBold', monospace;
 }
-.timeline__schedule{
- margin-top: 70px;
+
+.timeline__schedule {
+    margin-top: 70px;
 }
+
 .movie__planning {
     position: relative;
     margin-top: 40px;

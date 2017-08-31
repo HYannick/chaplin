@@ -3,6 +3,7 @@
         <el-row>
             <el-col :span="24">
                 <div class="diffused__movies">
+                    <big-title title="En Salle"></big-title>
                     <diffused-movies></diffused-movies>
                 </div>
             </el-col>
@@ -13,10 +14,12 @@
 <script>
 import Service from '../../services/services.js';
 import DiffusedMovies from './MovieSched';
+import BigTitle from '../utils/TitlesComponent';
 import _ from 'lodash';
 export default {
     components: {
-        'diffused-movies': DiffusedMovies
+        'diffused-movies': DiffusedMovies,
+        'big-title' : BigTitle
     },
     created() {
      

@@ -6,7 +6,7 @@
                     loaderai
                 </title>
                 <circle cx="42.5" cy="42.5" r="42" class="cls-1">
-    
+
                 </circle>
                 <circle cx="42.6" cy="42.2" r="36.1" class="cls-2" />
                 <g id="clap-wrapper">
@@ -63,9 +63,9 @@
                     <text class="cls-10" transform="translate(52.2 60.4)">
                         N°2
                     </text>
-    
+
                 </g>
-    
+
             </svg>
         </div>
     </div>
@@ -199,6 +199,7 @@ export default {
 
 
 
+
 /* Safari 4.0 - 8.0 */
 
 @-webkit-keyframes mymove {
@@ -215,6 +216,7 @@ export default {
         transform-origin: 23px 33px;
     }
 }
+
 
 
 
@@ -240,6 +242,7 @@ export default {
 }
 
 
+
 /* Safari 4.0 - 8.0 */
 
 @-webkit-keyframes rotation {
@@ -253,6 +256,7 @@ export default {
         transform-origin: 42.5px 42.5px;
     }
 }
+
 
 
 

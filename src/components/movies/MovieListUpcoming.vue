@@ -2,33 +2,49 @@
     <transition name="el-fade-in-linear">
         <el-row>
             <el-col :span="24">
-                <div class="popular__movies">
-                    <h2>Prochainement</h2>
-                    <el-row :gutter="10">
-                        <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(movie, index) in movies" :key="movie._id">
-                            <movie-card :movie="movie"></movie-card>
-                        </el-col>
-                    </el-row>
+                <div class="diffused__movies">
+                    <big-title title="En Salle"></big-title>
+                    <movie-timeline :movies="movies" :maxRow="isMax" display="diffusion" @refresh="loadMovies"></movie-timeline>
                 </div>
             </el-col>
-    
         </el-row>
     </transition>
 </template>
 
 <script>
 import Service from '../../services/services.js';
-import MovieCard from './MovieCard';
+import DiffusedMovies from './MovieSched';
+import BigTitle from '../utils/TitlesComponent';
+import _ from 'lodash';
 export default {
     components: {
-        'movie-card': MovieCard
+        'movie-timeline': DiffusedMovies,
+        'big-title': BigTitle
     },
     created() {
-        Service.getUpcomingMovies().then(movies => this.movies = movies.data);
+        Service.getUpcomingMovies(4).then(res => {
+            this.movies = res.data.movieList;
+            this.loaded = true;
+            if (this.movies.length >= 2) {
+                this.isMax = res.data.max;
+            }
+        });
     },
     data() {
         return {
-            movies: []
+            movies: [],
+            isMax: true
+        }
+    },
+    methods: {
+        loadMovies(limit) {
+            Service.getUpcomingMovies(limit).then(res => {
+                this.movies = res.data.movieList;
+                if (this.movies.length >= 2) {
+                    this.isMax = res.data.max;
+                }
+
+            })
         }
     }
 }

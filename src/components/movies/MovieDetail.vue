@@ -1,6 +1,6 @@
 <template>
     <transition name="el-fade-in-linear">
-        <el-row  v-if="show">
+        <el-row v-if="show">
             <el-row :gutter="15">
                 <el-col :span="24">
                     <div class="background__cover">
@@ -13,13 +13,13 @@
                             </transition>
                             <youtube class="yt__frame" v-show="trailerEnabled" @ready="ready" :video-id="movie.trailer" player-height="100%" player-width="100%" :player-vars="trailerOptions" @playing="animateTitle('playing')" @ended="animateTitle('stopped')"></youtube>
                         </div>
-    
+
                         <image-loader classname="lazy__bg" :imageUrl="bgCover"></image-loader>
                         <transition name="el-fade-in-linear">
                             <div class="background__details" v-show="displayTitle">
                                 <p class="movie__release">{{movie.releaseDate}}</p>
                                 <h4 class="movie__title">{{movie.title}}</h4>
-    
+
                                 <p class="movie__infos">
                                     <span class="movie__duration">{{movie.duration}}</span> |
                                     <span class="movie__genre" v-for="(genre,index) in movie.genres" :key="index">{{genre}} </span> |
@@ -59,7 +59,7 @@
                                             <li>Acteurs |</li>
                                             <li v-for="(actor, index) in movie.actors" :key="index">{{actor}}</li>
                                         </ul>
-    
+
                                         <ul class="movie__authors">
                                             <li>Auteurs |</li>
                                             <li v-for="(author, index) in movie.authors" :key="index">{{author}}</li>
@@ -77,7 +77,7 @@
                             </div>
                         </el-col>
                     </el-row>
-    
+
                     <el-table :data="dates" style="width: 100%">
                         <el-table-column prop="date" label="Date">
                         </el-table-column>
@@ -117,7 +117,7 @@
                     </el-row>
                 </el-col>
             </el-row>
-    
+
         </el-row>
     </transition>
 </template>
@@ -169,7 +169,7 @@ export default {
     computed: {
         ...mapGetters(['auth'])
     },
-    beforeRouteUpdate (to, from, next) {
+    beforeRouteUpdate(to, from, next) {
         this.getMovieReady(to.params.id)
         next()
     },
@@ -178,23 +178,23 @@ export default {
             this.show = false
 
             this.$nextTick(() => {
-                
-                 Service.getMovie(id).then(res => {
-                this.movie = res.data;  
-                this.dates = this.movie.dates.map(({ fullDate, time, dubbing }) => {
-                    return { 'date': moment(fullDate).format('dddd DD MMM YYYY'), time, dubbing: (dubbing) ? dubbing.join(' - ') : 'VF' }
-                })
-                this.imageSet = this.movie.imageSet.map(image => `${api.ftpUrl}/${image}`)
-                this.bgCover = `${api.ftpUrl}/${this.movie.imageSet[0]}`;
-                this.cover = `${api.ftpUrl}/${this.movie.cover}`;
-                Service.getRelatedMovies(id, this.movie.genres).then(movies => {
-                    this.show = true
-                    this.related = movies.data.slice(0,4)
-                } );
-            });
-                
+
+                Service.getMovie(id).then(res => {
+                    this.movie = res.data;
+                    this.dates = this.movie.dates.map(({ fullDate, time, dubbing }) => {
+                        return { 'date': moment(fullDate).format('dddd DD MMM YYYY'), time, dubbing: (dubbing) ? dubbing.join(' - ') : 'VF' }
+                    })
+                    this.imageSet = this.movie.imageSet.map(image => `${api.ftpUrl}/${image}`)
+                    this.bgCover = `${api.ftpUrl}/${this.movie.imageSet[0]}`;
+                    this.cover = `${api.ftpUrl}/${this.movie.cover}`;
+                    Service.getRelatedMovies(id, this.movie.genres).then(movies => {
+                        this.show = true
+                        this.related = movies.data.slice(0, 4)
+                    });
+                });
+
             })
-           
+
         },
         ready(player) {
             this.player = player;

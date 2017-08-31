@@ -316,7 +316,6 @@ export default {
         },
         onSubmit(formName) {
             this.$refs[formName].validate((valid) => {
-                console.log(valid)
                 if (valid) {
                     this.form.trailer = this.trailerId;
                     Services.postMovie(this.form)
