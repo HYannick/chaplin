@@ -57,8 +57,9 @@ export default {
     },
     created() {
 
-        Service.getMovies().then(res => {
-            this.carouselMovies = res.data.splice(0, 3);
+        Service.getDiffusedMovies(3).then(res => {
+            console.log(res.data)
+            this.carouselMovies = res.data.movieList;
             this.loaded = true;
         });
 

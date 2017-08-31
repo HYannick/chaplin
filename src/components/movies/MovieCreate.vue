@@ -52,6 +52,8 @@
                                         </el-table-column>
                                         <el-table-column prop="time" label="Time">
                                         </el-table-column>
+                                         <el-table-column prop="dubbing" label="Doublage" :formatter="formatDubbing">
+                                        </el-table-column>
                                     </el-table>
                                 </el-col>
                             </el-row>
@@ -220,6 +222,9 @@ export default {
     methods: {
         formatDate(row, column) {
             return moment.unix(row.date).format('ddd DD MMM YYYY');
+        },
+        formatDubbing(row, column) {
+            return (row.dubbing) ? row.dubbing.join(' - ') : ''
         },
         submitCover() {
             this.$refs.upCover.submit();

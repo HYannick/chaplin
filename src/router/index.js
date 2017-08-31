@@ -12,6 +12,7 @@ import UserEdit from '@/components/users//admin/UserEdit';
 
 import MovieList from '@/components/movies/MovieList';
 import MovieListPopular from '@/components/movies/MovieListPopular';
+import DiffusedMovies from '@/components/movies/DiffusedMovies';
 import MovieListUpcoming from '@/components/movies/MovieListUpcoming';
 import MovieCreate from '@/components/movies/MovieCreate';
 import MovieEdit from '@/components/movies/MovieEdit';
@@ -44,7 +45,7 @@ export default new Router({
         { path: '/users/:id/edit', name: 'UserEdit', component: UserEdit, meta: { requiresAuth: true, requiresAdmin: false } },
 
         { path: '/movies', name: 'Movies', component: MovieList },
-        { path: '/diffused', name: 'Diffused', component: MovieListPopular },
+        { path: '/diffused', name: 'Diffused', component: DiffusedMovies },
         { path: '/upcoming', name: 'Upcoming', component: MovieListUpcoming },
         { path: '/movies/add', name: 'MovieCreate', component: MovieCreate, meta: { requiresAuth: true, requiresAdmin: true }, props: true },
         { path: '/movies/:id', name: 'Movie', component: MovieDetail, props: true },

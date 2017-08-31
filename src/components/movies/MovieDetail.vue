@@ -83,6 +83,8 @@
                         </el-table-column>
                         <el-table-column prop="time" label="Time">
                         </el-table-column>
+                        <el-table-column prop="dubbing" label="Doublage">
+                        </el-table-column>
                     </el-table>
                     <el-row :gutter="15">
                         <el-col :span="24">
@@ -178,9 +180,9 @@ export default {
             this.$nextTick(() => {
                 
                  Service.getMovie(id).then(res => {
-                this.movie = res.data;
-                this.dates = this.movie.dates.map(({ fullDate, time }) => {
-                    return { 'date': moment(fullDate).format('dddd DD MMM YYYY'), time }
+                this.movie = res.data;  
+                this.dates = this.movie.dates.map(({ fullDate, time, dubbing }) => {
+                    return { 'date': moment(fullDate).format('dddd DD MMM YYYY'), time, dubbing: (dubbing) ? dubbing.join(' - ') : 'VF' }
                 })
                 this.imageSet = this.movie.imageSet.map(image => `${api.ftpUrl}/${image}`)
                 this.bgCover = `${api.ftpUrl}/${this.movie.imageSet[0]}`;

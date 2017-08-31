@@ -20,12 +20,15 @@
 <script>
 import Service from '../../services/services.js';
 import MovieCard from './MovieCard';
+import _ from 'lodash';
 export default {
     components: {
         'movie-card': MovieCard
     },
     created() {
-        Service.getDiffusedMovies(4).then(movies => this.movies = movies.data.movieList);
+        Service.getMovies().then(res => {
+            this.movies = _.shuffle(res.data.filter(movie => movie.diffused == true)).slice(0,4)
+        });
     },
     data() {
         return {

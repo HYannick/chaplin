@@ -55,7 +55,9 @@
                                     <el-table :data="form.dates" style="width: 100%; margin-bottom: 15px">
                                         <el-table-column prop="date" label="Date" :formatter="formatDate">
                                         </el-table-column>
-                                        <el-table-column prop="time" label="Time">
+                                        <el-table-column prop="time" label="Heure">
+                                        </el-table-column>
+                                        <el-table-column prop="dubbing" label="Doublage" :formatter="formatDubbing">
                                         </el-table-column>
                                     </el-table>
                                 </el-col>
@@ -73,15 +75,7 @@
                                         <el-input v-model="form.releaseDate"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :xs="24" :sm="24" :md="12" :lg="12">
-                                    <el-form-item label="Options">
-                                        <el-checkbox-group v-model="form.checkList">
-                                            <el-checkbox label="VF"></el-checkbox>
-                                            <el-checkbox label="VOSTR"></el-checkbox>
-                                            <el-checkbox label="3D"></el-checkbox>
-                                        </el-checkbox-group>
-                                    </el-form-item>
-                                </el-col>
+                                
                                 <el-col :xs="24" :sm="24" :md="12" :lg="12">
                                     <el-form-item label="Langues">
                                         <el-input v-model="form.language"></el-input>
@@ -224,6 +218,9 @@ export default {
     methods: {
         formatDate(row, column) {
             return moment.unix(row.date).format('ddd DD MMM YYYY');
+        },
+        formatDubbing(row, column) {
+            return (row.dubbing) ? row.dubbing.join(' - ') : 'VF'
         },
         submitCover() {
             this.$refs.upCover.submit();
@@ -407,5 +404,6 @@ export default {
 .avatar {
     width: 100%;
     display: block;
+    border-radius: 5px;
 }
 </style>

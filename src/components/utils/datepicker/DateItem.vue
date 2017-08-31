@@ -10,6 +10,10 @@
                                                     end: '21:00'
                                                   }" placeholder="Select time">
             </el-time-select>
+            <el-select v-model="dubbing" class="timer__dubbing" placeholder="Select">
+                <el-option v-for="item in dubbingArray" :key="item.value" :label="item.label" :value="item.value">
+                </el-option>
+            </el-select>
         </el-col>
         <el-button type="primary" @click="confirmDate">Confirm</el-button>
         <el-button  @click="cancelDate">Cancel</el-button>
@@ -19,12 +23,15 @@
 <script>
 import moment from 'moment';
 import DatePickerAgenda from './DatePickerAgenda';
+import dubbingArray from '../../movies/datas/dubbing';
 moment.locale('fr');
 export default {
     props: ['dateAt'],
     data() {
         return {
-            time: ''
+            time: '',
+            dubbing: [],
+            dubbingArray
         }
     },
     beforeUpdate() {
@@ -37,7 +44,13 @@ export default {
             return moment.unix(toParse).add(hours[0], 'h').add(hours[1], 'm')
         },
         confirmDate() {
-            this.$emit('change', { 'date': this.dateAt.unix(), 'time': (this.time !== "") ? this.time : '00:00', 'fullDate': this.getFullDate()})
+            this.$emit('change', { 
+                'date': this.dateAt.unix(),
+                'time': (this.time !== "") ? this.time : '00:00', 
+                'fullDate': this.getFullDate(), 
+                'dubbing': (this.dubbing.length === 0) ? ['VF'] : this.dubbing
+                }
+            )
         },
         cancelDate(){
             this.$emit('cancel', this.dateAt);
@@ -58,7 +71,7 @@ export default {
         opacity: 0.8;
     }
 }
-.timer__select{
+.timer__select, .timer__dubbing{
     margin-bottom: 10px;
 }
 </style>

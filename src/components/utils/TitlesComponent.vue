@@ -23,7 +23,7 @@
             top: -28px;
             left: 30px;
             font-size: 115px;
-            opacity: .1;
+            opacity: .05;
         }
     }
 }

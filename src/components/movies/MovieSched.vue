@@ -3,7 +3,7 @@
         <div>
             <el-col :span="24">
                 <el-row :gutter="20">
-                    <div class="timeline">
+                    <div id="timeline" class="timeline">
                         <div class="timeline__left">
                             <span class="next__diffusion">Prochaine<br>Séance</span>
                         </div>
@@ -68,7 +68,7 @@ export default {
     data() {
         return {
             movies: [],
-            limit: 4,
+            limit: 1,
             isMax: false,
         }
     },
@@ -85,17 +85,14 @@ export default {
 
     methods: {
         refresh(){
-            this.limit += 2;
-            this.pushMovies(this.limit);
-            document.body.scrollTop = document.body.scrollHeight;
+            this.limit += 1;
+            this.pushMovies(this.limit);  
         },
         pushMovies(limit){
             Service.getDiffusedMovies(limit).then(res => {   
-                console.log(res)
                 this.movies = res.data.movieList;
                 this.isMax = res.data.max;
             })
-     
         },
         transformUrl(movie) {
             return `${api.ftpUrl}/${movie.imageSet[1]}`
