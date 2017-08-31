@@ -18,7 +18,7 @@
                     </el-col>
                 </el-row>
                 <el-row :gutter="20">
-                    <el-col :xs="12" :sm="12" :md="8" :lg="8" v-for="(movie, index) in searchRes   " :key="movie._id">
+                    <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(movie, index) in searchRes   " :key="movie._id">
                         <movie-card :movie="movie"></movie-card>
                     </el-col>
                 </el-row>

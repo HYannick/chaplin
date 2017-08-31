@@ -44,7 +44,7 @@ export default {
     &:hover {
         .caption {
             .image {
-                transform: translate(-50%, -50%) scale(1.2);
+                transform: translate(-50%, -50%) scale(1.4);
                 opacity: 0.8;
                 border-radius: 5px;
             }

@@ -23,6 +23,7 @@ export default {
     },
     created() {
         Service.getUpcomingMovies(4).then(res => {
+            console.log(res.data)
             this.movies = res.data.movieList;
             this.loaded = true;
             if (this.movies.length >= 2) {

@@ -302,6 +302,7 @@ export default {
 .timeline {
     position: relative;
     display: table;
+    width: 100%;
     padding-top: 50px;
     .next__dates,
     .next__diffusion {
