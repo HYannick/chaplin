@@ -35,7 +35,7 @@
                                         <router-link :to="`/movies/${movie._id}`" class="goTo" tag="a">En savoir plus</router-link>
                                     </div>
                                 </el-col>
-                                <div class="next__schedule">
+                                <div class="next__schedule" data-title="Prochaines Dates">
                                     <p v-for="(date, index) in availabilities(movie)" :key="index">{{date}}</p>
                                 </div>
                             </div>
@@ -69,14 +69,25 @@ export default {
         }
     },
     created() {
-        Service.getDiffusedMovies().then(res => {
+        this.pushMovies()
+    },
+    filters: {
+        capitalize: function(value) {
+            if (!value) return ''
+            value = value.toString()
+            return value.charAt(0).toUpperCase() + value.slice(1)
+        }
+    },
+
+    methods: {
+        pushMovies(){
+            Service.getDiffusedMovies().then(res => {
                 const now = moment().unix();
                 const mapped = res.data.filter(movie => {
                     return movie.diffused;
                 }).map(movie => {
                     return movie.dates
                 });
-
 
                 const filtered = [].concat(...mapped).filter(item => {
                     return moment(item.fullDate).unix() >= now;
@@ -94,26 +105,17 @@ export default {
                         time,
                         imageSet : data[0].imageSet,
                         title: data[0].title,
-                        id: data[0]._id,
+                        _id: data[0]._id,
                         cover: data[0].cover,
                         desc: data[0].desc
                     };
                 });
 
                 // Filter by Id en sort by date
-                this.movies = _.uniqBy(_.sortBy(filtered, ['date']), 'id');
+                this.movies = _.uniqBy(_.sortBy(filtered, ['date']), '_id');
             })
      
-    },
-    filters: {
-        capitalize: function(value) {
-            if (!value) return ''
-            value = value.toString()
-            return value.charAt(0).toUpperCase() + value.slice(1)
-        }
-    },
-
-    methods: {
+        },
         transformUrl(movie) {
             return `${api.ftpUrl}/${movie.imageSet[1]}`
         },
@@ -174,6 +176,13 @@ export default {
             opacity: 0.2;
             transform: translateY(-50%) scale(1.1);
         }
+        .next__schedule {
+                box-shadow: inset 0 0 0 2px #000;
+            &:before{
+                opacity: 1;
+                top: -42px;
+            }
+        }
     }
     .row__background {
         position: absolute;
@@ -226,6 +235,7 @@ export default {
 .next__schedule {
     background: #fff;
     position: absolute;
+    z-index: 10;
     right: 20px;
     top: 40%;
     padding: 20px 10px;
@@ -236,6 +246,25 @@ export default {
     font-family: 'inconsolataBold', monospace;
     max-width: 190px;
     width: 100%;
+    transition: 0.3s;
+    &:before {
+        content: attr(data-title);
+        font-family: 'inconsolataBold', monospace;
+        font-size: 18px;
+        font-weight: bolder;
+        position: absolute;
+        width: 100%;
+        left: 50%;
+        display: block;
+        z-index: 0;
+        padding: 5px;
+        transform: translateX(-50%) scale(1, 1.4);
+        top: -50px;
+        opacity: 0;
+        background: #000;
+        color: #fff;
+        transition: 0.3s;
+    }
     p {
         margin: 0;
         display: block;
@@ -291,6 +320,7 @@ export default {
 .side__date {
     text-align: center;
     background: #fff;
+    border-radius: 5px;
     position: relative;
     transform: translateY(40%);
     position: absolute;
