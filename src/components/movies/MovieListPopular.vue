@@ -21,12 +21,11 @@
 import Service from '../../services/services.js';
 import MovieCard from './MovieCard';
 export default {
-    props: ['limit'],
     components: {
         'movie-card': MovieCard
     },
     created() {
-        Service.getDiffusedMovies().then(movies => this.movies = movies.data.slice(0, this.limit));
+        Service.getDiffusedMovies(4).then(movies => this.movies = movies.data.movieList);
     },
     data() {
         return {

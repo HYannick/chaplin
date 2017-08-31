@@ -42,7 +42,9 @@
 
                         </el-col>
                     </div>
-
+                    <div class="foot__view-more" v-show="!isMax">
+                        <button class="view__more" @click="refresh()">View More</button>
+                    </div>
                 </el-row>
             </el-col>
         </div>
@@ -66,10 +68,12 @@ export default {
     data() {
         return {
             movies: [],
+            limit: 4,
+            isMax: false,
         }
     },
     created() {
-        this.pushMovies()
+        this.pushMovies(this.limit)
     },
     filters: {
         capitalize: function(value) {
@@ -80,39 +84,16 @@ export default {
     },
 
     methods: {
-        pushMovies(){
-            Service.getDiffusedMovies().then(res => {
-                const now = moment().unix();
-                const mapped = res.data.filter(movie => {
-                    return movie.diffused;
-                }).map(movie => {
-                    return movie.dates
-                });
-
-                const filtered = [].concat(...mapped).filter(item => {
-                    return moment(item.fullDate).unix() >= now;
-                }).map(item => {
-                    const date = moment(item.fullDate).unix();
-                    const { time } = item;
-                    const data = res.data.filter(movie => {
-                        return movie.dates.indexOf(item) !== -1;
-                    }).map(({ title, _id, cover, desc, imageSet, dates }) => {
-                        return {title,_id,cover,imageSet,desc,dates}
-                    });
-                    return {
-                        dates : data[0].dates,
-                        date,
-                        time,
-                        imageSet : data[0].imageSet,
-                        title: data[0].title,
-                        _id: data[0]._id,
-                        cover: data[0].cover,
-                        desc: data[0].desc
-                    };
-                });
-
-                // Filter by Id en sort by date
-                this.movies = _.uniqBy(_.sortBy(filtered, ['date']), '_id');
+        refresh(){
+            this.limit += 2;
+            this.pushMovies(this.limit);
+            document.body.scrollTop = document.body.scrollHeight;
+        },
+        pushMovies(limit){
+            Service.getDiffusedMovies(limit).then(res => {   
+                console.log(res)
+                this.movies = res.data.movieList;
+                this.isMax = res.data.max;
             })
      
         },
@@ -149,6 +130,60 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.foot__view-more{
+    position: relative;
+    width: 115%;
+    height: 200px;
+    z-index: 4;
+    background: #fff;
+    transform: translateX(-15%);
+    display:flex;
+    justify-content: center;
+    align-items: start;
+    button {
+        margin-top: 30px;
+        position: relative;
+        font-size: 18px;
+        transition: 0.3s;
+        padding: 10px 55px;
+        z-index:1;
+        outline: none;
+        box-shadow: inset 0 0 0 2px #000;
+        &:hover {
+             color: #fff;
+            &:before{
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+        &:before{
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: -1;
+            transform: translate(-50%, -50%) scale(0);
+            width: 100%;
+            height: 100%;
+            background: #000;
+            opacity: 00;
+            transition: 0.3s;
+        }
+    }
+    &:before{
+        content:'';
+        position: absolute;
+        top: -100px;
+        left: 0;
+        background: #fff;
+        width: 100%;
+        height: 100px;
+        background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+        background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);
+        background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 );
+    }
+}
 .row_content {
     position: relative;
     z-index: 2;
@@ -191,7 +226,7 @@ export default {
         width: 90%;
         transform: translateY(-50%) scale(1.09);
         opacity: 0;
-        z-index: 1;
+        z-index: -1;
         transition: 0.3s ease-in-out;
         &:before {
             content: '';
@@ -319,12 +354,21 @@ export default {
 
 .side__date {
     text-align: center;
-    background: #fff;
     border-radius: 5px;
-    position: relative;
-    transform: translateY(40%);
+    top: 50%;
+    transform: translateY(-50%);
     position: absolute;
     left: -100px;
+    &:before{
+        content:'';
+        position: absolute;
+        top: 0;
+        width: 5px;
+        height: 100%;
+        left: 50%;
+        background: #fff;
+        transform: translateX(-50%);
+    }
     p {
         line-height: 1.3;
         font-weight: bolder;

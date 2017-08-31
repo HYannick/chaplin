@@ -74,8 +74,8 @@ export default {
     deleteCover(filename) {
         return axios.delete(`${rootUrl}/uploads/${filename}`, autho);
     },
-    getDiffusedMovies() {
-        return axios.get(`${rootUrl}/movies/popular`, autho)
+    getDiffusedMovies(limit) {
+        return axios.get(`${rootUrl}/movies/popular?limit=${limit}`, autho)
     },
     getUpcomingMovies() {
         return axios.get(`${rootUrl}/movies/upcoming`, autho)
