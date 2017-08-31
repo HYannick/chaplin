@@ -49,28 +49,27 @@
                                 <el-col :xs="24" :sm="24" :md="10" :lg="10">
                                     <div class="short__desc">
                                         <h5>Synopsis</h5>
-                                        <p>{{movie.desc}}</p>
+                                        <p>{{movie.synopsis}}</p>
                                     </div>
                                 </el-col>
                                 <el-col :xs="24" :sm="24" :md="8" :lg="8">
                                     <div class="movie__details">
                                         <h5>Détails</h5>
-                                        <ul class="movie__actors">
-                                            <li>Acteurs |</li>
-                                            <li v-for="(actor, index) in movie.actors" :key="index">{{actor}}</li>
-                                        </ul>
-
                                         <ul class="movie__authors">
-                                            <li>Auteurs |</li>
+                                            <li>De |</li>
                                             <li v-for="(author, index) in movie.authors" :key="index">{{author}}</li>
+                                        </ul>
+                                        <ul class="movie__actors">
+                                            <li>Avec |</li>
+                                            <li v-for="(actor, index) in movie.actors" :key="index">{{actor}}</li>
                                         </ul>
                                         <ul class="movie__authors">
                                             <li>Origine |</li>
                                             <li>{{movie.language}}</li>
                                         </ul>
                                         <ul class="movie__authors">
-                                            <li>Langue |</li>
-                                            <li v-for="(check,index) in movie.checkList" :key="index">{{check}}</li>
+                                            <li>Genres |</li>
+                                            <li v-for="(genre,index) in movie.genres" :key="index">{{genre}}</li>
                                         </ul>
                                     </div>
                                 </el-col>
@@ -78,36 +77,44 @@
                         </el-col>
                     </el-row>
 
-                    <el-table :data="dates" style="width: 100%">
-                        <el-table-column prop="date" label="Date">
-                        </el-table-column>
-                        <el-table-column prop="time" label="Time">
-                        </el-table-column>
-                        <el-table-column prop="dubbing" label="Doublage">
-                        </el-table-column>
-                    </el-table>
                     <el-row :gutter="15">
                         <el-col :span="24">
-                            <div class="movie__gallery movie__gallery-first">
-                                <image-loader classname="lazy__set" :imageUrl="imageSet[1]"></image-loader>
-                            </div>
-                        </el-col>
-                        <el-col :xs="24" :sm="24" :md="12" :lg="12">
-                            <div class="movie__gallery">
-                                <image-loader classname="lazy__set" :imageUrl="imageSet[2]"></image-loader>
-                            </div>
-                        </el-col>
-                        <el-col :xs="24" :sm="24" :md="12" :lg="12">
-                            <div class="movie__gallery">
-                                <image-loader classname="lazy__set" :imageUrl="imageSet[0]"></image-loader>
+                            <div class="timesheet">
+                                <big-title title="Horaires" orientation="center"></big-title>
+                                <div class="timesheet__item" v-for="(timesheet,index) in dates" :key="index">
+                                    <p class="timesheet__date">{{timesheet.date}}</p>
+                                    <p class="timesheet__time">{{timesheet.time}}</p>
+                                    <p class="timesheet__dubbing">{{timesheet.dubbing}}</p>
+                                </div>
                             </div>
                         </el-col>
                     </el-row>
-                    <el-row>
+                    <el-row :gutter="15">
+                        <div class="gallery">
+                            <big-title title="Gallerie" orientation="center"></big-title>
+                            <el-col :span="24">
+                                <div class="movie__gallery movie__gallery-first">
+                                    <image-loader classname="lazy__set" :imageUrl="imageSet[1]"></image-loader>
+                                </div>
+                            </el-col>
+                            <el-col :xs="24" :sm="24" :md="12" :lg="12">
+                                <div class="movie__gallery">
+                                    <image-loader classname="lazy__set" :imageUrl="imageSet[2]"></image-loader>
+                                </div>
+                            </el-col>
+                            <el-col :xs="24" :sm="24" :md="12" :lg="12">
+                                <div class="movie__gallery">
+                                    <image-loader classname="lazy__set" :imageUrl="imageSet[0]"></image-loader>
+                                </div>
+                            </el-col>
+                        </div>
+
+                    </el-row>
+                    <el-row v-show="related.length !== 0">
                         <el-col :span="24">
                             <div class="related__movies">
-                                <h2>Vous aimerez aussi ...</h2>
-                                <el-row :gutter="10">
+                                <big-title title="Films Similaires" orientation="center"></big-title>
+                                <el-row :gutter="20">
                                     <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(movie, index) in related" :key="movie._id">
                                         <movie-card :movie="movie"></movie-card>
                                     </el-col>
@@ -125,6 +132,7 @@
 import Service from '../../services/services.js';
 import MovieCard from './MovieCard';
 import ImageLoader from '../utils/imageLoader/ImageLoader';
+import BigTitle from '../utils/TitlesComponent';
 import { mapGetters, mapActions } from 'vuex';
 import api from '../../../config/api';
 import moment from 'moment';
@@ -132,7 +140,8 @@ export default {
     props: ['id'],
     components: {
         'image-loader': ImageLoader,
-        'movie-card': MovieCard
+        'movie-card': MovieCard,
+        'big-title': BigTitle
     },
     created() {
         this.getMovieReady(this.id)
@@ -182,7 +191,7 @@ export default {
                 Service.getMovie(id).then(res => {
                     this.movie = res.data;
                     this.dates = this.movie.dates.map(({ fullDate, time, dubbing }) => {
-                        return { 'date': moment(fullDate).format('dddd DD MMM YYYY'), time, dubbing: (dubbing) ? dubbing.join(' - ') : 'VF' }
+                        return { 'date': moment(fullDate).format('dddd DD MMMM'), time, dubbing: (dubbing) ? dubbing.join(' - ') : 'VF' }
                     })
                     this.imageSet = this.movie.imageSet.map(image => `${api.ftpUrl}/${image}`)
                     this.bgCover = `${api.ftpUrl}/${this.movie.imageSet[0]}`;
@@ -218,10 +227,55 @@ export default {
 </script>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Cutive+Mono|Dosis|Exo+2|Inconsolata|Josefin+Sans|Roboto+Mono');
 * {
-    font-family: 'inconsolata', monospace;
+    font-family: 'inconsolataRegular', monospace;
 }
+
+.gallery,
+.related__movies,
+.timesheet {
+    margin: 70px 0 50px;
+    h3 {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+}
+
+.gallery {
+    .movie__gallery {
+        box-shadow: 10px 9px 19px 0px rgba(66, 66, 66, 0.2);
+        border-radius: 5px
+    }
+}
+
+.related__movies {
+    .movie__card {
+        box-shadow: 10px 9px 19px 0px rgba(66, 66, 66, 0.2);
+    }
+}
+
+.timesheet {
+    &__item {
+        display: flex;
+        font-size: 28px;
+        font-weight: bolder;
+        max-width: 500px;
+        margin: 0 auto;
+        width: 100%;
+        p {
+            flex-grow: 1;
+            text-align: center;
+            font-family: 'inconsolataBold', monospace;
+            margin: 0;
+        }
+    }
+    &__date {}
+    &__time,
+    &__dubbing {
+        opacity: 0.6
+    }
+}
+
 
 .viewTrailer__mobile {
     margin: 10px;

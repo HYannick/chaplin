@@ -4,10 +4,10 @@
             <el-col :span="24">
                 <el-row :gutter="20">
                     <div id="timeline" class="timeline">
-                        <div class="timeline__left"  v-show="display === 'diffusion'">
+                        <div class="timeline__left"  v-show="display === 'homeSchedule'">
                             <span class="next__diffusion">Prochaine<br>Séance</span>
                         </div>
-                        <div class="timeline__right">
+                        <div class="timeline__right" v-show="display !== 'upcoming'">
                             <span class="next__dates">Prochaines<br>Dates</span>
                         </div>
                         <el-col class="row__schedule" :xs="24" :sm="24" :md="24" :lg="24" v-for="(movie, index) in movies" :key="movie._id">
@@ -15,7 +15,7 @@
                                 <img :src="transformUrl(movie)" />
                             </div>
                             <div class="row_content">
-                                <div class="side__date" v-show="display === 'diffusion'">
+                                <div class="side__date" v-show="display === 'homeSchedule'">
                                     <p>
                                         <span class="side__day">{{availabilities(movie, 'side')[0].day}}</span>
                                         <span class="side__month">{{availabilities(movie, 'side')[0].month | capitalize}}</span>
@@ -35,7 +35,7 @@
                                         <router-link :to="`/movies/${movie._id}`" class="goTo" tag="a">En savoir plus</router-link>
                                     </div>
                                 </el-col>
-                                <div class="next__schedule" data-title="Prochaines Dates">
+                                <div class="next__schedule" data-title="Prochaines Dates" v-show="display !== 'upcoming'">
                                     <p v-for="(date, index) in availabilities(movie)" :key="index">{{date}}</p>
                                 </div>
                             </div>
@@ -107,7 +107,7 @@ export default {
 
 
             if (display !== 'side') {
-                return sorted.slice(1)
+                return (this.display === 'diffusedList') ? sorted : sorted.slice(1)
             } else {
                 return sorted
             }
@@ -375,6 +375,7 @@ export default {
 
     .side__month {
         font-family: 'inconsolataBold', sans-serif;
+        position: relative;
         font-size: 40px;
     }
 }

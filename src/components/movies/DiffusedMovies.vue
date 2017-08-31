@@ -3,8 +3,8 @@
         <el-row>
             <el-col :span="24">
                 <div class="diffused__movies">
-                    <big-title title="En Salle"></big-title>
-                    <diffused-movies></diffused-movies>
+                    <big-title title="En Salle" orientation="bottom"></big-title>
+                    <diffused-movies :movies="movies" :maxRow="isMax" display="diffusedList" @refresh="loadMovies"></diffused-movies>
                 </div>
             </el-col>
         </el-row>
@@ -19,14 +19,28 @@ import _ from 'lodash';
 export default {
     components: {
         'diffused-movies': DiffusedMovies,
-        'big-title' : BigTitle
+        'big-title': BigTitle
     },
     created() {
-     
+        Service.getDiffusedMovies(4).then(res => {
+            this.movies = res.data.movieList
+        });
     },
     data() {
         return {
-            movies: []
+            movies: [],
+            isMax: false,
+        }
+    },
+    methods: {
+        loadMovies(limit) {
+            Service.getDiffusedMovies(limit).then(res => {
+                this.movies = res.data.movieList;
+                if (this.movies.length >= 2) {
+                    this.isMax = res.data.max;
+                }
+
+            })
         }
     }
 }

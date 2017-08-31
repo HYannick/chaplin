@@ -18,13 +18,13 @@
                 </el-carousel>
                 <el-col :span="24" class="wrapper">
                     <div class="movie__list">
-                        <big-title title="A l'affiche"></big-title>
+                        <big-title title="A l'affiche" orientation="top"></big-title>
                         <movie-list-popular :limit="4"></movie-list-popular>
                     </div>
                     <div class="timeline__schedule">
-                        <big-title title="Au Programme"></big-title>
+                        <big-title title="Au Programme"  orientation="top"></big-title>
                         <div class="movie__planning">
-                            <movie-timeline :movies="movies" :maxRow="isMax" display="diffusion" @refresh="loadMovies"></movie-timeline>
+                            <movie-timeline :movies="movies" :maxRow="isMax" display="homeSchedule" @refresh="loadMovies"></movie-timeline>
                         </div>
                     </div>
 

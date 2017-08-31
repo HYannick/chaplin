@@ -3,8 +3,8 @@
         <el-row>
             <el-col :span="24">
                 <div class="diffused__movies">
-                    <big-title title="En Salle"></big-title>
-                    <movie-timeline :movies="movies" :maxRow="isMax" display="diffusion" @refresh="loadMovies"></movie-timeline>
+                    <big-title title="Prochainement" orientation="bottom"></big-title>
+                    <movie-timeline :movies="movies" :maxRow="isMax" display="upcoming" @refresh="loadMovies"></movie-timeline>
                 </div>
             </el-col>
         </el-row>
