@@ -191,7 +191,7 @@ export default {
                 Service.getMovie(id).then(res => {
                     this.movie = res.data;
                     this.dates = this.movie.dates.map(({ fullDate, time, dubbing }) => {
-                        return { 'date': moment(fullDate).format('dddd DD MMMM'), time, dubbing: (dubbing) ? dubbing.join(' - ') : 'VF' }
+                        return { 'date': moment(fullDate).format('dddd DD MMMM'), time, dubbing: dubbing || 'VF' }
                     })
                     this.imageSet = this.movie.imageSet.map(image => `${api.ftpUrl}/${image}`)
                     this.bgCover = `${api.ftpUrl}/${this.movie.imageSet[0]}`;

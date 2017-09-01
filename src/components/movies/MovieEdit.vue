@@ -220,7 +220,7 @@ export default {
             return moment.unix(row.date).format('ddd DD MMM YYYY');
         },
         formatDubbing(row, column) {
-            return (row.dubbing) ? row.dubbing.join(' - ') : 'VF'
+            return row.dubbing ||'VF'
         },
         submitCover() {
             this.$refs.upCover.submit();
