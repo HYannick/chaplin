@@ -2,7 +2,7 @@
     <div>
         <el-row>
             <el-col :span="12">
-                <h4>Settings | {{user.username || user._id}}</h4>
+                <big-title :title="user.username || 'Profil'" back="Infos" orientation="bottom"></big-title>
             </el-col>
             <el-col :span="12">
                 <el-menu theme="light" :default-active="activeIndex" class="el-menu-demo profile__nav" mode="horizontal">
@@ -15,18 +15,23 @@
             </el-col>
         </el-row>
         <el-row>
-            <router-view></router-view>
+            <el-col :span="24">
+                <router-view></router-view>
+            </el-col>
         </el-row>
-    
+
     </div>
 </template>
 <script>
 import Services from '../../services/services';
+import BigTitle from '../utils/BigTitle'
 import { mapGetters } from 'vuex';
 export default {
-
+    components: {
+        'big-title': BigTitle
+    },
     created() {
-    
+
         Services.getUser(this.auth.userId, this.auth.token).then(res => {
             this.user = res.data;
         });

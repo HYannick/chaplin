@@ -14,7 +14,7 @@
 <script>
 import Service from '../../services/services.js';
 import DiffusedMovies from './MovieSched';
-import BigTitle from '../utils/TitlesComponent';
+import BigTitle from '../utils/BigTitle';
 import _ from 'lodash';
 export default {
     components: {

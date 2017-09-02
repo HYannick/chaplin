@@ -8,9 +8,11 @@ import locale from 'element-ui/lib/locale/lang/fr';
 import App from './App'
 import router from './router'
 import VueYouTubeEmbed from 'vue-youtube-embed';
+import BigTitle from './components/utils/BigTitle.vue';
 import { store } from './store/store';
 
 Vue.use(VueYouTubeEmbed);
+Vue.use(BigTitle);
 Vue.use(ElementUI, { locale });
 
 Vue.config.productionTip = false;

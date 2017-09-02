@@ -54,7 +54,7 @@
 <script>
 import Service from '../../services/services.js';
 import MovieCard from './MovieCard';
-import BigTitle from '../utils/TitlesComponent';
+import BigTitle from '../utils/BigTitle';
 import ImageLoader from '../utils/imageLoader/ImageLoader'
 import moment from 'moment';
 import api from '../../../config/api';

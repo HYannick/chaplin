@@ -1,11 +1,11 @@
 <template>
     <div class="title__big" :class="classObject">
-        <h3 :data-title="title">{{title}}</h3>
+        <h3 :data-title="back || title">{{title}}</h3>
     </div>
 </template>
 <script>
 export default {
-    props: ['title', 'orientation'],
+    props: ['title', 'orientation', 'back'],
     computed: {
         classObject: function() {
             return {

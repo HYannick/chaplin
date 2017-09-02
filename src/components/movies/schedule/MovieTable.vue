@@ -49,7 +49,7 @@ export default {
         'subscribe-button': SubscribeBtn,
     },
     props: ['userLogged'],
-    
+
     created() {
         this.refreshTable();
     },
@@ -65,7 +65,7 @@ export default {
             return moment.unix(row.date).format('dddd DD MMM');
         },
         refreshTable() {
-             const now = moment().unix();
+            const now = moment().unix();
             Services.getMovies(this.auth.userId, this.auth.token).then(res => {
                 this.movies = res.data;
 
@@ -107,7 +107,6 @@ export default {
                         volunteer: (vol.length === 0) ? '' : vol[0].enrolled[0].username
                     };
                 });
-                console.log(this.tableData)
             })
         }
     },

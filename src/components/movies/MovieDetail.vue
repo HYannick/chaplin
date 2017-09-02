@@ -132,7 +132,7 @@
 import Service from '../../services/services.js';
 import MovieCard from './MovieCard';
 import ImageLoader from '../utils/imageLoader/ImageLoader';
-import BigTitle from '../utils/TitlesComponent';
+import BigTitle from '../utils/BigTitle';
 import { mapGetters, mapActions } from 'vuex';
 import api from '../../../config/api';
 import moment from 'moment';

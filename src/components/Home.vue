@@ -2,8 +2,12 @@
     <transition name="el-fade-in-linear">
         <div>
             <preloader :toHide="loaded"></preloader>
-            <div class="loader" v-show="!loaded">Loader</div>
+
             <div v-show="loaded">
+                <div class="home__announce">
+                    <announce-icon></announce-icon>
+                    <p>{{announce.title}}</p>
+                </div>
                 <el-carousel :interval="6000" height="0">
                     <el-carousel-item v-for="movie in carouselMovies" :key="movie._id">
                         <div class="slide__overlay"></div>
@@ -22,7 +26,7 @@
                         <movie-list-popular :limit="4"></movie-list-popular>
                     </div>
                     <div class="timeline__schedule">
-                        <big-title title="Au Programme"  orientation="top"></big-title>
+                        <big-title title="Au Programme" orientation="top"></big-title>
                         <div class="movie__planning">
                             <movie-timeline :movies="movies" :maxRow="isMax" display="homeSchedule" @refresh="loadMovies"></movie-timeline>
                         </div>
@@ -44,7 +48,8 @@ import MovieTable from './movies/schedule/MovieTable';
 import MovieListPopular from './movies/MovieListPopular';
 import MovieSched from './movies/MovieSched';
 import Preloader from './utils/icons/Loader';
-import BigTitle from './utils/TitlesComponent';
+import BigTitle from './utils/BigTitle';
+import AnnounceIcon from './utils/icons/Announce';
 import api from '../../config/api';
 export default {
     components: {
@@ -53,7 +58,8 @@ export default {
         'movie-timeline': MovieSched,
         'image-loader': ImageLoader,
         'preloader': Preloader,
-        'big-title': BigTitle
+        'big-title': BigTitle,
+        'announce-icon': AnnounceIcon
     },
     created() {
         Service.getDiffusedMovies(4).then(res => {
@@ -61,12 +67,18 @@ export default {
             this.carouselMovies = res.data.movieList;
             this.loaded = true;
         });
+        Service.getAnnounce().then(res => {
+            console.log(res.data[0])
+            this.announce = res.data[0] || { title: '', date: '' }
+            console.log(this.announce)
+        })
     },
     data() {
         return {
             movies: [],
             carouselMovies: [],
             apiRoot: api.ftpUrl,
+            announce: {},
             loaded: false,
             isMax: false
         }
@@ -94,6 +106,29 @@ h2,
 h3,
 h4 {
     font-family: 'inconsolataBold', monospace;
+}
+
+.home__announce {
+    position: relative;
+    display: flex;
+    font-size: 20px;
+    margin-bottom: 20px;
+    z-index: 0;
+    p {
+        margin-left: 10px;
+        font-family: 'inconsolataBold', monospace;
+        margin-bottom: 0;
+    }
+    &:before {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 40px;
+        z-index: -1;
+        background: #f3f3f3;
+        width: 90%;
+        height: 20px;
+    }
 }
 
 .timeline__schedule {

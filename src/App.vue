@@ -70,6 +70,6 @@ body {
 
 .main__wrapper {
   position: relative;
-  padding: 20px;
+  padding: 40px;
 }
 </style>
