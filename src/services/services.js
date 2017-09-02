@@ -20,10 +20,15 @@ export default {
     signin(data) {
         return axios.post(`${rootUrl}/signin`, data, autho)
     },
+    createUser(data) {
+        return axios.post(`${rootUrl}/signup`, data, autho)
+    },
     getUsers() {
         return axios.get(`${rootUrl}/users`, autho)
     },
-
+    deleteUser(id) {
+        return axios.delete(`${rootUrl}/users/${id}`, autho)
+    },
     getUser(id, token) {
         return axios.get(`${rootUrl}/users/${id}`, setHeader(token))
     },

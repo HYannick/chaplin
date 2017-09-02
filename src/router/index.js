@@ -30,7 +30,6 @@ export default new Router({
         { path: '/users', name: 'Users', component: UserList, meta: { requiresAuth: true, requiresAdmin: true } },
         {
             path: '/users/:id',
-            name: 'User',
             component: User,
             meta: { requiresAuth: true, requiresAdmin: false },
             props: true,

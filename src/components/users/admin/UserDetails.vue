@@ -15,7 +15,7 @@
                 </router-link>
             </div>
 
-            <el-form v-show="auth.logged && auth.role == 'admin'" ref="form" class="pushline" :model="form" label-position="top" label-width="120px">
+            <el-form v-if="auth.logged && auth.role == 'admin'" ref="form" class="pushline" :model="form" label-position="top" label-width="120px">
                 <el-form-item label="Annonce">
                     <el-input placeholder="Ecrivez une annonce :)" v-model="form.pushline.title">
                         <el-button slot="append" @click="onSubmit">Poster</el-button>
@@ -41,8 +41,47 @@
                     </el-col>
                 </div>
             </el-row>
+            <el-row :gutter="20">
+                <div class="self__perms" v-if="auth.logged && auth.role == 'admin'">
+                    <big-title title="Gestion des bénévoles" back="Administration"></big-title>
+                    <el-tabs v-model="activeName">
+                        <el-tab-pane label="Liste des bénévoles" name="first">
+                            <transition name="el-fade-in-linear">
+                                <edit-table></edit-table>
+                            </transition>
+                        </el-tab-pane>
+                        <el-tab-pane label="Ajouter un bénévole" name="second">
+                            <transition name="el-fade-in-linear">
+                                <el-form :model="createUserForm">
+                                    <el-form-item label="Nom" :label-width="formLabelWidth">
+                                        <el-input v-model="createUserForm.username"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="Mot de passe" :label-width="formLabelWidth">
+                                        <el-input  type="password" v-model="createUserForm.password"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="Email" :label-width="formLabelWidth">
+                                        <el-input v-model="createUserForm.email"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="Role" :label-width="formLabelWidth">
+                                        <el-select v-model="createUserForm.role" placeholder="Sélectionnez un rôle">
+                                            <el-option label="Admin" value="admin"></el-option>
+                                            <el-option label="Volunteer" value="volunteer"></el-option>
+                                            <el-option label="Utilisateur" value="reader"></el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                    <el-form-item>
+                                        <el-button type="primary" @click="addUser">Ajouter un utilisateur</el-button>
+                                    </el-form-item>
+                                </el-form>
+                            </transition>
+                        </el-tab-pane>
+                        <el-tab-pane label="Newsletter" name="third">
+                            <transition name="el-fade-in-linear"></transition>
+                        </el-tab-pane>
+                    </el-tabs>
+                </div>
+            </el-row>
         </div>
-
     </transition>
 </template>
 
@@ -50,18 +89,29 @@
 import Services from '../../../services/services';
 import MovieCard from '../../movies/MovieCard';
 import BigTitle from '../../utils/BigTitle';
+import EditTable from './EditTable';
 import moment from 'moment';
 import { mapGetters } from 'vuex';
 import _ from 'lodash';
 export default {
     components: {
         'movie-card': MovieCard,
-        'big-title': BigTitle
+        'big-title': BigTitle,
+        'edit-table': EditTable
     },
     computed: {
         ...mapGetters(['auth']),
     },
     methods: {
+        addUser(){
+            Services.createUser(this.createUserForm).then(() => {
+                this.$notify({
+                    title: 'Success',
+                    message: 'Utilisateur créé!',
+                    type: 'success'
+                });
+            })
+        },
         dateInCard(date) {
             return moment.unix(date).format('dddd DD MMMM')
         },
@@ -69,7 +119,7 @@ export default {
             const now = moment().unix();
             this.form.pushline.date = now
             Services.postAnnounce(this.form.pushline).then(res => {
-                 this.$notify({
+                this.$notify({
                     title: 'Success',
                     message: 'Annonce mise à jour!',
                     type: 'success'
@@ -99,23 +149,31 @@ export default {
             })
         });
 
-        Services.getAnnounce().then(res => {
-            console.log(res.data[0])
-            this.form.pushline = res.data[0] || { title :'', date: ''}
-            console.log(this.form.pushline)
-        })
-
+        if (this.auth.logged && this.auth.role === 'admin') {
+            Services.getAnnounce().then(res => {
+                this.form.pushline = res.data[0] || { title: '', date: '' }
+            })
+        }
     },
     data() {
         return {
             user: {},
             subs: [],
+            activeName: 'first',
             form: {
                 pushline: {
                     title: '',
                     date: moment()
                 }
             },
+
+            createUserForm: {
+                username: '',
+                password: '',
+                role: '',
+                email: ''
+            },
+            formLabelWidth: '120px'
         }
     }
 }
@@ -165,7 +223,7 @@ export default {
     }
     .movie__card {
         .lazy {
-            padding-bottom: 50%;
+            padding-bottom: 90%;
         }
         margin-bottom: 10px;
         box-shadow: 10px 9px 19px 0px rgba(66, 66, 66, 0.2);
