@@ -91,7 +91,7 @@
                     </el-row>
                     <el-row :gutter="15">
                         <div class="gallery">
-                            <big-title title="Gallerie" orientation="center"></big-title>
+                            <big-title title="Galerie" orientation="center"></big-title>
                             <el-col :span="24">
                                 <div class="movie__gallery movie__gallery-first">
                                     <image-loader classname="lazy__set" :imageUrl="imageSet[1]"></image-loader>
@@ -455,6 +455,9 @@ export default {
         @media screen and (max-width: 768px) {
             transform: translateY(0);
         }
+        .lazy{
+            border-radius: 0;
+        }
     }
 }
 
@@ -469,7 +472,7 @@ export default {
     }
     &:hover {
         img {
-            transform: translate(-50%, -50%) scale(1.3) !important;
+            transform: translate(-50%, -50%) scale(1.05) !important;
         }
         .player__button {
             transform: translate(-50%, -50%) scale(1);

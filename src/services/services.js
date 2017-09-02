@@ -117,6 +117,19 @@ export default {
         return axios.delete(`${rootUrl}/announce/${id}`, autho)
     },
 
+    getEmails() {
+        return axios.get(`${rootUrl}/newsletter/emails`, autho)
+    },
+
+    postEmail(data) {
+        console.log(data)
+        return axios.post(`${rootUrl}/newsletter/email/create`, data, autho)
+    },
+
+    removeEmail(id) {
+        return axios.delete(`${rootUrl}/newsletter/email/${id}`, autho)
+    },
+
 
 
 

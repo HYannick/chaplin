@@ -64,7 +64,7 @@ export default {
     },
 
     methods: {
-        sendMail(user){
+        sendMail(user) {
             console.log(user.email)
         },
         editUser(user) {
@@ -75,8 +75,8 @@ export default {
         deleteUser(user) {
             console.log(user)
             Services.deleteUser(user._id).then((res) => {
-                console.log(res)
-                 this.$notify({
+                this.userList = res.data;
+                this.$notify({
                     title: 'Success',
                     message: 'Utilisateur supprimé!',
                     type: 'success'

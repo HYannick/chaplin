@@ -29,6 +29,7 @@ export default {
         transform: translate(-60%, -50%) scale(1.3);
     }
     &.loaded {
+        border-radius: 5px;
         img {
             transform: translate(50%, -50%) scale(1.3);
         }
@@ -93,21 +94,23 @@ export default {
         transition: 0.5s ease-in-out;
     }
 }
+
 .lazy {
-     &.loaded {
+    &.loaded {
         img {
             transform: translate(-50%, -50%) scale(1.3);
             opacity: 1;
         }
     }
 }
+
 .lazy__set,
 .lazy__bg {
-     &.loaded {
+    &.loaded {
         img {
             transform: translate(-50%, -50%) scale(1);
             opacity: 1;
         }
     }
- }
+}
 </style>

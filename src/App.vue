@@ -1,28 +1,37 @@
 <template>
   <div id="app">
-    <el-col :xs="24" :sm="24" :md="4" :lg="4">
-      <ch-header></ch-header>
-    </el-col>
-    <el-col :xs="24" :sm="24" :md="14" :lg="14" class="main__wrapper">
-      <router-view></router-view>
-    </el-col>
-    <el-col :span="6" class="fixed__side">
-      <div class="sidebar">
-        <div class="title__cinema">
-          <h2>CHAPLIN</h2>
-          <h4>Cinéma de Montmélian</h4>
+    <el-row>
+      <el-col :xs="24" :sm="24" :md="4" :lg="4">
+        <ch-header></ch-header>
+      </el-col>
+      <el-col :xs="24" :sm="24" :md="14" :lg="14" class="main__wrapper">
+        <router-view></router-view>
+      </el-col>
+      <el-col :span="6" class="fixed__side">
+        <div class="sidebar">
+          <div class="title__cinema">
+            <h2>CHAPLIN</h2>
+            <h4>Cinéma de Montmélian</h4>
+          </div>
         </div>
-      </div>
-    </el-col>
+      </el-col>
+    </el-row>
+    <el-row :gutter="40">
+      <el-col :span="18">
+        <ch-footer></ch-footer>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
 import Header from './components/Header.vue';
+import Footer from './components/Footer.vue'
 export default {
   name: 'app',
   components: {
-    'ch-header': Header
+    'ch-header': Header,
+    'ch-footer': Footer
   }
 }
 </script>
@@ -33,14 +42,16 @@ export default {
 body {
   background: #fff;
 }
+
 .fixed__side {
-    position: fixed;
-    right: 0;
-    top: 0;
-    @media screen and (max-width: 765px) {
-      display: none;
-    }
+  position: fixed;
+  right: 0;
+  top: 0;
+  @media screen and (max-width: 765px) {
+    display: none;
+  }
 }
+
 .title__cinema {
   text-align: center;
   margin-top: 40px;

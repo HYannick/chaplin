@@ -76,7 +76,9 @@
                             </transition>
                         </el-tab-pane>
                         <el-tab-pane label="Newsletter" name="third">
-                            <transition name="el-fade-in-linear"></transition>
+                            <transition name="el-fade-in-linear">
+                               <cp-newsletter></cp-newsletter>
+                            </transition>
                         </el-tab-pane>
                     </el-tabs>
                 </div>
@@ -90,6 +92,7 @@ import Services from '../../../services/services';
 import MovieCard from '../../movies/MovieCard';
 import BigTitle from '../../utils/BigTitle';
 import EditTable from './EditTable';
+import CPNewsletter from './CPNewsletter';
 import moment from 'moment';
 import { mapGetters } from 'vuex';
 import _ from 'lodash';
@@ -97,14 +100,16 @@ export default {
     components: {
         'movie-card': MovieCard,
         'big-title': BigTitle,
-        'edit-table': EditTable
+        'edit-table': EditTable,
+        'cp-newsletter': CPNewsletter
     },
     computed: {
         ...mapGetters(['auth']),
     },
     methods: {
         addUser(){
-            Services.createUser(this.createUserForm).then(() => {
+            Services.createUser(this.createUserForm).then((res) => {
+                console.log(res.data)
                 this.$notify({
                     title: 'Success',
                     message: 'Utilisateur créé!',
