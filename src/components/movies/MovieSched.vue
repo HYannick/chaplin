@@ -92,7 +92,7 @@ export default {
         availabilities(movie, display) {
             const now = moment();
             const { dates } = movie;
-            var sorted = dates.filter(item => {
+            return dates.filter(item => {
                 return moment(item.fullDate) >= now;
             }).map(item => {
                 if (display === 'side') {
@@ -104,13 +104,6 @@ export default {
                     return moment.unix(item.date).format('dddd DD MMMM')
                 }
             });
-
-
-            if (display !== 'side') {
-                return (this.display === 'diffusedList') ? sorted : sorted.slice(1)
-            } else {
-                return sorted
-            }
         }
     }
 
