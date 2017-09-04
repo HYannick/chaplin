@@ -43,36 +43,11 @@
             </el-row>
             <el-row :gutter="20">
                 <div class="self__perms" v-if="auth.logged && auth.role == 'admin'">
-                    <big-title title="Gestion des bénévoles" back="Administration"></big-title>
+                    <big-title title="Gestion des bénévoles" back="Bénévoles"></big-title>
                     <el-tabs v-model="activeName">
                         <el-tab-pane label="Liste des bénévoles" name="first">
                             <transition name="el-fade-in-linear">
                                 <edit-table></edit-table>
-                            </transition>
-                        </el-tab-pane>
-                        <el-tab-pane label="Ajouter un bénévole" name="second">
-                            <transition name="el-fade-in-linear">
-                                <el-form :model="createUserForm">
-                                    <el-form-item label="Nom" :label-width="formLabelWidth">
-                                        <el-input v-model="createUserForm.username"></el-input>
-                                    </el-form-item>
-                                    <el-form-item label="Mot de passe" :label-width="formLabelWidth">
-                                        <el-input  type="password" v-model="createUserForm.password"></el-input>
-                                    </el-form-item>
-                                    <el-form-item label="Email" :label-width="formLabelWidth">
-                                        <el-input v-model="createUserForm.email"></el-input>
-                                    </el-form-item>
-                                    <el-form-item label="Role" :label-width="formLabelWidth">
-                                        <el-select v-model="createUserForm.role" placeholder="Sélectionnez un rôle">
-                                            <el-option label="Admin" value="admin"></el-option>
-                                            <el-option label="Volunteer" value="volunteer"></el-option>
-                                            <el-option label="Utilisateur" value="reader"></el-option>
-                                        </el-select>
-                                    </el-form-item>
-                                    <el-form-item>
-                                        <el-button type="primary" @click="addUser">Ajouter un utilisateur</el-button>
-                                    </el-form-item>
-                                </el-form>
                             </transition>
                         </el-tab-pane>
                         <el-tab-pane label="Newsletter" name="third">
@@ -91,8 +66,8 @@
 import Services from '../../../services/services';
 import MovieCard from '../../movies/MovieCard';
 import BigTitle from '../../utils/BigTitle';
-import EditTable from './EditTable';
-import CPNewsletter from './CPNewsletter';
+import EditTable from './volunteers/EditTable';
+import CPNewsletter from './volunteers/CPNewsletter';
 import moment from 'moment';
 import { mapGetters } from 'vuex';
 import _ from 'lodash';
@@ -107,16 +82,6 @@ export default {
         ...mapGetters(['auth']),
     },
     methods: {
-        addUser(){
-            Services.createUser(this.createUserForm).then((res) => {
-                console.log(res.data)
-                this.$notify({
-                    title: 'Success',
-                    message: 'Utilisateur créé!',
-                    type: 'success'
-                });
-            })
-        },
         dateInCard(date) {
             return moment.unix(date).format('dddd DD MMMM')
         },

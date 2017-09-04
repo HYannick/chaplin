@@ -130,6 +130,13 @@ export default {
         return axios.delete(`${rootUrl}/newsletter/email/${id}`, autho)
     },
 
+    getMsg() {
+        return axios.get(`${rootUrl}/chat/messages`, autho)
+    },
+    postMsg(data) {
+        return axios.post(`${rootUrl}/chat/messages/create`, data, autho)
+    }
+
 
 
 

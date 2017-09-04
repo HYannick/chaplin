@@ -3,10 +3,10 @@
         <div class="ch-footer">
             <el-col :span="18" :offset="3">
                 <div class="newsletter__form">
-                    <el-form ref="form" class="newsletter" label-position="left" label-width="200px" :model="form">
-                        <el-form-item label="S'inscrire à la Newsletter">
+                    <el-form ref="form" :rules="rules" class="newsletter" label-position="left" label-width="250px" :model="form">
+                        <el-form-item label="S'inscrire à la Newsletter" prop="email">
                             <el-input placeholder="Allez-y c'est gratuit :D" v-model="form.email">
-                                <el-button slot="append" @click="onSubmit">S'inscrire</el-button>
+                                <el-button slot="append" @click="onSubmit('form')">S'inscrire</el-button>
                             </el-input>
                         </el-form-item>
                     </el-form>
@@ -66,6 +66,11 @@ export default {
         return {
             dialogVisible: false,
             center: { lat: 45.500044, lng: 6.0509035 },
+            rules: {
+                email: [
+                    { type: 'email', required: true, message: 'Veuillez enter un email valide', trigger: 'change' }
+                ],
+            },
             markers: [{
                 position: { lat: 45.5000429, lng: 6.0494388 }
             }], // How you would like to style the map. 
@@ -77,14 +82,31 @@ export default {
         }
     },
     methods: {
-        onSubmit() {
-            Service.postEmail(this.form).then(() => {
-                this.$notify({
-                    title: 'Success',
-                    message: 'Vous êtes bien inscrit!',
-                    type: 'success'
-                });
-            })
+        onSubmit(formName) {
+            console.log(formName)
+            this.$refs[formName].validate((valid) => {
+                console.log(valid)
+                if (valid) {
+                    Service.postEmail(this.form).then(() => {
+                        this.$refs[formName].resetFields();
+                        this.$notify({
+                            title: 'Success',
+                            message: 'Vous êtes bien inscrit!',
+                            type: 'success'
+                        });
+                    })
+
+                } else {
+                    this.$notify({
+                        title: 'Error',
+                        message: 'Quelquechose ne va pas !',
+                        type: 'error'
+                    });
+                    return false;
+                }
+            });
+
+
         }
     }
 }
@@ -92,9 +114,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
-.ch-footer{
+.ch-footer {
     margin-top: 50px;
 }
+
 .map {
     position: relative;
 }
