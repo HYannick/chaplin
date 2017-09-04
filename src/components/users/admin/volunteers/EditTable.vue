@@ -3,7 +3,7 @@
         <el-table ref="multipleTable" :data="userList" border style="width: 100%">
             <el-table-column property="username" label="Nom">
             </el-table-column>
-            <el-table-column property="role" label="Role">
+            <el-table-column property="role" label="Role" prop="role" :formatter="formatRole">
             </el-table-column>
             <el-table-column property="email" label="Email">
             </el-table-column>
@@ -29,8 +29,7 @@
                 <el-form-item label="Role" :label-width="formLabelWidth">
                     <el-select v-model="userForm.role" placeholder="Sélectionnez un rôle">
                         <el-option label="Admin" value="admin"></el-option>
-                        <el-option label="Volunteer" value="volunteer"></el-option>
-                        <el-option label="Utilisateur" value="reader"></el-option>
+                        <el-option label="Bénévole" value="volunteer"></el-option>
                     </el-select>
                 </el-form-item>
             </el-form>
@@ -69,6 +68,13 @@ export default {
     },
 
     methods: {
+        formatRole(row, column) {
+            if(row.role === 'admin') {
+                return 'Administrateur'
+            } else {
+                return 'Bénévole'
+            }
+        },
         refreshList() {
             Services.getUsers().then(users => {
                 this.userList = users.data

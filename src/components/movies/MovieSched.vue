@@ -35,7 +35,7 @@
                                         <router-link :to="`/movies/${movie._id}`" class="goTo" tag="a">En savoir plus</router-link>
                                     </div>
                                 </el-col>
-                                <div class="next__schedule" data-title="Prochaines Dates" v-show="display !== 'upcoming'">
+                                <div class="next__schedule" data-title="Toutes les séances" v-show="display !== 'upcoming'">
                                     <p v-for="(date, index) in availabilities(movie)" :key="index">{{date}}</p>
                                 </div>
                             </div>

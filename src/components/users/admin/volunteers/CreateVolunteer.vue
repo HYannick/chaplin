@@ -15,8 +15,7 @@
                 <el-form-item label="Role" :label-width="formLabelWidth" prop="role">
                     <el-select v-model="ruleForm.role" placeholder="Sélectionnez un rôle">
                         <el-option label="Admin" value="admin"></el-option>
-                        <el-option label="Volunteer" value="volunteer"></el-option>
-                        <el-option label="Utilisateur" value="reader"></el-option>
+                        <el-option label="Bénévole" value="volunteer"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item>
@@ -45,11 +44,11 @@ export default {
             rules: {
                 username: [
                     { required: true, message: 'Veuillez entrer un nom valide', trigger: 'blur' },
-                    { min: 3, max: 5, message: 'Longueur entre 3 et 5 caractères', trigger: 'blur' }
+                    { min: 3, message: 'Longueur entre 3 et 5 caractères', trigger: 'blur' }
                 ],
                 password: [
                     { required: true, message: 'Veuillez entrer un mot de passe valide', trigger: 'blur' },
-                    { min: 3, max: 5, message: 'Longueur entre 3 et 5 caractères', trigger: 'blur' }
+                    { min: 3, message: 'Longueur entre 3 et 5 caractères', trigger: 'blur' }
                 ],
                 role: [
                     { required: true, message: 'Veuillez sélectionner un rôle', trigger: 'change' }
