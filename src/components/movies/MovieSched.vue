@@ -30,7 +30,7 @@
                                 <el-col :span="10">
                                     <div class="timeline__item">
                                         <h5 class="m-title">{{movie.title}}</h5>
-                                        <p class="m-date">{{availabilities(movie)[0]}}</p>
+                                        <br>
                                         <p class="m-desc"> {{movie.desc}}</p>
                                         <router-link :to="`/movies/${movie._id}`" class="goTo" tag="a">En savoir plus</router-link>
                                     </div>
