@@ -6,6 +6,9 @@
                 <el-button type="danger" size="small" icon="delete" @click="deleteMail(item._id)"></el-button>
             </li>
         </ul>
+        <el-button type="success">
+            <a :href="`mailto:${mailing}`">Envoyer une newsletter</a>
+        </el-button>
     </div>
 </template>
 <script>
@@ -16,9 +19,17 @@ export default {
             emailList: [],
         }
     },
+    computed: {
+        mailing() {
+            return this.emailList.map(mail => mail.email)
+        }
+    },
     created() {
         Services.getEmails().then(emailList => {
             this.emailList = emailList.data
+            navigator.registerProtocolHandler("mailto",
+                "https://mail.google.com/mail/?extsrc=mailto&url=%s",
+                "Gmail");
         })
     },
 
