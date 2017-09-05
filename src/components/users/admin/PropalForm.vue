@@ -60,8 +60,8 @@ export default {
             this.cover = URL.createObjectURL(file.raw);
             this.form.cover = res.cover[0].filename;
             this.$notify({
-                title: 'Success',
-                message: 'Images uploaded !',
+                title: 'Upload réussit',
+                message: 'Images enregistrée !',
                 type: 'success'
             });
         },
@@ -95,22 +95,22 @@ export default {
                         .then(res => {
                             this.$emit('reload-proposals');
                             this.$notify({
-                                title: 'Success',
-                                message: 'Film mis à jour !',
+                                title: 'Film à jour',
+                                message: 'Le film a bien été mis à jour!',
                                 type: 'success'
                             });
 
                         })
                         .catch(err => {
                             this.$notify({
-                                title: 'Error',
+                                title: 'Une erreur s\'est produite',
                                 message: err,
                                 type: 'error'
                             });
                         });
                 } else {
                     this.$notify({
-                        title: 'Error',
+                        title: 'Une erreur s\'est produite',
                         message: 'An error occured',
                         type: 'error'
                     });

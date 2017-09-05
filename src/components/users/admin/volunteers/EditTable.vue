@@ -3,7 +3,7 @@
         <el-table ref="multipleTable" :data="userList" border style="width: 100%">
             <el-table-column property="username" label="Nom">
             </el-table-column>
-            <el-table-column property="role" label="Role" prop="role" :formatter="formatRole">
+            <el-table-column property="role" label="Statut" prop="role" :formatter="formatRole">
             </el-table-column>
             <el-table-column property="email" label="Email">
             </el-table-column>
@@ -92,7 +92,7 @@ export default {
             Services.deleteUser(user._id).then((res) => {
                 this.userList = res.data;
                 this.$notify({
-                    title: 'Success',
+                    title: 'Suppression',
                     message: 'Utilisateur supprimé!',
                     type: 'success'
                 });
@@ -102,7 +102,7 @@ export default {
             this.dialogFormVisible = false;
             Services.updateUser(this._idToEdit, this.userForm).then((res) => {
                 this.$notify({
-                    title: 'Success',
+                    title: 'Mise à jour',
                     message: 'Bénévole mis à jour!',
                     type: 'success'
                 });

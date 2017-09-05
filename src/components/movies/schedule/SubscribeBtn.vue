@@ -45,15 +45,16 @@ export default {
 
             Services.subscribeTo(data).then(res => {
                 this.isSub = !this.isSub;
+                const textSub = this.isSub ? 'Vous êtes bien inscrit!' : 'vous êtes bien désinscrit!'
                 this.$notify({
-                    title: 'Success',
-                    message: 'Vous avez été bien enregistré!',
+                    title: 'Demande enregistrée',
+                    message: textSub,
                     type: 'success'
                 });
                 this.$emit('change');
             }).catch(err => {
                 this.$notify({
-                    title: 'Error',
+                    title: 'Une erreur s\'est produite!',
                     message: err.response.data.error,
                     type: 'error'
                 });

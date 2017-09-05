@@ -9,8 +9,8 @@ export const login = ({ commit }, payload) => {
             localStorage.setItem('role', res.data.user.role);
             localStorage.setItem('user', res.data.user._id);
             Notification({
-                title: 'Success',
-                message: `Bienvenue, petit(e)!`,
+                title: 'Bienvenue',
+                message: `Bienvenue, ${res.data.user.username || 'Utilisateur'}`,
                 type: 'success'
             });
             commit('granted', res.data.user._id);

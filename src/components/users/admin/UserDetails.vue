@@ -9,7 +9,7 @@
                 <p>
                     <span>Email</span>| {{user.email}}</p>
                 <p>
-                    <span>Role</span>| {{user.role}}</p>
+                    <span>Statut</span> | {{formattedRole}}</p>
                 <router-link v-show="auth.logged" :to="`/users/${user._id}/edit`">
                     <el-button class="user__edit">Editer mon profil</el-button>
                 </router-link>
@@ -80,6 +80,13 @@ export default {
     },
     computed: {
         ...mapGetters(['auth']),
+        formattedRole(){
+            if(this.user.role === 'admin') {
+                return 'Administrateur'
+            }else {
+                return 'Bénévole'
+            }
+        }
     },
     methods: {
         dateInCard(date) {
@@ -90,8 +97,8 @@ export default {
             this.form.pushline.date = now
             Services.postAnnounce(this.form.pushline).then(res => {
                 this.$notify({
-                    title: 'Success',
-                    message: 'Annonce mise à jour!',
+                    title: 'Annonce à jour',
+                    message: 'L\'annonce a bien été mise à jour!',
                     type: 'success'
                 });
             })
@@ -222,7 +229,7 @@ export default {
         span {
             font-family: 'InconsolataBold', monospace;
             font-weight: bold;
-            width: 50px;
+            width: 70px;
             display: block;
             float: left;
         }

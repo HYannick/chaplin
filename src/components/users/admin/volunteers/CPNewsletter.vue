@@ -1,14 +1,26 @@
 <template>
     <div>
+        <div class="nl__head">
+            <h5>Liste d'inscrits ({{emailList.length}})</h5>
+
+            <el-button class="send__news" @click="dialogVisible = true">
+                Envoyer une newsletter
+            </el-button>
+        </div>
+        <hr>
         <ul class="newsletter__list">
             <li class="newsletter__item" v-for="(item, index) in emailList" :key="index">
                 <span class="email__item">{{item.email}}</span>
                 <el-button type="danger" size="small" icon="delete" @click="deleteMail(item._id)"></el-button>
             </li>
         </ul>
-        <el-button type="success">
-            <a :href="`mailto:${mailing}`">Envoyer une newsletter</a>
-        </el-button>
+        <el-dialog title="Copier les emails" :visible.sync="dialogVisible" size="small">
+            <el-input class="mailing__list" v-model="mailing">
+            </el-input>
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="copy">Copier</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 <script>
@@ -16,24 +28,31 @@ import Services from '../../../../services/services';
 export default {
     data() {
         return {
+            dialogVisible: false,
             emailList: [],
         }
     },
     computed: {
         mailing() {
-            return this.emailList.map(mail => mail.email)
+            return this.emailList.map(mail => mail.email).join(', ')
         }
     },
     created() {
         Services.getEmails().then(emailList => {
             this.emailList = emailList.data
-            navigator.registerProtocolHandler("mailto",
-                "https://mail.google.com/mail/?extsrc=mailto&url=%s",
-                "Gmail");
         })
     },
 
     methods: {
+        copy() {
+            this.$clipboard(this.mailing)
+            this.$notify({
+                    title: 'Copié !',
+                    message: 'Emails copiés dans la presse papier !',
+                    type: 'success'
+                });
+            this.dialogVisible = false
+        },
         deleteMail(id) {
             Services.removeEmail(id).then(emailList => {
                 this.emailList = emailList.data
@@ -45,6 +64,34 @@ export default {
 <style lang="scss" scoped>
 .newsletter__list {
     padding: 0;
+    overflow: hidden;
+    width: 100%;
+}
+
+.nl__head {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    h5 {
+        margin: 0;
+        flex-grow: 1;
+    }
+}
+
+.send__news {
+
+    margin-top: 10px;
+    overfow: hidden;
+}
+
+.mailing__list {
+    .el-input__inner {
+        padding: 10px;
+        background: #333;
+        font-weight: bold;
+        color: #fff;
+        border-radius: none;
+    }
 }
 
 .newsletter__item {
@@ -56,8 +103,7 @@ export default {
     }
 
     &:nth-child(even) {
-        background: rgba(0, 0, 0, 0.90);
-        color: #fff;
+        background: rgba(0, 0, 0, 0.10);
     }
 }
 </style>

@@ -43,8 +43,8 @@ export default {
                     Services.updateUser(this.auth.userId, this.form)
                         .then(res => {
                             this.$notify({
-                                title: 'Success',
-                                message: 'Film mis à jour !',
+                                title: 'Film à jour',
+                                message: 'Le film a bien été mis à jour !',
                                 type: 'success'
                             });
                             this.$router.push(`/users/${this.auth.userId}`)

@@ -11,10 +11,12 @@ import VueYouTubeEmbed from 'vue-youtube-embed';
 import BigTitle from './components/utils/BigTitle.vue';
 import { store } from './store/store';
 import VueSocketio from 'vue-socket.io';
+import Clipboard from 'v-clipboard';
 Vue.use(VueSocketio, 'http://localhost:4001');
 Vue.use(VueYouTubeEmbed);
 Vue.use(BigTitle);
 Vue.use(ElementUI, { locale });
+Vue.use(Clipboard);
 
 Vue.config.productionTip = false;
 

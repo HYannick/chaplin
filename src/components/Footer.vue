@@ -90,7 +90,7 @@ export default {
                     Service.postEmail(this.form).then(() => {
                         this.$refs[formName].resetFields();
                         this.$notify({
-                            title: 'Success',
+                            title: 'Inscription réussie',
                             message: 'Vous êtes bien inscrit!',
                             type: 'success'
                         });
@@ -98,8 +98,8 @@ export default {
 
                 } else {
                     this.$notify({
-                        title: 'Error',
-                        message: 'Quelquechose ne va pas !',
+                        title: 'Erreur',
+                        message: 'Avez vous entré un email valide ?',
                         type: 'error'
                     });
                     return false;

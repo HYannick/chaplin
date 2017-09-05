@@ -12,7 +12,7 @@
                 <el-form-item label="Email" :label-width="formLabelWidth" prop="email">
                     <el-input v-model="ruleForm.email"></el-input>
                 </el-form-item>
-                <el-form-item label="Role" :label-width="formLabelWidth" prop="role">
+                <el-form-item label="Statut" :label-width="formLabelWidth" prop="role">
                     <el-select v-model="ruleForm.role" placeholder="Sélectionnez un rôle">
                         <el-option label="Admin" value="admin"></el-option>
                         <el-option label="Bénévole" value="volunteer"></el-option>
@@ -65,12 +65,11 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     Services.createUser(this.ruleForm).then((res) => {
-                        console.log(res.data)
                         this.$emit('created');
                         this.dialogVisible = false;
                         this.$notify({
-                            title: 'Success',
-                            message: 'Utilisateur créé!',
+                            title: 'Utilisateur créé',
+                            message: 'Utilisateur bien enregistré!',
                             type: 'success'
                         });
                         this.$refs[formName].resetFields();
