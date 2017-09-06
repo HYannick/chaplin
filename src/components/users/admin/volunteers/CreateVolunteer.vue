@@ -69,18 +69,18 @@ export default {
                         this.dialogVisible = false;
                         this.$notify({
                             title: 'Utilisateur créé',
-                            message: 'Utilisateur bien enregistré!',
+                            message: 'Utilisateur bien enregistré !',
                             type: 'success'
                         });
                         this.$refs[formName].resetFields();
                     })
                 } else {
-                     this.$notify({
-                            title: 'Error',
-                            message: 'Quelquechose ne va pas !',
-                            type: 'error'
-                        });
-    
+                    this.$notify({
+                        title: 'Erreur',
+                        message: 'Une erreur s\'est produite',
+                        type: 'error'
+                    });
+
                     return false;
                 }
             });

@@ -98,8 +98,14 @@ export default {
             Services.postAnnounce(this.form.pushline).then(res => {
                 this.$notify({
                     title: 'Annonce à jour',
-                    message: 'L\'annonce a bien été mise à jour!',
+                    message: 'L\'annonce a bien été mise à jour !',
                     type: 'success'
+                });
+            }).catch(err => {
+                this.$notify({
+                    title: 'Erreur',
+                    message: 'Une erreur s\'est produite',
+                    type: 'error'
                 });
             })
         }

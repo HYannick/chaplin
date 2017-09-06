@@ -93,8 +93,14 @@ export default {
                 this.userList = res.data;
                 this.$notify({
                     title: 'Suppression',
-                    message: 'Utilisateur supprimé!',
+                    message: 'Utilisateur supprimé !',
                     type: 'success'
+                });
+            }).catch(err => {
+                this.$notify({
+                    title: 'Erreur',
+                    message: 'Une erreur s\'est produite',
+                    type: 'error'
                 });
             })
         },
@@ -103,8 +109,14 @@ export default {
             Services.updateUser(this._idToEdit, this.userForm).then((res) => {
                 this.$notify({
                     title: 'Mise à jour',
-                    message: 'Bénévole mis à jour!',
+                    message: 'Bénévole mis à jour !',
                     type: 'success'
+                });
+            }).catch(err => {
+                this.$notify({
+                    title: 'Erreur',
+                    message: 'Une erreur s\'est produite',
+                    type: 'error'
                 });
             })
         },

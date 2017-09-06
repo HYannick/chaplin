@@ -60,8 +60,8 @@ export default {
             this.cover = URL.createObjectURL(file.raw);
             this.form.cover = res.cover[0].filename;
             this.$notify({
-                title: 'Upload réussit',
-                message: 'Images enregistrée !',
+                title: 'Ajout d\'affiche',
+                message: 'Affiche enregistrée !',
                 type: 'success'
             });
         },
@@ -70,10 +70,10 @@ export default {
             const isLt2M = file.size / 1024 / 1024 < 2;
 
             if (!isJPG) {
-                this.$message.error('Avatar picture must be JPG format!');
+                this.$message.error('Avatar picture must be JPG format !');
             }
             if (!isLt2M) {
-                this.$message.error('Avatar picture size can not exceed 2MB!');
+                this.$message.error('Avatar picture size can not exceed 2MB !');
             }
             return isJPG && isLt2M;
         },
@@ -96,7 +96,7 @@ export default {
                             this.$emit('reload-proposals');
                             this.$notify({
                                 title: 'Film à jour',
-                                message: 'Le film a bien été mis à jour!',
+                                message: 'Le film a bien été mis à jour !',
                                 type: 'success'
                             });
 
@@ -110,8 +110,8 @@ export default {
                         });
                 } else {
                     this.$notify({
-                        title: 'Une erreur s\'est produite',
-                        message: 'An error occured',
+                        title: 'Erreur',
+                        message: 'Une erreur s\'est produite',
                         type: 'error'
                     });
                     return false;

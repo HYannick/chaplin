@@ -15,7 +15,7 @@
                         </el-form-item>
                     </el-col>
                 </el-row>
-    
+
                 <el-form-item>
                     <el-button type="primary" @click="onSubmit('form')">Update</el-button>
                     <el-button @click="back">Cancel</el-button>
@@ -51,11 +51,11 @@ export default {
                         })
                         .catch(err => {
                             this.$notify({
-                                title: 'Error',
-                                message: err,
+                                title: 'Erreur',
+                                message: 'Une erreur s\'est produite',
                                 type: 'error'
                             });
-                        });
+                        })
                 } else {
                     this.$notify({
                         title: 'Error',
@@ -82,7 +82,7 @@ export default {
             form: {
                 username: '',
                 email: '',
-               
+
             },
             rules: {
                 username: [

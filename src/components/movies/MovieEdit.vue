@@ -18,12 +18,12 @@
                                 <cs-tags v-model="form.authors"></cs-tags>
                                 <cs-tagslist v-model="form.authors"></cs-tagslist>
                             </el-form-item>
-    
+
                             <el-form-item label="Acteurs(s)">
                                 <cs-tags v-model="form.actors"></cs-tags>
                                 <cs-tagslist v-model="form.actors"></cs-tagslist>
                             </el-form-item>
-    
+
                             <el-form-item label="Genre(s)">
                                 <el-select v-model="form.genres" multiple placeholder="Select">
                                     <el-option v-for="item in genres" :key="item.value" :label="item.label" :value="item.value">
@@ -61,9 +61,9 @@
                                         </el-table-column>
                                     </el-table>
                                 </el-col>
-    
+
                             </el-row>
-    
+
                             <el-row :gutter="20">
                                 <el-col :xs="12" :sm="12" :md="12" :lg="12">
                                     <el-form-item label="Durée">
@@ -75,7 +75,7 @@
                                         <el-input v-model="form.releaseDate"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                
+
                                 <el-col :xs="24" :sm="24" :md="12" :lg="12">
                                     <el-form-item label="Langues">
                                         <el-input v-model="form.language"></el-input>
@@ -88,7 +88,7 @@
                                     <el-form-item label="Synopsis">
                                         <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 8}" v-model="form.synopsis"></el-input>
                                     </el-form-item>
-    
+
                                 </el-col>
                                 <el-col :span="24">
                                     <el-form-item label="trailer">
@@ -109,12 +109,12 @@
                                         <el-button style="margin-top: 10px" @click="submitImages">Upload Images</el-button>
                                     </el-form-item>
                                 </el-col>
-    
+
                             </el-row>
                         </el-col>
-    
+
                     </el-row>
-    
+
                     <el-form-item>
                         <el-button type="primary" @click="onSubmit('form')">Update</el-button>
                         <el-button type="danger" @click="deleteMovie">Delete</el-button>
@@ -122,7 +122,7 @@
                     </el-form-item>
                 </el-form>
             </el-col>
-    
+
         </el-row>
     </transition>
 </template>
@@ -212,7 +212,7 @@ export default {
                 this.fileList.push({ 'name': image, 'url': `${api.ftpUrl}/${image}` })
             });
             this.cover = `${api.ftpUrl}/${res.data.cover}`;
-           
+
         });
     },
     methods: {
@@ -220,7 +220,7 @@ export default {
             return moment.unix(row.date).format('ddd DD MMM YYYY');
         },
         formatDubbing(row, column) {
-            return row.dubbing ||'VF'
+            return row.dubbing || 'VF'
         },
         submitCover() {
             this.$refs.upCover.submit();
@@ -230,14 +230,14 @@ export default {
                 this.cover = '';
                 this.form.cover = '';
                 this.$notify({
-                    title: 'Success',
-                    message: 'Cover deleted!',
+                    title: 'Suppression',
+                    message: 'Affiche supprimée !',
                     type: 'success'
                 });
             }).catch(err => {
                 this.$notify({
-                    title: 'Error',
-                    message: 'Something bad Happenned!',
+                    title: 'Erreur',
+                    message: 'Une erreur s\'est produite',
                     type: 'error'
                 });
             })
@@ -253,15 +253,15 @@ export default {
             this.cover = URL.createObjectURL(file.raw);
             this.form.cover = res.cover[0].filename;
             this.$notify({
-                title: 'Success',
-                message: 'Images uploaded !',
+                title: 'Ajout d\'affiche',
+                message: 'Affiche ajoutée !',
                 type: 'success'
             });
         },
         handleListSuccess(res, file) {
             this.$notify({
-                title: 'Success',
-                message: 'Images uploaded !',
+                title: 'Ajout d\'images',
+                message: 'Images ajoutées !',
                 type: 'success'
             });
         },
@@ -289,10 +289,10 @@ export default {
             const isLt2M = file.size / 1024 / 1024 < 2;
 
             if (!isJPG) {
-                this.$message.error('Avatar picture must be JPG format!');
+                this.$message.error('Avatar picture must be JPG format !');
             }
             if (!isLt2M) {
-                this.$message.error('Avatar picture size can not exceed 2MB!');
+                this.$message.error('Avatar picture size can not exceed 2MB !');
             }
             return isJPG && isLt2M;
         },
@@ -310,7 +310,7 @@ export default {
                     Services.updateMovie(this.id, this.form)
                         .then(res => {
                             this.$notify({
-                                title: 'Success',
+                                title: 'Mise à jour',
                                 message: 'Film mis à jour !',
                                 type: 'success'
                             });
@@ -318,15 +318,15 @@ export default {
                         })
                         .catch(err => {
                             this.$notify({
-                                title: 'Error',
-                                message: err,
+                                title: 'Erreur',
+                                message: 'Une erreur s\'est produite',
                                 type: 'error'
                             });
                         });
                 } else {
                     this.$notify({
-                        title: 'Error',
-                        message: 'An error occured',
+                        title: 'Erreur',
+                        message: 'Une erreur s\'est produite',
                         type: 'error'
                     });
                     return false;
@@ -334,12 +334,11 @@ export default {
             })
         },
         deleteMovie() {
-            this.$confirm('Are you sure to delete this movie ?')
+            this.$confirm('Etes vous sûr de vouloir supprimer ce film ?')
                 .then(_ => {
-                    console.log('Deleting ...');
                     Services.removeMovie(this.id).then(res => {
                         this.$notify({
-                            title: 'Success',
+                            title: 'Suppression',
                             message: 'Film supprimé !',
                             type: 'success'
                         });
@@ -348,8 +347,8 @@ export default {
                 })
                 .catch(err => {
                     this.$notify({
-                        title: 'Error',
-                        message: err,
+                        title: 'Erreur',
+                        message: 'Une erreur s\'est produite',
                         type: 'error'
                     });
                 });

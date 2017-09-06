@@ -9,8 +9,8 @@ export const login = ({ commit }, payload) => {
             localStorage.setItem('role', res.data.user.role);
             localStorage.setItem('user', res.data.user._id);
             Notification({
-                title: 'Bienvenue',
-                message: `Bienvenue, ${res.data.user.username || 'Utilisateur'}`,
+                title: `Bienvenue, ${res.data.user.username || 'Utilisateur'}`,
+                message: '',
                 type: 'success'
             });
             commit('granted', res.data.user._id);
@@ -19,8 +19,8 @@ export const login = ({ commit }, payload) => {
         })
         .catch(err => {
             Notification({
-                title: 'Error',
-                message: 'err',
+                title: 'Erreur',
+                message: 'Accès refusé',
                 type: 'error'
             });
         });

@@ -91,8 +91,14 @@ export default {
                         this.$refs[formName].resetFields();
                         this.$notify({
                             title: 'Inscription réussie',
-                            message: 'Vous êtes bien inscrit!',
+                            message: 'Vous êtes bien inscrit !',
                             type: 'success'
+                        });
+                    }).catch(err => {
+                        this.$notify({
+                            title: 'Erreur',
+                            message: 'Une erreur s\'est produite',
+                            type: 'error'
                         });
                     })
 
