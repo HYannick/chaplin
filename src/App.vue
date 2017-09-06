@@ -17,7 +17,7 @@
       </el-col>
     </el-row>
     <el-row :gutter="40">
-      <el-col :xs="24" :sm="24" :md="18" :lg="18">
+      <el-col :xs="24" :sm="24" :md="18">
         <ch-footer></ch-footer>
       </el-col>
     </el-row>
