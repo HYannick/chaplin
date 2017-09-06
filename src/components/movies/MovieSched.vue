@@ -5,10 +5,10 @@
                 <el-row :gutter="20">
                     <div id="timeline" class="timeline">
                         <div class="timeline__left"  v-show="display === 'homeSchedule'">
-                            <span class="next__diffusion">Prochaine<br>Séance</span>
+                            <span class="next__diffusion">Prochaine<br>séance</span>
                         </div>
                         <div class="timeline__right" v-show="display !== 'upcoming'">
-                            <span class="next__dates">Prochaines<br>Dates</span>
+                            <span class="next__dates">Prochaines<br>dates</span>
                         </div>
                         <el-col class="row__schedule" :xs="24" :sm="24" :md="24" :lg="24" v-for="(movie, index) in movies" :key="movie._id">
                             <div class="row__background">
@@ -36,7 +36,7 @@
                                     </div>
                                 </el-col>
                                 <div class="next__schedule" data-title="Toutes les séances" v-show="display !== 'upcoming'">
-                                    <p v-for="(date, index) in availabilities(movie)" :key="index">{{date}}</p>
+                                    <p v-for="(date, index) in availabilities(movie)" :key="index">{{date | capitalize}}</p>
                                 </div>
                             </div>
 

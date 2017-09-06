@@ -68,8 +68,8 @@
                                             <li>{{movie.language}}</li>
                                         </ul>
                                         <ul class="movie__authors">
-                                            <li>Genres |</li>
-                                            <li v-for="(genre,index) in movie.genres" :key="index">{{genre}}</li>
+                                            <li>Genre(s) |</li>
+                                            <li>{{movie.genres.join(' / ')}}</li>
                                         </ul>
                                     </div>
                                 </el-col>
@@ -82,7 +82,7 @@
                             <div class="timesheet">
                                 <big-title title="Horaires" orientation="center"></big-title>
                                 <div class="timesheet__item" v-for="(timesheet,index) in dates" :key="index">
-                                    <p class="timesheet__date">{{timesheet.date}}</p>
+                                    <p class="timesheet__date">{{timesheet.date | capitalize}}</p>
                                     <p class="timesheet__time">{{timesheet.time}}</p>
                                     <p class="timesheet__dubbing">{{timesheet.dubbing}}</p>
                                 </div>
@@ -113,7 +113,7 @@
                     <el-row v-show="related.length !== 0">
                         <el-col :span="24">
                             <div class="related__movies">
-                                <big-title title="Films Similaires" orientation="center"></big-title>
+                                <big-title title="Films similaires" orientation="center"></big-title>
                                 <el-row :gutter="20">
                                     <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(movie, index) in related" :key="movie._id">
                                         <movie-card :movie="movie"></movie-card>
@@ -142,6 +142,13 @@ export default {
         'image-loader': ImageLoader,
         'movie-card': MovieCard,
         'big-title': BigTitle
+    },
+    filters: {
+        capitalize: function(value) {
+            if (!value) return ''
+            value = value.toString()
+            return value.charAt(0).toUpperCase() + value.slice(1)
+        }
     },
     created() {
         this.getMovieReady(this.id)
@@ -256,20 +263,21 @@ export default {
 
 .timesheet {
     &__item {
-        display: flex;
         font-size: 28px;
         font-weight: bolder;
         max-width: 500px;
         margin: 0 auto;
         width: 100%;
         p {
-            flex-grow: 1;
+            display: inline-block;
             text-align: center;
             font-family: 'inconsolataBold', monospace;
             margin: 0;
         }
     }
-    &__date {}
+    &__date {
+        width: 350px;
+    }
     &__time,
     &__dubbing {
         opacity: 0.6

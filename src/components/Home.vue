@@ -26,7 +26,7 @@
                         <movie-list-popular :limit="4"></movie-list-popular>
                     </div>
                     <div class="timeline__schedule">
-                        <big-title title="Au Programme" orientation="top"></big-title>
+                        <big-title title="Au programme" orientation="top"></big-title>
                         <div class="movie__planning">
                             <movie-timeline :movies="movies" :maxRow="isMax" display="homeSchedule" @refresh="loadMovies"></movie-timeline>
                         </div>

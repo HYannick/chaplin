@@ -4,7 +4,7 @@
             <el-col :span="18" :offset="3">
                 <div class="newsletter__form">
                     <el-form ref="form" :rules="rules" class="newsletter" label-position="left" label-width="250px" :model="form">
-                        <el-form-item label="S'inscrire à la Newsletter" prop="email">
+                        <el-form-item label="S'inscrire à la newsletter" prop="email">
                             <el-input placeholder="Adresse email" v-model="form.email">
                                 <el-button slot="append" @click="onSubmit('form')">S'inscrire</el-button>
                             </el-input>
@@ -30,8 +30,7 @@
             </el-col>
             <el-col :span="24">
                 <div class="deep_foot">
-                    <p>Vous êtes le
-                        <span class="nb__visitors">456978</span> visiteur ! | Copyright©Ayho.nine - Chaplin Montmelian |
+                    <p>Copyright©Ayho.nine - Chaplin Montmelian |
                         <span class="m__legals" @click="dialogVisible = true">Mentions Légales</span>
                     </p>
                 </div>
@@ -105,7 +104,7 @@ export default {
                 } else {
                     this.$notify({
                         title: 'Erreur',
-                        message: 'Avez vous entré un email valide ?',
+                        message: 'Avez-vous entré un email valide ?',
                         type: 'error'
                     });
                     return false;

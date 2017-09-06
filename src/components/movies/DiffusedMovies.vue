@@ -3,7 +3,7 @@
         <el-row>
             <el-col :span="24">
                 <div class="diffused__movies">
-                    <big-title title="En Salle" orientation="bottom"></big-title>
+                    <big-title title="En salle" orientation="bottom"></big-title>
                     <diffused-movies :movies="movies" :maxRow="isMax" display="diffusedList" @refresh="loadMovies"></diffused-movies>
                 </div>
             </el-col>
