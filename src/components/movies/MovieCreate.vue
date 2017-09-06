@@ -6,7 +6,7 @@
                 <el-form ref="form" label-position="top" :rules="rules" :model="form" label-width="120px" class="form-add">
                     <el-row :gutter="20">
                         <el-col :xs="24" :sm="24" :md="8" :lg="8">
-                            <el-form-item label="Movie Cover">
+                            <el-form-item label="Affiche du film">
                                 <el-upload class="avatar-uploader" name="cover" :action="`${apiRoot}/upload/cover`" :show-file-list="false" :on-success="handleAvatarSuccess" :on-change="handleCoverPreview" :auto-upload="false" ref="upCover">
                                     <img v-if="cover" :src="cover" class="avatar">
                                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -91,7 +91,7 @@
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="24">
-                                    <el-form-item label="trailer">
+                                    <el-form-item label="Bande d'annonce">
                                         <el-input v-model="form.trailer"></el-input>
                                         <transition name="el-fade-in-linear">
                                             <youtube v-show="form.trailer !== ''" :video-id="getTrailerUrl" player-height="400px" player-width="100%"></youtube>
@@ -115,7 +115,7 @@
                     <el-form-item>
                         <el-button type="primary" @click="onSubmit('form')">Create</el-button>
                         <el-button @click="resetForm('form')">Reset</el-button>
-                        <el-button @click="back">Cancel</el-button>
+                        <el-button @click="back">Annuler</el-button>
                     </el-form-item>
                 </el-form>
             </el-col>

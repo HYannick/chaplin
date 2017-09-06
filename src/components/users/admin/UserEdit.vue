@@ -17,8 +17,8 @@
                 </el-row>
 
                 <el-form-item>
-                    <el-button type="primary" @click="onSubmit('form')">Update</el-button>
-                    <el-button @click="back">Cancel</el-button>
+                    <el-button type="primary" @click="onSubmit('form')">Mettre à jour</el-button>
+                    <el-button @click="back">Annuler</el-button>
                 </el-form-item>
             </el-form>
         </div>

@@ -39,7 +39,7 @@
             <el-dialog title="Mentions Légales" :visible.sync="dialogVisible" size="small">
                 <m-legals></m-legals>
                 <span slot="footer" class="dialog-footer">
-                    <el-button @click="dialogVisible = false">Cancel</el-button>
+                    <el-button @click="dialogVisible = false">Annuler</el-button>
                     <el-button type="primary" @click="dialogVisible = false">Confirm</el-button>
                 </span>
             </el-dialog>

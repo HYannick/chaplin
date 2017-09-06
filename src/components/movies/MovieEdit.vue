@@ -91,7 +91,7 @@
 
                                 </el-col>
                                 <el-col :span="24">
-                                    <el-form-item label="trailer">
+                                    <el-form-item label="Bande d'annonce">
                                         <el-input v-model="form.trailer"></el-input>
                                         <transition name="el-fade-in-linear">
                                             <youtube v-show="form.trailer !== ''" :video-id="getTrailerUrl" player-height="400px" player-width="100%"></youtube>
@@ -116,9 +116,9 @@
                     </el-row>
 
                     <el-form-item>
-                        <el-button type="primary" @click="onSubmit('form')">Update</el-button>
-                        <el-button type="danger" @click="deleteMovie">Delete</el-button>
-                        <el-button @click="back">Cancel</el-button>
+                        <el-button type="primary" @click="onSubmit('form')">Mettre à jour</el-button>
+                        <el-button type="danger" @click="deleteMovie">Supprimer</el-button>
+                        <el-button @click="back">Annuler</el-button>
                     </el-form-item>
                 </el-form>
             </el-col>

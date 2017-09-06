@@ -46,7 +46,7 @@
                             </router-link>
                         </el-menu-item>
                         <el-menu-item index="8">
-                            <a @click="disconnect">Logout</a>
+                            <a @click="disconnect">Se déconnecter</a>
                         </el-menu-item>
                     </div>
                 </transition>

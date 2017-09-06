@@ -11,15 +11,15 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="24">
-                            <el-form-item label="Password" prop="password">
+                            <el-form-item label="Mot de passe" prop="password">
                                 <el-input type="password" v-model="user.password"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
     
                     <el-form-item>
-                        <el-button type="primary" @click="onSubmit('form')">Login</el-button>
-                        <el-button @click="back">Cancel</el-button>
+                        <el-button type="primary" @click="onSubmit('form')">Se connecter</el-button>
+                        <el-button @click="back">Annuler</el-button>
                     </el-form-item>
                 </el-form>
             </el-col>
@@ -45,7 +45,7 @@ export default {
                     { required: true, message: 'Veuillez entrer un email', trigger: 'blur' },
                 ],
                 password: [
-                    { required: true, message: 'Veuillez entrer un password', trigger: 'blur' },
+                    { required: true, message: 'Veuillez entrer un mot de passe', trigger: 'blur' },
                 ]
             },
         }

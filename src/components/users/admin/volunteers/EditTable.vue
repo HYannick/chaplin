@@ -26,7 +26,7 @@
                 <el-form-item label="Email" :label-width="formLabelWidth">
                     <el-input v-model="userForm.email" auto-complete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="Role" :label-width="formLabelWidth">
+                <el-form-item label="Statut" :label-width="formLabelWidth">
                     <el-select v-model="userForm.role" placeholder="Sélectionnez un rôle">
                         <el-option label="Admin" value="admin"></el-option>
                         <el-option label="Bénévole" value="volunteer"></el-option>
@@ -34,7 +34,7 @@
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">Cancel</el-button>
+                <el-button @click="dialogFormVisible = false">Annuler</el-button>
                 <el-button type="primary" @click="submitUser()">Confirm</el-button>
             </span>
         </el-dialog>

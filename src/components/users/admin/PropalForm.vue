@@ -5,7 +5,7 @@
                 <h5>Proposer un film</h5>
                 <el-row :gutter="20">
                     <el-col :md="12">
-                        <el-form-item label="Movie Cover">
+                        <el-form-item label="Affiche du film">
                             <el-upload class="avatar-uploader" name="cover" :action="`${apiRoot}/upload/cover`" :show-file-list="false" :on-success="handleAvatarSuccess" :on-change="handleCoverPreview" :auto-upload="false" ref="upCover">
                                 <img v-if="cover" :src="cover" class="avatar">
                                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -27,8 +27,8 @@
                     </el-col>
                     <el-col :md="12">
                         <el-form-item>
-                            <el-button type="primary" @click="onSubmit('form')">Update</el-button>
-                            <el-button @click="back">Cancel</el-button>
+                            <el-button type="primary" @click="onSubmit('form')">Mettre à jour</el-button>
+                            <el-button @click="back">Annuler</el-button>
                         </el-form-item>
                     </el-col>
                 </el-row>

@@ -14,7 +14,7 @@
                 </el-form-item>
                 <el-form-item label="Statut" :label-width="formLabelWidth" prop="role">
                     <el-select v-model="ruleForm.role" placeholder="Sélectionnez un rôle">
-                        <el-option label="Admin" value="admin"></el-option>
+                        <el-option label="Administrateur" value="admin"></el-option>
                         <el-option label="Bénévole" value="volunteer"></el-option>
                     </el-select>
                 </el-form-item>
@@ -23,7 +23,7 @@
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">Cancel</el-button>
+                <el-button @click="dialogVisible = false">Annuler</el-button>
                 <el-button type="primary" @click="addUser('ruleForm')">Ajouter</el-button>
             </span>
         </el-dialog>

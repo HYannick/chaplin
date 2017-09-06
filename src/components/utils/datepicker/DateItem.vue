@@ -16,7 +16,7 @@
             </el-select>
         </el-col>
         <el-button type="primary" @click="confirmDate">Confirm</el-button>
-        <el-button  @click="cancelDate">Cancel</el-button>
+        <el-button  @click="cancelDate">Annuler</el-button>
     
     </el-row>
 </template>

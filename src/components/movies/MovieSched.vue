@@ -43,7 +43,7 @@
                         </el-col>
                     </div>
                     <div class="foot__view-more" v-show="!maxRow">
-                        <button class="view__more" @click="refresh()">View More</button>
+                        <button class="view__more" @click="refresh()">Plus de films</button>
                     </div>
                 </el-row>
             </el-col>
