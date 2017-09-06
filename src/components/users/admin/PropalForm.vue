@@ -11,8 +11,8 @@
                                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                                 {{form.cover}}
                             </el-upload>
-                            <el-button style="margin-top: 10px" type="primary" size="small" @click="submitCover">Upload Cover</el-button>
-                            <el-button style="margin-top: 10px" type="danger" size="small" @click="changeCover">Delete Cover</el-button>
+                            <el-button style="margin-top: 10px" type="primary" size="small" @click="submitCover">Ajouter</el-button>
+                            <el-button style="margin-top: 10px" type="danger" size="small" @click="changeCover">Supprimer</el-button>
                         </el-form-item>
                     </el-col>
                     <el-col :md="12">

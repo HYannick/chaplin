@@ -5,7 +5,7 @@
                 <div class="newsletter__form">
                     <el-form ref="form" :rules="rules" class="newsletter" label-position="left" label-width="250px" :model="form">
                         <el-form-item label="S'inscrire à la Newsletter" prop="email">
-                            <el-input placeholder="Allez-y c'est gratuit :D" v-model="form.email">
+                            <el-input placeholder="Adresse email" v-model="form.email">
                                 <el-button slot="append" @click="onSubmit('form')">S'inscrire</el-button>
                             </el-input>
                         </el-form-item>
@@ -18,13 +18,13 @@
                         <gmap-marker :key="index" v-for="(m, index) in markers" :position="m.position" :clickable="true" :draggable="true" @click="center=m.position"></gmap-marker>
                     </gmap-map>
                     <div class="info_cine">
-                        <h4>Cinéma Charlie </h4>
+                        <h4>Cinéma Charlie Chaplin </h4>
                         <p class="subtle">Espace François Miterrand</p>
                         <p class="address">Place Centenaire<br>73800 Montmelian</p>
                         <p class="contact__mail">
-                            <b>Mail</b>: @gmail.com</p>
+                            <b>Mail</b> : montmeliancine@gmail.com</p>
                         <p class="contact__phone">
-                            <b>Tel</b>: 04 79 84 74 59</p>
+                            <b>Tel</b> : 04 79 84 74 59</p>
                     </div>
                 </div>
             </el-col>

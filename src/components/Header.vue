@@ -26,7 +26,7 @@
                 </el-menu-item>
                 <el-menu-item index="4">
                     <router-link to="/infos">
-                        Infos pratiques
+                        Tarifs
                     </router-link>
                 </el-menu-item>
     

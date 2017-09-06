@@ -9,13 +9,13 @@
                     <el-col :span="6">
                         <div class="add__link">
                             <router-link v-show="auth.logged && auth.role == 'admin'" to="/movies/add">
-                                <el-button>Add a movie</el-button>
+                                <el-button>Ajouter un film</el-button>
                             </router-link>
                         </div>
                     </el-col>
-                    <el-col :span="6">
+                    <!--<el-col :span="6">
                         <el-autocomplete class="inline-input" v-model="search" :fetch-suggestions="querySearch" placeholder="Please Input" :trigger-on-focus="false" @select="handleSelect"></el-autocomplete>
-                    </el-col>
+                    </el-col>-->
                 </el-row>
                 <el-row :gutter="20">
                     <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(movie, index) in searchRes   " :key="movie._id">

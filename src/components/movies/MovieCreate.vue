@@ -12,8 +12,8 @@
                                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                                     {{form.cover}}
                                 </el-upload>
-                                <el-button style="margin-top: 10px" type="primary" @click="submitCover">Upload Cover</el-button>
-                                <el-button style="margin-top: 10px" type="danger" @click="changeCover">Delete Cover</el-button>
+                                <el-button style="margin-top: 10px" type="primary" @click="submitCover">Ajouterr</el-button>
+                                <el-button style="margin-top: 10px" type="danger" @click="changeCover">Supprimer</el-button>
                             </el-form-item>
 
                             <el-form-item label="Auteur(s)">
@@ -106,7 +106,7 @@
                                         <el-dialog v-model="dialogVisible" size="large">
                                             <img width="100%" :src="dialogImageUrl" alt="">
                                         </el-dialog>
-                                        <el-button style="margin-top: 10px" @click="submitImages">Upload Images</el-button>
+                                        <el-button style="margin-top: 10px" @click="submitImages">Ajouter</el-button>
                                     </el-form-item>
                                 </el-col>
                             </el-row>

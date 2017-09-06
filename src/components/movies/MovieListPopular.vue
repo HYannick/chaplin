@@ -4,15 +4,13 @@
             <el-col :span="24">
                 <div class="popular__movies">
                     <el-row :gutter="10">
-                        <el-col :offset="4">
-                            <el-col :xs="12" :sm="12" :md="5" :lg="5" v-for="(movie, index) in movies" :key="movie._id">
-                                <movie-card :movie="movie"></movie-card>
-                            </el-col>
+                        <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(movie, index) in movies" :key="movie._id">
+                            <movie-card :movie="movie"></movie-card>
                         </el-col>
                     </el-row>
                 </div>
             </el-col>
-    
+
         </el-row>
     </transition>
 </template>
@@ -22,12 +20,13 @@ import Service from '../../services/services.js';
 import MovieCard from './MovieCard';
 import _ from 'lodash';
 export default {
+    props: ['limit'],
     components: {
         'movie-card': MovieCard
     },
     created() {
         Service.getMovies().then(res => {
-            this.movies = _.shuffle(res.data.filter(movie => movie.diffused == true)).slice(0,4)
+            this.movies = _.shuffle(res.data.filter(movie => movie.diffused == true)).slice(0, this.limit)
         });
     },
     data() {

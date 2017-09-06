@@ -18,13 +18,15 @@
                     </el-row>
                 </template>
             </el-table-column>
-            <el-table-column prop="date" label="Séance" :width="160" :formatter="formatDate">
+            <el-table-column prop="date" label="Séance" :width="200" :formatter="formatDate">
             </el-table-column>
             <el-table-column prop="time" label="Horaire" :width="100">
             </el-table-column>
+            <el-table-column prop="dubbing" label="Doublage" :width="100">
+            </el-table-column>
             <el-table-column prop="title" label="Film">
             </el-table-column>
-            <el-table-column v-if="auth.logged" prop="volunteer" label="Adhérent" :width="140">
+            <el-table-column v-if="auth.logged" prop="volunteer" label="Bénévole" :width="140">
             </el-table-column>
             <el-table-column v-if="auth.logged" label="" :width="140">
                 <template scope="props">
@@ -76,10 +78,13 @@ export default {
                 });
 
                 this.tableData = [].concat(...mapped).filter(item => {
+                     
                     return moment(item.fullDate).unix() >= now;
                 }).map(item => {
+           
                     const date = moment(item.fullDate).unix();
                     const { time } = item;
+                    const { dubbing } = item
                     const data = this.movies.filter(movie => {
                         return movie.dates.indexOf(item) !== -1;
                     }).map(({ title, _id, cover, desc, volunteers }) => {
@@ -100,6 +105,7 @@ export default {
                     return {
                         date,
                         time,
+                        dubbing,
                         title: data[0].title,
                         id: data[0]._id,
                         cover: data[0].cover,
