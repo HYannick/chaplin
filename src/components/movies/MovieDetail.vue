@@ -265,7 +265,7 @@ export default {
     &__item {
         font-size: 28px;
         font-weight: bolder;
-        max-width: 500px;
+        max-width: 600px;
         margin: 0 auto;
         width: 100%;
         p {
@@ -276,7 +276,10 @@ export default {
         }
     }
     &__date {
-        width: 350px;
+        @media screen and (min-width: 768px) {
+            width: 350px;
+        }
+
     }
     &__time,
     &__dubbing {

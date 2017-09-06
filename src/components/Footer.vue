@@ -1,10 +1,10 @@
 <template>
     <transition name="el-fade-in-linear">
         <div class="ch-footer">
-            <el-col :span="18" :offset="3">
+            <el-col :xs="24" :sm="24" :md="{'span':18, 'offset': 3}" :lg="{'span':18, 'offset': 3}" >
                 <div class="newsletter__form">
                     <el-form ref="form" :rules="rules" class="newsletter" label-position="left" label-width="250px" :model="form">
-                        <el-form-item label="S'inscrire à la newsletter" prop="email">
+                        <el-form-item class="ns_container" label="S'inscrire à la newsletter" prop="email">
                             <el-input placeholder="Adresse email" v-model="form.email">
                                 <el-button slot="append" @click="onSubmit('form')">S'inscrire</el-button>
                             </el-input>
@@ -126,7 +126,16 @@ export default {
 .map {
     position: relative;
 }
-
+@media screen and (max-width: 768px) {
+    .ns_container {
+        label {
+            width: 100% !important;
+        }
+        .el-form-item__content{
+            margin: 0 !important;
+        }
+    }
+}
 .newsletter {
     label {
         font-weight: bold;

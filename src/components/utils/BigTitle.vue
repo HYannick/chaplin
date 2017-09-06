@@ -50,6 +50,9 @@ export default {
             left: 30px;
             font-size: 115px;
             opacity: .05;
+            @media screen and (max-width: 768px) {
+                display: none;
+            }
         }
     }
 }

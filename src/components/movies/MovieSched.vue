@@ -4,13 +4,13 @@
             <el-col :span="24">
                 <el-row :gutter="20">
                     <div id="timeline" class="timeline">
-                        <div class="timeline__left"  v-show="display === 'homeSchedule'">
+                        <div class="timeline__left" v-show="display === 'homeSchedule'">
                             <span class="next__diffusion">Prochaine<br>séance</span>
                         </div>
                         <div class="timeline__right" v-show="display !== 'upcoming'">
                             <span class="next__dates">Prochaines<br>dates</span>
                         </div>
-                        <el-col class="row__schedule" :xs="24" :sm="24" :md="24" :lg="24" v-for="(movie, index) in movies" :key="movie._id">
+                        <el-col class="row__schedule" :span="24" v-for="(movie, index) in movies" :key="movie._id">
                             <div class="row__background">
                                 <img :src="transformUrl(movie)" />
                             </div>
@@ -22,12 +22,12 @@
                                     </p>
                                 </div>
 
-                                <el-col :span="5">
+                                <el-col :xs="24" :sm="24" :md="5" :lg="5">
                                     <div class="timeline__item">
                                         <movie-card :movie="movie"></movie-card>
                                     </div>
                                 </el-col>
-                                <el-col :span="10">
+                                <el-col :xs="24" :sm="24" :md="10" :lg="10">
                                     <div class="timeline__item">
                                         <h5 class="m-title">{{movie.title}}</h5>
                                         <br>
@@ -85,7 +85,7 @@ export default {
             this.limit += 2;
             this.$emit('refresh', this.limit);
         },
-        
+
         transformUrl(movie) {
             return `${api.ftpUrl}/${movie.imageSet[1]}`
         },
@@ -112,16 +112,25 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+@media screen and (max-width: 768px) {
+    .timeline__right,
+    .timeline__left {
+        display: none;
+    }
+}
+
 .foot__view-more {
     position: relative;
-    width: 115%;
     height: 200px;
     z-index: 4;
     background: #fff;
-    transform: translateX(-15%);
     display: flex;
     justify-content: center;
     align-items: start;
+    @media screen and (min-width: 768px) {
+        width: 115%;
+        transform: translateX(-15%);
+    }
     button {
         margin-top: 30px;
         position: relative;
@@ -191,6 +200,9 @@ export default {
 
 .row__schedule {
     position: relative;
+    @media screen and (max-width: 768px) {
+        margin-bottom: 20px;
+    }
     &:hover {
         .row__background {
             opacity: 0.2;
@@ -254,19 +266,27 @@ export default {
 
 .next__schedule {
     background: #fff;
-    position: absolute;
-    z-index: 10;
-    right: 20px;
-    top: 40%;
-    padding: 20px 10px;
-    transform: translateY(-50%);
+    padding: 70px 10px 20px;
     text-align: center;
     font-weight: bold;
     font-size: 16px;
     font-family: 'inconsolataBold', monospace;
-    max-width: 190px;
     width: 100%;
     transition: 0.3s;
+    display: table;
+    box-shadow: inset 0 0 0 2px #000;
+    position: relative;
+    @media screen and (min-width: 768px) {
+        position: absolute;
+        z-index: 10;
+        right: 20px;
+        top: 40%;
+        box-shadow: none;
+        transform: translateY(-50%);
+        max-width: 190px;
+        padding: 20px 10px;
+    }
+
     &:before {
         content: attr(data-title);
         font-family: 'inconsolataBold', monospace;
@@ -284,6 +304,10 @@ export default {
         background: #000;
         color: #fff;
         transition: 0.3s;
+        @media screen and (max-width: 768px) {
+            opacity: 1;
+            top: 8px;
+        }
     }
     p {
         margin: 0;
@@ -345,6 +369,9 @@ export default {
     transform: translateY(-50%);
     position: absolute;
     left: -100px;
+    @media screen and (max-width: 768px) {
+        display: none;
+    }
     &:before {
         content: '';
         position: absolute;

@@ -62,6 +62,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+
 .newsletter__list {
     padding: 0;
     overflow: hidden;

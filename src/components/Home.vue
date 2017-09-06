@@ -67,11 +67,7 @@ export default {
             this.carouselMovies = res.data.movieList;
             this.loaded = true;
         });
-        Service.getAnnounce().then(res => {
-            console.log(res.data[0])
-            this.announce = res.data[0] || { title: '', date: '' }
-            console.log(this.announce)
-        })
+        Service.getAnnounce().then(res => this.announce = res.data[0] || { title: '', date: '' })
     },
     data() {
         return {
@@ -86,6 +82,7 @@ export default {
     methods: {
         loadMovies(limit) {
             Service.getDiffusedMovies(limit).then(res => {
+                console.log(res.data.max);
                 this.movies = res.data.movieList;
                 this.isMax = res.data.max;
             })
