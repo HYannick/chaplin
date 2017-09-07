@@ -121,6 +121,7 @@ export default {
 <style lang="scss">
 .ch-footer {
     margin-top: 50px;
+    padding: 0 40px;
 }
 
 .map {

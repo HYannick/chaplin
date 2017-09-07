@@ -48,7 +48,7 @@ export default {
             this.$clipboard(this.mailing)
             this.$notify({
                     title: 'Copié !',
-                    message: 'Emails copiés dans la presse papier !',
+                    message: 'Emails copiés dans le presse papier !',
                     type: 'success'
                 });
             this.dialogVisible = false
