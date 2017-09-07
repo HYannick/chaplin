@@ -51,9 +51,7 @@
                     </div>
                 </transition>
                 <div class="social__network">
-                    <facebook-icon></facebook-icon>
-                    <twitter-icon></twitter-icon>
-                    <pinterest-icon></pinterest-icon>
+                    <facebook-icon url="https://www.facebook.com/"></facebook-icon>
                 </div>
             </el-menu>
     

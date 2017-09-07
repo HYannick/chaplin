@@ -18,9 +18,6 @@
                         <el-option label="Bénévole" value="volunteer"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item>
-
-                </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">Annuler</el-button>

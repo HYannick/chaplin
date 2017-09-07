@@ -1,21 +1,16 @@
 <template>
   <div id="app">
     <el-row>
-      <el-col :xs="24" :sm="24" :md="4" :lg="4">
+      <el-col :xs="24" :sm="24" :md="6" :lg="4">
         <ch-header></ch-header>
       </el-col>
-      <el-col :xs="24" :sm="24" :md="14" :lg="14" class="main__wrapper">
+      <el-col :xs="24" :sm="24" :md="18" :lg="14" class="main__wrapper">
         <router-view></router-view>
       </el-col>
       <el-col :span="6" class="fixed__side">
-        <div class="sidebar">
-          <div class="title__cinema">
-            <h2>CHAPLIN</h2>
-            <h4>Cinéma de Montmélian</h4>
-          </div>
-        </div>
+        <div class="sidebar"></div>
       </el-col>
-      <el-col :xs="24" :sm="24" :md="18">
+      <el-col :xs="24" :sm="24" :md="24" :lg="18">
         <ch-footer></ch-footer>
       </el-col>
     </el-row>
@@ -46,7 +41,7 @@ body {
   position: fixed;
   right: 0;
   top: 0;
-  @media screen and (max-width: 765px) {
+  @media screen and (max-width: 1024px) {
     display: none;
   }
 }

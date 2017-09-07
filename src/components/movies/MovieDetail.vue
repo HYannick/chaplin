@@ -268,6 +268,10 @@ export default {
         max-width: 600px;
         margin: 0 auto;
         width: 100%;
+        @media screen and (max-width: 768px) {
+             font-size: 26px;
+            text-align: center;
+        }
         p {
             display: inline-block;
             text-align: center;
@@ -279,7 +283,6 @@ export default {
         @media screen and (min-width: 768px) {
             width: 350px;
         }
-
     }
     &__time,
     &__dubbing {
@@ -466,7 +469,7 @@ export default {
         @media screen and (max-width: 768px) {
             transform: translateY(0);
         }
-        .lazy{
+        .lazy {
             border-radius: 0;
         }
     }

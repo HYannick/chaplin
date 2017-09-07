@@ -42,6 +42,11 @@ export default {
         position: relative;
         z-index: 10;
         font-size: 48px;
+        @media screen and (max-width: 768px) {
+            text-align: center;
+            font-size: 40px;
+        }
+
         &:before {
             content: attr(data-title);
             position: absolute;

@@ -158,6 +158,9 @@ export default {
     transform: translateY(-50%);
     right: 25px;
     padding: 20px;
+    @media screen and (max-width: 768px) {
+        right: 0;
+    }
     h4 {
         margin: 0;
     }
