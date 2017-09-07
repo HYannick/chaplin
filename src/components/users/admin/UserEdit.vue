@@ -7,8 +7,11 @@
                         <el-form-item label="Pseudonyme" prop="username">
                             <el-input v-model="form.username"></el-input>
                         </el-form-item>
-                        <el-form-item label="Mot de passe" prop="password">
-                            <el-input v-model="tempPassword"></el-input>
+                        <el-form-item label="Mot de passe" prop="tempPassword">
+                            <el-input type="password" v-model="form.tempPassword"></el-input>
+                        </el-form-item>
+                        <el-form-item label="Confirmer le mot de passe" prop="checkPass">
+                            <el-input type="password" v-model="form.checkPass" auto-complete="off"></el-input>
                         </el-form-item>
                         <el-form-item label="Email" prop="email">
                             <el-input v-model="form.email"></el-input>
@@ -37,10 +40,14 @@ export default {
             this.$refs[formName].resetFields();
         },
         onSubmit(formName) {
-            console.log('Submitting ...');
+
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    Services.updateUser(this.auth.userId, this.form)
+                    if (this.form.tempPassword !== '') {
+                        this.form.password = this.form.tempPassword;
+                    }
+                    const {username, email, password} = this.form;
+                    Services.updateUser(this.auth.userId, {username, email, password})
                         .then(res => {
                             this.$notify({
                                 title: 'Film à jour',
@@ -75,13 +82,35 @@ export default {
         Services.getUser(this.auth.userId, this.auth.token).then(res => {
             this.form = res.data;
         });
-
     },
     data() {
+        const validatePass = (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('Please input the password'));
+            } else {
+                if (this.form.checkPass !== '') {
+                    this.$refs.form.validateField('checkPass');
+                }
+                callback();
+            }
+        };
+        var validatePass2 = (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('Please input the password again'));
+            } else if (value !== this.form.tempPassword) {
+                console.log(value)
+                callback(new Error('Two inputs don\'t match!'));
+            } else {
+                callback();
+            }
+        };
         return {
             form: {
                 username: '',
                 email: '',
+                password: '',
+                tempPassword: '',
+                checkPass: ''
 
             },
             rules: {
@@ -91,9 +120,14 @@ export default {
                 email: [
                     { required: true, message: 'Veuillez entrer une adresse email', trigger: 'blur' },
                 ],
+                tempPassword: [
+                    { validator: validatePass, trigger: 'blur' }
+                ],
+                checkPass: [
+                    { validator: validatePass2, trigger: 'blur' }
+                ],
 
             },
-            tempPassword: ''
         }
     }
 }

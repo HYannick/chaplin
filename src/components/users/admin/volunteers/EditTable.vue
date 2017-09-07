@@ -35,6 +35,9 @@
                 <el-form-item label="Email" :label-width="formLabelWidth">
                     <el-input v-model="userForm.email" auto-complete="off"></el-input>
                 </el-form-item>
+                <el-form-item label="Mot de passe" :label-width="formLabelWidth" prop="password">
+                    <el-input type="password" v-model="userPassword"></el-input>
+                </el-form-item>
                 <el-form-item label="Statut" :label-width="formLabelWidth">
                     <el-select v-model="userForm.role" placeholder="Sélectionnez un rôle">
                         <el-option label="Administrateur" value="admin"></el-option>
@@ -64,9 +67,11 @@ export default {
             dialogTableVisible: false,
             dialogFormVisible: false,
             _idToEdit: '',
+            userPassword: '',
             userForm: {
                 email: '',
                 username: '',
+                password: '',
                 role: '',
             },
             formLabelWidth: '120px'
@@ -119,6 +124,7 @@ export default {
         },
         submitUser() {
             this.dialogFormVisible = false;
+            this.userForm.password = this.userPassword;
             Services.updateUser(this._idToEdit, this.userForm).then((res) => {
                 this.$notify({
                     title: 'Mise à jour',
