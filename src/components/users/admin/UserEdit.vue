@@ -98,7 +98,6 @@ export default {
             if (value === '') {
                 callback(new Error('Please input the password again'));
             } else if (value !== this.form.tempPassword) {
-                console.log(value)
                 callback(new Error('Two inputs don\'t match!'));
             } else {
                 callback();
