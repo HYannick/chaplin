@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div >
         <el-row>
             <el-col :span="12">
                 <big-title :title="user.username || 'Profil'" back="Infos" orientation="bottom"></big-title>

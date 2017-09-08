@@ -76,5 +76,6 @@ body {
 .main__wrapper {
   position: relative;
   padding: 40px;
+  min-height: 100vh;
 }
 </style>

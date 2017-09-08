@@ -1,7 +1,8 @@
 <template>
     <transition name="el-fade-in-linear">
-
-        <div class="user__wrapper">
+        <div>
+             <min-loader :toHide="loaded"></min-loader>
+            <div class="user__wrapper" :class="{visible : loaded}">
 
             <div class="user__infos">
                 <p>
@@ -52,18 +53,21 @@
                         </el-tab-pane>
                         <el-tab-pane label="Newsletter" name="third">
                             <transition name="el-fade-in-linear">
-                               <cp-newsletter></cp-newsletter>
+                                <cp-newsletter></cp-newsletter>
                             </transition>
                         </el-tab-pane>
                     </el-tabs>
                 </div>
             </el-row>
         </div>
+        </div>
+        
     </transition>
 </template>
 
 <script>
 import Services from '../../../services/services';
+import MinLoader from '../../utils/icons/MinLoader';
 import MovieCard from '../../movies/MovieCard';
 import BigTitle from '../../utils/BigTitle';
 import EditTable from './volunteers/EditTable';
@@ -76,14 +80,15 @@ export default {
         'movie-card': MovieCard,
         'big-title': BigTitle,
         'edit-table': EditTable,
-        'cp-newsletter': CPNewsletter
+        'cp-newsletter': CPNewsletter,
+        'min-loader': MinLoader
     },
     computed: {
         ...mapGetters(['auth']),
-        formattedRole(){
-            if(this.user.role === 'admin') {
+        formattedRole() {
+            if (this.user.role === 'admin') {
                 return 'Administrateur'
-            }else {
+            } else {
                 return 'Bénévole'
             }
         }
@@ -129,6 +134,7 @@ export default {
                         console.log(res);
                     })
                 }
+                this.loaded = true
             })
         });
 
@@ -142,6 +148,7 @@ export default {
         return {
             user: {},
             subs: [],
+            loaded: false,
             activeName: 'first',
             form: {
                 pushline: {
@@ -167,6 +174,16 @@ export default {
 .self__perms {
     margin-top: 30px;
 }
+
+.user__wrapper {
+    transition: all 0.3s ease-in;
+    opacity: 0;
+    &.visible {
+        opacity: 1
+    }
+}
+
+
 
 .pushline {
     label {

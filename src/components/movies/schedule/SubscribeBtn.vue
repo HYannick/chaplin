@@ -1,8 +1,8 @@
 <template>
     <transition name="el-fade-in-linear">
         <div v-show="!isFull">
-            <el-button v-if="!isSub" @click="handleClick(row)" size="small">S'inscrire</el-button>
-            <el-button v-if="isSub" @click="handleClick(row)" size="small">Se désinscrire</el-button>
+            <el-switch v-model="isSub"  on-color="#13ce66" @change="handleClick(row)" on-text="" off-text="">
+            </el-switch>
         </div>
     </transition>
 </template>
@@ -44,7 +44,7 @@ export default {
             };
 
             Services.subscribeTo(data).then(res => {
-                this.isSub = !this.isSub;
+                
                 const textSub = this.isSub ? 'Vous êtes bien inscrit !' : 'vous êtes bien désinscrit !'
                 this.$notify({
                     title: 'Demande enregistrée',

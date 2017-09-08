@@ -28,10 +28,9 @@
                     <div class="timeline__schedule">
                         <big-title title="Au programme" orientation="top"></big-title>
                         <div class="movie__planning">
-                            <movie-timeline :movies="movies" :maxRow="isMax" display="homeSchedule" @refresh="loadMovies"></movie-timeline>
+                            <movie-timeline :movies="movies" :maxRow="isMax" display="homeSchedule" @refresh="loadMovies" :completed="complete"></movie-timeline>
                         </div>
                     </div>
-
                 </el-col>
             </div>
 
@@ -76,13 +75,15 @@ export default {
             apiRoot: api.ftpUrl,
             announce: {},
             loaded: false,
+            complete: true,
             isMax: false
         }
     },
     methods: {
         loadMovies(limit) {
+            this.complete = false;
             Service.getDiffusedMovies(limit).then(res => {
-                console.log(res.data.max);
+                this.complete = true;
                 this.movies = res.data.movieList;
                 this.isMax = res.data.max;
             })

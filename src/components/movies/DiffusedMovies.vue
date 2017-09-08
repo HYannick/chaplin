@@ -2,9 +2,9 @@
     <transition name="el-fade-in-linear">
         <el-row>
             <el-col :span="24">
-                <div class="diffused__movies">
+                <div class="diffused__movies " :class="{visible : loaded}">
                     <big-title title="En salle" orientation="bottom"></big-title>
-                    <diffused-movies :movies="movies" :maxRow="isMax" display="diffusedList" @refresh="loadMovies"></diffused-movies>
+                    <diffused-movies :movies="movies" :maxRow="isMax" display="diffusedList" @refresh="loadMovies" :completed="complete"></diffused-movies>
                 </div>
             </el-col>
         </el-row>
@@ -14,31 +14,40 @@
 <script>
 import Service from '../../services/services.js';
 import DiffusedMovies from './MovieSched';
+import MinLoader from '../utils/icons/MinLoader';
 import BigTitle from '../utils/BigTitle';
 import _ from 'lodash';
 export default {
     components: {
         'diffused-movies': DiffusedMovies,
-        'big-title': BigTitle
+        'big-title': BigTitle,
+        'min-loader': MinLoader
     },
     created() {
         Service.getDiffusedMovies(4).then(res => {
             this.movies = res.data.movieList
+            this.loaded = true;
         });
     },
     data() {
         return {
             movies: [],
             isMax: false,
+            loaded: false,
+            complete: true,
         }
     },
     methods: {
         loadMovies(limit) {
+            this.loaded = false;
+            this.complete = false;
             Service.getDiffusedMovies(limit).then(res => {
                 this.movies = res.data.movieList;
                 if (this.movies.length >= 2) {
                     this.isMax = res.data.max;
                 }
+                this.loaded = true;
+                this.complete = true;
 
             })
         }
@@ -65,6 +74,14 @@ li {
 
 a {
     color: #42b983;
+}
+
+.diffused__movies {
+    transition: all 0.3s ease-in;
+    opacity: 0;
+    &.visible {
+        opacity: 1
+    }
 }
 
 .popular__movies {

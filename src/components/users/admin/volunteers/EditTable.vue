@@ -3,11 +3,11 @@
         <el-table class="user__table" ref="multipleTable" :data="userList" border style="width: 100%">
             <el-table-column property="username" label="Nom">
             </el-table-column>
-            <el-table-column property="role" label="Statut" prop="role" :formatter="formatRole">
+            <el-table-column property="role" label="Statut" prop="role" :formatter="formatRole" width="140">
             </el-table-column>
             <el-table-column property="email" label="Email">
             </el-table-column>
-            <el-table-column property="verified" label="Validé" align="center" width="100px" :formatter="formatVerified">
+            <el-table-column property="verified" label="Validé" align="center" width="80" :formatter="formatVerified">
                 <template scope="props">
                     <div style="text-align: center">
                         <i v-if="props.row.verified" class="el-icon-circle-check"></i>
@@ -15,7 +15,7 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column label="Editer">
+            <el-table-column label="Editer" width="90">
                 <template scope="props">
                     <div class="edition">
                         <el-button @click.native.prevent="editUser(props.row)" type="text" icon="edit" size="medium"></el-button>

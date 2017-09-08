@@ -3,7 +3,7 @@
         <div>
             <el-col :span="24">
                 <el-row :gutter="20">
-                    <div id="timeline" class="timeline">
+                    <div id="timeline" class="timeline" :class="{visible: loaded}">
                         <div class="timeline__left" v-show="display === 'homeSchedule'">
                             <span class="next__diffusion">Prochaine<br>séance</span>
                         </div>
@@ -43,7 +43,10 @@
                         </el-col>
                     </div>
                     <div class="foot__view-more" v-show="!maxRow">
-                        <button class="view__more" @click="refresh()">Plus de films</button>
+                        <button class="view__more" @click="refresh()">
+                            <span v-if="!completed">... Chargement ...</span>
+                            <span v-else>Voir plus</span>
+                        </button>
                     </div>
                 </el-row>
             </el-col>
@@ -60,7 +63,7 @@ import moment from 'moment';
 import api from '../../../config/api';
 import _ from 'lodash';
 export default {
-    props: ['maxRow', 'movies', 'display'],
+    props: ['maxRow', 'movies', 'display', 'completed'],
     components: {
         'movie-card': MovieCard,
         'image-loader': ImageLoader,
@@ -70,6 +73,7 @@ export default {
         return {
             limit: 4,
             isMax: false,
+            loaded: false
         }
     },
     filters: {

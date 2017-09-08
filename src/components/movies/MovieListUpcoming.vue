@@ -4,7 +4,7 @@
             <el-col :span="24">
                 <div class="diffused__movies">
                     <big-title title="Prochainement" orientation="bottom"></big-title>
-                    <movie-timeline :movies="movies" :maxRow="isMax" display="upcoming" @refresh="loadMovies"></movie-timeline>
+                    <movie-timeline :movies="movies" :maxRow="isMax" display="upcoming" @refresh="loadMovies" :completed="complete"></movie-timeline>
                 </div>
             </el-col>
         </el-row>
@@ -23,7 +23,6 @@ export default {
     },
     created() {
         Service.getUpcomingMovies(4).then(res => {
-            console.log(res.data)
             this.movies = res.data.movieList;
             this.loaded = true;
             if (this.movies.length >= 2) {
@@ -34,12 +33,15 @@ export default {
     data() {
         return {
             movies: [],
-            isMax: true
+            isMax: true,
+            complete: true,
         }
     },
     methods: {
         loadMovies(limit) {
+            this.complete = false;
             Service.getUpcomingMovies(limit).then(res => {
+                this.complete = true;
                 this.movies = res.data.movieList;
                 if (this.movies.length >= 2) {
                     this.isMax = res.data.max;
