@@ -12,6 +12,15 @@ import BigTitle from './components/utils/BigTitle.vue';
 import { store } from './store/store';
 import VueSocketio from 'vue-socket.io';
 import Clipboard from 'v-clipboard';
+// only import the icons you use to reduce bundle size
+import 'vue-awesome/icons/flag'
+// or import all icons if you don't care about bundle size
+import 'vue-awesome/icons'
+/* Register component with one of 2 methods */
+import Icon from 'vue-awesome/components/Icon'
+// globally (in your main .js file)
+Vue.component('icon', Icon)
+
 Vue.use(VueSocketio, 'http://localhost:4001');
 Vue.use(VueYouTubeEmbed);
 Vue.use(BigTitle);

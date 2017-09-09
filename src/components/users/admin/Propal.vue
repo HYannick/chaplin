@@ -6,19 +6,19 @@
                 <h4>Propositions</h4>
                 <el-row :gutter="10">
                     <el-col :xs="24" :sm="12" :md="6" :lg="6" v-for="(propal, index) in proposals" :key="propal._id">
-                        <a :href="`${propal.url}`" target="_blank" class="proposal">
+                        <div :href="`${propal.url}`" @click="vote(propal._id, propal)" target="_blank" class="proposal">
                             <span class="submitter">
                                 <b>{{propal.submitter.username || propal.submitter.email}}</b>
                             </span>
                             <h5 class="prop-title">{{propal.title}}</h5>
-
+                            <icon :name="(isLiked(propal)) ? 'heart' : 'heart-o'" label="Source Code"></icon>
                             <div class="propal">
                                 <p class="prop-likes">{{propal.likes.length}}</p>
                                 <image-loader classname="lazy" :imageUrl="`${apiFtp}/${propal.cover}`"></image-loader>
                             </div>
+                            <el-button2 @click="vote(propal._id, propal)" :icon="(isLiked(propal)) ? 'star-on' : 'star-off'"></el-button2>
+                        </div>
 
-                        </a>
-                        <el-button @click="vote(propal._id)" icon="star-on"></el-button>
                     </el-col>
                 </el-row>
             </el-row>
@@ -50,13 +50,12 @@ export default {
         back() {
             this.$router.push('/movies');
         },
-        vote(id) {
-            console.log('voting to :: ', id)
-
+        isLiked(propal) {
+            return propal.likes.indexOf(this.auth.userId) !== -1
+        },
+        vote(id, propal) {
             Services.likeProposal(id, this.auth.userId).then(res => {
-                Services.getProposals().then(movies => {
-                    this.proposals = movies.data
-                });
+                this.proposals = res.data
             });
         },
 
@@ -83,7 +82,7 @@ export default {
 <style lang="scss">
 .propal {
     position: relative;
-    .lazy{
+    .lazy {
         opacity: 0.8;
     }
     .prop-likes {
@@ -137,5 +136,4 @@ export default {
     width: 100%;
     display: block;
 }
-
 </style>
