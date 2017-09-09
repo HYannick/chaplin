@@ -394,5 +394,6 @@ export default {
 .avatar {
     width: 100%;
     display: block;
+    border-radius: 0;
 }
 </style>

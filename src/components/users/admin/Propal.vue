@@ -7,18 +7,22 @@
                 <el-row :gutter="10">
                     <el-col :xs="24" :sm="12" :md="6" :lg="6" v-for="(propal, index) in proposals" :key="propal._id">
                         <a :href="`${propal.url}`" target="_blank" class="proposal">
-                            <span>
+                            <span class="submitter">
                                 <b>{{propal.submitter.username || propal.submitter.email}}</b>
                             </span>
-                            <h5>{{propal.title}}</h5>
-                            <p>{{propal.likes.length}}</p>
-                            <image-loader classname="lazy" :imageUrl="`${apiFtp}/${propal.cover}`"></image-loader>
-                            <el-button @click="vote(propal._id)">Voter</el-button>
+                            <h5 class="prop-title">{{propal.title}}</h5>
+
+                            <div class="propal">
+                                <p class="prop-likes">{{propal.likes.length}}</p>
+                                <image-loader classname="lazy" :imageUrl="`${apiFtp}/${propal.cover}`"></image-loader>
+                            </div>
+
                         </a>
+                        <el-button @click="vote(propal._id)" icon="star-on"></el-button>
                     </el-col>
                 </el-row>
             </el-row>
-    
+
         </div>
     </transition>
 </template>
@@ -48,7 +52,7 @@ export default {
         },
         vote(id) {
             console.log('voting to :: ', id)
-       
+
             Services.likeProposal(id, this.auth.userId).then(res => {
                 Services.getProposals().then(movies => {
                     this.proposals = movies.data
@@ -77,6 +81,22 @@ export default {
 </script>
 
 <style lang="scss">
+.propal {
+    position: relative;
+    .lazy{
+        opacity: 0.8;
+    }
+    .prop-likes {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 80px;
+        z-index: 999;
+        color: #fff;
+    }
+}
+
 .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
@@ -99,7 +119,8 @@ export default {
 .avatar-uploader .el-upload:hover {
     border-color: #20a0ff;
 }
-.proposal{
+
+.proposal {
     transition: 0.3s;
 }
 
@@ -117,9 +138,4 @@ export default {
     display: block;
 }
 
-.form-add-proposal {
-    background: #e8e8e8;
-    border-radius: 10px;
-    padding: 15px;
-}
 </style>

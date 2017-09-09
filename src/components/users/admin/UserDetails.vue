@@ -1,67 +1,69 @@
 <template>
     <transition name="el-fade-in-linear">
         <div>
-             <min-loader :toHide="loaded"></min-loader>
+            <min-loader :toHide="loaded"></min-loader>
             <div class="user__wrapper" :class="{visible : loaded}">
 
-            <div class="user__infos">
-                <p>
-                    <span>Nom</span>| {{user.username}}</p>
-                <p>
-                    <span>Email</span>| {{user.email}}</p>
-                <p>
-                    <span>Statut</span> | {{formattedRole}}</p>
-                <router-link v-show="auth.logged" :to="`/users/${user._id}/edit`">
-                    <el-button class="user__edit">Editer mon profil</el-button>
-                </router-link>
-            </div>
+                <div class="user__infos">
+                    <p>
+                        <span>Nom</span>| {{user.username}}</p>
+                    <p>
+                        <span>Email</span>| {{user.email}}</p>
+                    <p>
+                        <span>Statut</span> | {{formattedRole}}</p>
+                    <router-link v-show="auth.logged" :to="`/users/${user._id}/edit`">
+                        <el-button class="user__edit">Editer mon profil</el-button>
+                    </router-link>
+                </div>
 
-            <el-form v-if="auth.logged && auth.role == 'admin'" ref="form" class="pushline" :model="form" label-position="top" label-width="120px">
-                <el-form-item label="Annonce">
-                    <el-input placeholder="Ecrivez une annonce :)" v-model="form.pushline.title">
-                        <el-button slot="append" @click="onSubmit">Poster</el-button>
-                    </el-input>
-                </el-form-item>
-            </el-form>
-            <el-row :gutter="20">
-                <div class="self__perms">
-                    <big-title title="Mes permanences"></big-title>
-                    <el-col :xs="24" :sm="12" :md="6" :lg="6" v-for="(sub, index) in subs" :key="sub.date">
-                        <div class="perm">
-                            <movie-card :movie="sub.movies[0]"></movie-card>
-                            <div class="perm__item">
-                                <div class="perm_sheet">
-                                    <span class="perm__title">{{sub.movies[0].title}}</span>
-                                    <span>{{dateInCard(sub.date)}} |
-                                        <b>{{sub.time}}</b>
-                                    </span>
+                <el-form v-if="auth.logged && auth.role == 'admin'" ref="form" class="pushline" :model="form" label-position="top" label-width="120px">
+                    <el-form-item label="Annonce">
+                        <el-input placeholder="Ecrivez une annonce :)" v-model="form.pushline.title">
+                            <el-button slot="append" @click="onSubmit">Poster</el-button>
+                        </el-input>
+                    </el-form-item>
+                </el-form>
+                <el-row :gutter="20">
+                    <div class="self__perms">
+                        <big-title title="Mes permanences"></big-title>
+                        <div v-if="subs.length !== 0">
+                            <el-col :xs="24" :sm="12" :md="6" :lg="6" v-for="(sub, index) in subs" :key="sub.date">
+                                <div class="perm">
+                                    <movie-card :movie="sub.movies[0]"></movie-card>
+                                    <div class="perm__item">
+                                        <div class="perm_sheet">
+                                            <span class="perm__title">{{sub.movies[0].title}}</span>
+                                            <span>{{dateInCard(sub.date)}} |
+                                                <b>{{sub.time}}</b>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-
+                            </el-col>
                         </div>
-                    </el-col>
-                </div>
-            </el-row>
-            <el-row :gutter="20">
-                <div class="self__perms" v-if="auth.logged && auth.role == 'admin'">
-                    <big-title title="Gestion des bénévoles" back="Bénévoles"></big-title>
-                    <el-tabs v-model="activeName">
-                        <el-tab-pane label="Liste des bénévoles" name="first">
-                            <transition name="el-fade-in-linear">
-                                <edit-table></edit-table>
-                            </transition>
-                        </el-tab-pane>
-                        <el-tab-pane label="Newsletter" name="third">
-                            <transition name="el-fade-in-linear">
-                                <cp-newsletter></cp-newsletter>
-                            </transition>
-                        </el-tab-pane>
-                    </el-tabs>
-                </div>
-            </el-row>
+                        <div v-else><h5 style="text-align: center">Aucune permanence.</h5></div>
+                    </div>
+                </el-row>
+                <el-row :gutter="20">
+                    <div class="self__perms" v-if="auth.logged && auth.role == 'admin'">
+                        <big-title title="Gestion des bénévoles" back="Bénévoles"></big-title>
+                        <el-tabs v-model="activeName">
+                            <el-tab-pane label="Liste des bénévoles" name="first">
+                                <transition name="el-fade-in-linear">
+                                    <edit-table></edit-table>
+                                </transition>
+                            </el-tab-pane>
+                            <el-tab-pane label="Newsletter" name="third">
+                                <transition name="el-fade-in-linear">
+                                    <cp-newsletter></cp-newsletter>
+                                </transition>
+                            </el-tab-pane>
+                        </el-tabs>
+                    </div>
+                </el-row>
+            </div>
         </div>
-        </div>
-        
+
     </transition>
 </template>
 

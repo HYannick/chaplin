@@ -1,38 +1,42 @@
 <template>
     <el-row>
-        <el-col :span="12" :offset="6">
-            <el-form ref="form" :rules="rules" label-position="top" :model="form" label-width="120px" class="form-add-proposal">
-                <h5>Proposer un film</h5>
-                <el-row :gutter="20">
-                    <el-col :md="12">
-                        <el-form-item label="Affiche du film">
-                            <el-upload class="avatar-uploader" name="cover" :action="`${apiRoot}/upload/cover`" :show-file-list="false" :on-success="handleAvatarSuccess" :on-change="handleCoverPreview" :auto-upload="false" ref="upCover">
-                                <img v-if="cover" :src="cover" class="avatar">
-                                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                                {{form.cover}}
-                            </el-upload>
-                            <el-button style="margin-top: 10px" type="primary" size="small" @click="submitCover">Ajouter</el-button>
-                            <el-button style="margin-top: 10px" type="danger" size="small" @click="changeCover">Supprimer</el-button>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :md="12">
-                        <el-form-item label="Titre" prop="title">
-                            <el-input v-model="form.title"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :md="12">
-                        <el-form-item label="Lien" prop="title">
-                            <el-input v-model="form.url"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :md="12">
-                        <el-form-item>
-                            <el-button type="primary" @click="onSubmit('form')">Mettre à jour</el-button>
-                            <el-button @click="back">Annuler</el-button>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-            </el-form>
+        <el-col :span="24">
+            <el-button class="proposal__movie" @click="dialogFormVisible = true" type="text" icon="plus" size="medium">Proposer un film</el-button>
+            <el-dialog :title="`Proposer un film`" :visible.sync="dialogFormVisible">
+                <el-form ref="form" :rules="rules" label-position="top" :model="form" label-width="120px" class="form-add-proposal">
+                    <el-row :gutter="20">
+                        <el-col :md="12">
+                            <el-form-item label="Affiche du film">
+                                <el-upload class="avatar-uploader" name="cover" :action="`${apiRoot}/upload/cover`" :show-file-list="false" :on-success="handleAvatarSuccess" :on-change="handleCoverPreview" :auto-upload="false" ref="upCover">
+                                    <img v-if="cover" :src="cover" class="avatar">
+                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                    {{form.cover}}
+                                </el-upload>
+                                <el-button style="margin-top: 10px" type="primary" size="small" @click="submitCover">Ajouter</el-button>
+                                <el-button style="margin-top: 10px" type="danger" size="small" @click="changeCover">Supprimer</el-button>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :md="12">
+                            <el-form-item label="Titre" prop="title">
+                                <el-input v-model="form.title"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :md="12">
+                            <el-form-item label="Lien" prop="url">
+                                <el-input placeholder="Entrez une url" v-model="form.url">
+                                    <template slot="prepend">Http://</template>
+                                </el-input>
+                            </el-form-item>
+
+                        </el-col>
+                    </el-row>
+                </el-form>
+                <span slot="footer" class="dialog-footer">
+                    <el-button type="primary" @click="onSubmit('form')">Ajouter</el-button>
+                    <el-button @click="dialogFormVisible = false">Annuler</el-button>
+                </span>
+            </el-dialog>
+
         </el-col>
     </el-row>
 </template>
@@ -87,6 +91,7 @@ export default {
             console.log('voted!')
         },
         onSubmit(formName) {
+            this.dialogFormVisible = false
             console.log('Submitting ...');
             console.log(this.form)
             this.$refs[formName].validate((valid) => {
@@ -128,6 +133,7 @@ export default {
     },
     data() {
         return {
+            dialogFormVisible: false,
             apiRoot: api.rootUrl,
             form: {
                 submitter: '',
@@ -151,6 +157,40 @@ export default {
 </script>
 
 <style lang="scss">
+.proposal__movie {
+    border-radius: 0;
+    color: #333;
+    margin: 30px auto;
+    position: relative;
+    display: table;
+    font-size: 18px;
+    transition: 0.3s;
+    padding: 10px 55px;
+    z-index: 1;
+    outline: none;
+    box-shadow: inset 0 0 0 2px #000;
+    &:hover {
+        color: #fff;
+        &:before {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+    }
+    &:before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: -1;
+        transform: translate(-50%, -50%) scale(0);
+        width: 100%;
+        height: 100%;
+        background: #000;
+        opacity: 00;
+        transition: 0.3s;
+    }
+}
+
 .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
@@ -158,6 +198,7 @@ export default {
     position: relative;
     overflow: hidden;
     width: 100%;
+    height: 400px;
     background: #fbfdff;
 }
 
@@ -179,18 +220,22 @@ export default {
     color: #8c939d;
     width: 178px;
     height: 178px;
+    position: absolute;
     line-height: 178px;
     text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .avatar {
     width: 100%;
     display: block;
+    border-radius: 5px;
 }
 
 .form-add-proposal {
-    background: #e8e8e8;
-    border-radius: 10px;
+    border-radius: 0px;
     padding: 15px;
 }
 </style>
