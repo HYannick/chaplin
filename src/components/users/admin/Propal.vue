@@ -16,9 +16,8 @@
                                 <p class="prop-likes">{{propal.likes.length}}</p>
                                 <image-loader classname="lazy" :imageUrl="`${apiFtp}/${propal.cover}`"></image-loader>
                             </div>
-                            <el-button2 @click="vote(propal._id, propal)" :icon="(isLiked(propal)) ? 'star-on' : 'star-off'"></el-button2>
                         </div>
-
+                        <el-button v-if="auth.logged && auth.role == 'admin'" @click="deletePropal(propal._id)" type="danger" icon="delete"></el-button>
                     </el-col>
                 </el-row>
             </el-row>
@@ -42,6 +41,11 @@ export default {
         ...mapGetters(['auth']),
     },
     methods: {
+        deletePropal(id) {
+            Services.deleteProposal(id).then((res) => {
+                console.log(res)
+            })
+        },
         reloadP() {
             Services.getProposals().then(movies => {
                 this.proposals = movies.data

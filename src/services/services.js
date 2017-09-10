@@ -74,7 +74,7 @@ export default {
         return axios.put(`${rootUrl}/proposals/${id}`, { userId }, autho);
     },
     deleteProposal(id, userId) {
-        return axios.delete(`${rootUrl}/proposals/${id}`, userId, autho);
+        return axios.delete(`${rootUrl}/proposals/${id}`, autho);
     },
     deleteCover(filename) {
         return axios.delete(`${rootUrl}/uploads/${filename}`, autho);

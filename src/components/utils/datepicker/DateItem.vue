@@ -7,7 +7,7 @@
             <el-time-select class="timer__select" v-model="time" :picker-options="{
                                                     start: '16:00',
                                                     step: '00:30',
-                                                    end: '21:00'
+                                                    end: '22:00'
                                                   }" placeholder="Select time">
             </el-time-select>
             <el-select v-model="dubbing" class="timer__dubbing" placeholder="Select">
