@@ -56,6 +56,7 @@
 import { EventBus } from '../../../utils/event-bus';
 import Services from '../../../../services/services';
 import CreateVolunteer from './CreateVolunteer'
+import { mapGetters } from 'vuex';
 export default {
     components: {
         'create-volunteer': CreateVolunteer
@@ -80,7 +81,9 @@ export default {
     created() {
         this.refreshList()
     },
-
+    computed: {
+         ...mapGetters(['auth'])
+    },
     methods: {
         formatRole(row, column) {
             if (row.role === 'admin') {
@@ -93,13 +96,9 @@ export default {
             return row.verified.toString();
         },
         refreshList() {
-            Services.getUsers().then(users => {
+            Services.getUsers(this.auth.token).then(users => {
                 this.userList = users.data
-                console.log(this.userList)
             })
-        },
-        sendMail(user) {
-            console.log(user.email)
         },
         editUser(user) {
             this._idToEdit = user._id;

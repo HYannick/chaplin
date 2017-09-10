@@ -23,8 +23,9 @@ export default {
     createUser(data) {
         return axios.post(`${rootUrl}/signup`, data, autho)
     },
-    getUsers() {
-        return axios.get(`${rootUrl}/users`, autho)
+    getUsers(token) {
+        console.log(token)
+        return axios.get(`${rootUrl}/users`, setHeader(token))
     },
     deleteUser(id) {
         return axios.delete(`${rootUrl}/users/${id}`, autho)
