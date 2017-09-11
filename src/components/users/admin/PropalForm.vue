@@ -98,6 +98,8 @@ export default {
                 if (valid) {
                     Services.postProposal(this.form)
                         .then(res => {
+                            this.$refs[formName].resetFields();
+                            this.cover = '';
                             this.$emit('reload-proposals');
                             this.$notify({
                                 title: 'Film à jour',
@@ -141,7 +143,6 @@ export default {
                 cover: '',
                 url: ''
             },
-            like: 0,
             rules: {
                 title: [
                     { required: true, message: 'Veuillez entrer un titre', trigger: 'blur' },

@@ -4,9 +4,10 @@
             <propal-form @reload-proposals="reloadP"></propal-form>
             <el-row>
                 <h4>Propositions</h4>
-                <el-row>
-                    <transition-group name="list" v-on:enter="enter" v-on:leave="leave">
-                        <el-col class="propal__wrapper" :class="{sorted: sorted}" :xs="24" :sm="12" :md="6" :lg="6" v-for="(propal, index) in proposals" :key="propal._id">
+                <el-row :gutter="10">
+
+                    <transition-group class="container__grid" name="list" v-on:enter="enter" v-on:leave="leave" tag="div">
+                        <div :class="['propal__wrapper', {first: findIndex(propal.likes.length)}, `item-${index}`, {sorted: sorted}]" v-for="(propal, index) in proposals" :key="propal._id">
                             <div class="proposal">
                                 <div class="propal">
                                     <div class="like__header">
@@ -22,8 +23,9 @@
                                         <p class="prop-likes">{{propal.likes.length}}</p>
                                     </div>
                                     <image-loader classname="lazy" :imageUrl="`${apiFtp}/${propal.cover}`"></image-loader>
+                                  
                                     <div class="like__footer">
-                                        <div class="like__footer--block" @click="vote(propal._id, propal)">
+                                        <div class="like__footer--block" v-if="propal.submitter._id !== auth.userId" @click="vote(propal._id, propal)">
                                             <icon :name="(isLiked(propal)) ? 'heart' : 'heart-o'" label="like" scale="1.5"></icon>
                                             <span>Voter</span>
                                         </div>
@@ -33,11 +35,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </el-col>
+                        </div>
                     </transition-group>
                 </el-row>
             </el-row>
-
         </div>
     </transition>
 </template>
@@ -78,7 +79,6 @@ export default {
             const proposal = el;
             anime({
                 targets: proposal,
-                translateX: 15,
                 opacity: 0,
                 complete: function(anim) {
                     done();
@@ -91,10 +91,18 @@ export default {
                 this.reloadP();
             })
         },
+        findIndex(likes){
+            console.log(likes)
+            if( _.findLastIndex(this.proposals, ['nbLike', likes]) === 0){
+                return true;
+            }
+        }
+        ,
         sortProposals(proposals) {
             proposals.forEach(movie => {
                 movie.nbLike = movie.likes.length;
             });
+            
             return _.sortBy(proposals, ['nbLike']).reverse();
         },
         reloadP() {
@@ -133,7 +141,19 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
+.container__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 1em;
+    grid-auto-rows:minmax(100px, auto);
+    .first{
+        grid-column: 1/3;
+        grid-row: 1/3;
+    }
+    
+}
+
 .like__header {
     position: absolute;
     top: 0;
@@ -188,7 +208,7 @@ export default {
     z-index: 999;
     transform: translate(-50%, -50%) scale(1);
     color: #fff;
-    opacity: 0.7;
+    opacity: 0.8;
     transition: 0.3s;
     font-size: 80px;
     p {
@@ -201,6 +221,7 @@ export default {
     position: relative;
     overflow: hidden;
     background: #000;
+    border-radius: 5px;
     &:hover {
         .lazy {
             transform: scale(1.1);
@@ -219,6 +240,7 @@ export default {
     .lazy {
         opacity: 0.6;
         transition: 0.3s;
+  
     }
 }
 
