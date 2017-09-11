@@ -200,7 +200,6 @@ export default {
                     this.dates = this.movie.dates.filter(date => moment(date.fullDate).unix() >= now).map(({ date, fullDate, time, dubbing }) => {
                         return { 'unix':date , 'date': moment(fullDate).format('dddd DD MMMM'), time, dubbing: dubbing || 'VF' }
                     })
-                    console.log(this.dates)
                     this.imageSet = this.movie.imageSet.map(image => `${api.ftpUrl}/${image}`)
                     this.bgCover = `${api.ftpUrl}/${this.movie.imageSet[0]}`;
                     this.cover = `${api.ftpUrl}/${this.movie.cover}`;
