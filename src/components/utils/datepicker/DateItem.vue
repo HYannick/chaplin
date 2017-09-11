@@ -7,7 +7,7 @@
             <el-time-select class="timer__select" v-model="time" :picker-options="{
                                                     start: '16:00',
                                                     step: '00:30',
-                                                    end: '22:00'
+                                                    end: '23:00'
                                                   }" placeholder="Select time">
             </el-time-select>
             <el-select v-model="dubbing" class="timer__dubbing" placeholder="Select">
@@ -30,7 +30,7 @@ export default {
     data() {
         return {
             time: '',
-            dubbing: [],
+            dubbing: '',
             dubbingArray
         }
     },
@@ -48,7 +48,7 @@ export default {
                 'date': this.dateAt.unix(),
                 'time': (this.time !== "") ? this.time : '00:00', 
                 'fullDate': this.getFullDate(), 
-                'dubbing': (this.dubbing.length === 0) ? ['VF'] : this.dubbing
+                'dubbing': (this.dubbing.length === 0) ? 'VF' : this.dubbing
                 }
             )
         },

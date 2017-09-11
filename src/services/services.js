@@ -24,7 +24,6 @@ export default {
         return axios.post(`${rootUrl}/signup`, data, autho)
     },
     getUsers(token) {
-        console.log(token)
         return axios.get(`${rootUrl}/users`, setHeader(token))
     },
     deleteUser(id) {
@@ -71,7 +70,6 @@ export default {
         return axios.post(`${rootUrl}/proposals`, data, autho);
     },
     likeProposal(id, userId, token) {
-        console.log(userId)
         return axios.put(`${rootUrl}/proposals/${id}`, { userId }, autho);
     },
     deleteProposal(id, userId) {
@@ -123,7 +121,6 @@ export default {
     },
 
     postEmail(data) {
-        console.log(data)
         return axios.post(`${rootUrl}/newsletter/email/create`, data, autho)
     },
 
