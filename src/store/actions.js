@@ -8,6 +8,7 @@ export const login = ({ commit }, payload) => {
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('role', res.data.user.role);
             localStorage.setItem('user', res.data.user._id);
+            localStorage.setItem('username', res.data.user.username);
             Notification({
                 title: `Bienvenue, ${res.data.user.username || 'Utilisateur'}`,
                 message: '',
@@ -16,6 +17,7 @@ export const login = ({ commit }, payload) => {
             commit('granted', res.data.user._id);
             commit('role', res.data.user.role);
             commit('token', res.data.token);
+            commit('username', res.data.user.username);
         })
         .catch(err => {
             Notification({

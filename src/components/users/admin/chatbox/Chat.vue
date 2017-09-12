@@ -3,7 +3,7 @@
         <div>
             <el-col :span="18" :offset="2">
                 <ul class="chat__list">
-                    <li class="chat__item" v-for="(msg, index) in msgList" :key="index">
+                    <li class="chat__item" v-for="(msg, index) in msgs" :key="index">
                         <el-row :gutter="20">
                             <div class="author">{{msg.author}}</div>
                             <div class="message">{{msg.message}}</div>
@@ -15,7 +15,7 @@
                 </ul>
             </el-col>
             <el-col :span="18" :offset="2">
-                <chat-message @post="refreshList"></chat-message>
+                <chat-message></chat-message>
             </el-col>
         </div>
     </transition>
@@ -31,41 +31,40 @@ export default {
     components: {
         'chat-message': ChatMessage
     },
-    methods: {
-        refreshList() {
-            Services.getMsg().then(res => {
-                console.log(res)
-                this.msgList = res.data;
-            })
+    sockets: {
+        connect: function(msg) {
+            console.log('socket connected')           
+        },
+        chat: function(msgs) {
+            console.log('chat')
+            this.msgs.push(msg);
+        },
+        response: function(msg) {
+            console.log('response')
+            this.msgs.push(msg);
+        },
+        getMessages: function(msgs) {
+            console.log('getMessages')
+            this.msgs = msgs;
         }
     },
     created() {
-        this.refreshList();
+        console.log('created')
+        this.login(this.auth.username);
+        Services.getMsg().then(res => {
+            this.msgs = res.data
+        })
     },
+    methods: {
+        login(val) {
+            console.log('emmiting')
+            this.$socket.emit('login', val);
+        }
+    },
+
     data() {
         return {
-            msgList: [
-                {
-                    author: 'Mathilde',
-                    message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in justo malesuada, mollis ligula at, facilisis ex. Nunc pellentesque fermentum varius. ',
-                    date: '10/12/990'
-                },
-                {
-                    author: 'Jacqueline',
-                    message: 'Duis nec blandit enim. Duis viverra tempor lectus. Suspendisse ac dui enim. Pellentesque venenatis consequat dignissim. Sed consequat blandit diam, eu lobortis leo commodo quis. Cras augue leo, finibus iaculis vestibulum luctus, cursus nec odio. Mauris venenatis nibh cursus erat sagittis imperdiet.',
-                    date: '10/12/990'
-                },
-                {
-                    author: 'Paul',
-                    message: 'Phasellus egestas pellentesque leo, vitae scelerisque ligula porttitor et. Sed finibus neque nec mi mollis dictum. Nunc finibus enim quis porttitor finibus. Phasellus mollis risus ut pellentesque dapibus. In hac habitasse platea dictumst. Vestibulum tempus neque ac lectus faucibus semper. Praesent auctor scelerisque vestibulum. Aliquam purus nibh, ullamcorper non rhoncus sed, fringilla et arcu. Quisque ex lorem, tincidunt sed laoreet vel, pulvinar a mi. Nam euismod justo nisl, sit amet ultricies magna dignissim a. Phasellus lacus erat, efficitur sed rhoncus sed, hendrerit id leo. Pellentesque in nisi scelerisque, sagittis nunc et, iaculis felis. Suspendisse leo sem, pretium nec lectus nec, dictum volutpat tortor. Quisque euismod, nibh eu rhoncus pellentesque, erat arcu egestas est, at tincidunt tellus metus sit amet velit.',
-                    date: '10/12/990'
-                },
-                {
-                    author: 'Laetitia',
-                    message: 'Je hais les cornichons',
-                    date: '10/12/990'
-                }
-            ]
+            msgs: []
         }
     }
 }

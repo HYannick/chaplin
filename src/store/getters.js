@@ -1,8 +1,9 @@
-export const auth = ({ logged, role, userId, subscribed, token }) => {
+export const auth = ({ logged, role, userId, token, username }) => {
     return {
         logged,
         role,
         userId,
-        token
+        token,
+        username
     };
 }

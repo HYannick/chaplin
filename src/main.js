@@ -37,6 +37,8 @@ if (token) {
     //we need to update application state
     store.commit('granted', localStorage.getItem('user'));
     store.commit('role', localStorage.getItem('role'));
+    store.commit('userId', localStorage.getItem('userId'));
+    store.commit('username', localStorage.getItem('username'));
 }
 
 router.beforeEach((to, from, next) => {
