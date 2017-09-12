@@ -10,6 +10,6 @@ export default {
     components: {
         'chat-container': Chat
     },
-
+    
 }
 </script>

@@ -22,6 +22,7 @@
             <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">Annuler</el-button>
                 <el-button type="primary" @click="addUser('ruleForm')">Ajouter</el-button>
+                
             </span>
         </el-dialog>
     </div>
