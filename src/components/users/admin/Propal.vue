@@ -23,7 +23,7 @@
                                         <p class="prop-likes">{{propal.likes.length}}</p>
                                     </div>
                                     <image-loader classname="lazy" :imageUrl="`${apiFtp}/${propal.cover}`"></image-loader>
-                                  
+
                                     <div class="like__footer">
                                         <div class="like__footer--block" v-if="propal.submitter._id !== auth.userId" @click="vote(propal._id, propal)">
                                             <icon :name="(isLiked(propal)) ? 'heart' : 'heart-o'" label="like" scale="1.5"></icon>
@@ -87,13 +87,29 @@ export default {
 
         },
         deletePropal(id) {
-            Services.deleteProposal(id).then((res) => {
-                this.reloadP();
-            })
+            this.$confirm('Etes vous sûr de vouloir supprimer cette proposition ?')
+                .then(_ => {
+                    Services.deleteProposal(id).then((res) => {
+                        this.reloadP();
+                        this.$notify({
+                            title: 'Succès',
+                            message: 'Proposition supprimée !',
+                            type: 'success'
+                        });
+                    }).catch(err => {
+                        this.$notify({
+                            title: 'Erreur',
+                            message: 'Une erreur s\'est produite',
+                            type: 'error'
+                        });
+                    })
+                })
+
+
         },
-        findIndex(likes){
+        findIndex(likes) {
             console.log(likes)
-            if( _.findLastIndex(this.proposals, ['nbLike', likes]) === 0){
+            if (_.findLastIndex(this.proposals, ['nbLike', likes]) === 0) {
                 return true;
             }
         }
@@ -102,7 +118,7 @@ export default {
             proposals.forEach(movie => {
                 movie.nbLike = movie.likes.length;
             });
-            
+
             return _.sortBy(proposals, ['nbLike']).reverse();
         },
         reloadP() {
@@ -146,12 +162,11 @@ export default {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 1em;
-    grid-auto-rows:minmax(100px, auto);
-    .first{
+    grid-auto-rows: minmax(100px, auto);
+    .first {
         grid-column: 1/3;
         grid-row: 1/3;
     }
-    
 }
 
 .like__header {
@@ -240,7 +255,6 @@ export default {
     .lazy {
         opacity: 0.6;
         transition: 0.3s;
-  
     }
 }
 

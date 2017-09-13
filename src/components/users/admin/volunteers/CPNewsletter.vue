@@ -47,22 +47,36 @@ export default {
         copy() {
             this.$clipboard(this.mailing)
             this.$notify({
-                    title: 'Copié !',
-                    message: 'Emails copiés dans le presse papier !',
-                    type: 'success'
-                });
+                title: 'Copié !',
+                message: 'Emails copiés dans le presse papier !',
+                type: 'success'
+            });
             this.dialogVisible = false
         },
         deleteMail(id) {
-            Services.removeEmail(id).then(emailList => {
-                this.emailList = emailList.data
-            })
+            this.$confirm('Etes vous sûr de vouloir supprimer cet email ?')
+                .then(_ => {
+                    Services.removeEmail(id).then(emailList => {
+                        this.emailList = emailList.data
+                        this.$notify({
+                            title: 'Email supprimé',
+                            message: '',
+                            type: 'success'
+                        });
+                    }).catch(err => {
+                        this.$notify({
+                            title: 'Erreur',
+                            message: 'Une erreur s\'est produite',
+                            type: 'error'
+                        });
+                    })
+                })
+
         }
     }
 }
 </script>
 <style lang="scss" scoped>
-
 .newsletter__list {
     padding: 0;
     overflow: hidden;

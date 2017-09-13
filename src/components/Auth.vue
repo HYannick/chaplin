@@ -3,7 +3,7 @@
         <el-row :gutter="20">
             <el-col :span="12" :offset="6">
                 <h4>Se connecter</h4>
-                <el-form ref="form" :rules="rules" label-position="top" :model="user" label-width="120px" class="form-add">
+                <el-form ref="form" :rules="rules" label-position="top" :model="user" @submit.native.prevent="onSubmit('form')" label-width="120px" class="form-add">
                     <el-row :gutter="20">
                         <el-col :span="24">
                             <el-form-item label="Email" prop="email">
@@ -18,7 +18,7 @@
                     </el-row>
     
                     <el-form-item>
-                        <el-button type="primary" @click="onSubmit('form')">Se connecter</el-button>
+                        <el-button type="primary" native-type="submit">Se connecter</el-button>
                         <el-button @click="back">Annuler</el-button>
                     </el-form-item>
                 </el-form>

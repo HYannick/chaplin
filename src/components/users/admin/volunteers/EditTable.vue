@@ -19,7 +19,7 @@
                 <template scope="props">
                     <div class="edition">
                         <el-button @click.native.prevent="editUser(props.row)" type="text" icon="edit" size="medium"></el-button>
-                        <el-button @click.native.prevent="deleteUser(props.row)" type="text" icon="delete" size="medium"  v-if="props.row.role !== 'admin'"></el-button>
+                        <el-button @click.native.prevent="deleteUser(props.row)" type="text" icon="delete" size="medium" v-if="props.row.role !== 'admin'"></el-button>
                     </div>
                 </template>
             </el-table-column>
@@ -82,7 +82,7 @@ export default {
         this.refreshList()
     },
     computed: {
-         ...mapGetters(['auth'])
+        ...mapGetters(['auth'])
     },
     methods: {
         formatRole(row, column) {
@@ -106,20 +106,25 @@ export default {
             this.dialogFormVisible = true;
         },
         deleteUser(user) {
-            Services.deleteUser(user._id).then((res) => {
-                this.userList = res.data;
-                this.$notify({
-                    title: 'Suppression',
-                    message: 'Utilisateur supprimé !',
-                    type: 'success'
-                });
-            }).catch(err => {
-                this.$notify({
-                    title: 'Erreur',
-                    message: 'Une erreur s\'est produite',
-                    type: 'error'
-                });
-            })
+
+            this.$confirm('Etes vous sûr de vouloir supprimer ce bénévole ?')
+                .then(_ => {
+                    Services.deleteUser(user._id).then((res) => {
+                        this.userList = res.data;
+                        this.$notify({
+                            title: 'Suppression',
+                            message: 'Utilisateur supprimé !',
+                            type: 'success'
+                        });
+                    }).catch(err => {
+                        this.$notify({
+                            title: 'Erreur',
+                            message: 'Une erreur s\'est produite',
+                            type: 'error'
+                        });
+                    })
+                })
+
         },
         submitUser() {
             this.dialogFormVisible = false;
@@ -143,9 +148,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.edition button{
+.edition button {
     color: #333;
 }
+
 .user__table {
     .el-icon-circle-check {
         color: #13CE66;
