@@ -23,6 +23,15 @@
                         </el-input>
                     </el-form-item>
                 </el-form>
+                <el-form v-if="auth.logged && auth.role == 'admin'" label-position="top" class="pushline" label-width="120px">
+                    <el-form-item label="Upload PDF">
+                        <el-upload class="upload-demo" name="pdf" ref="uploadPDF" :multiple="false" :action="`${apiRoot}/upload/pdf`" :on-success="pdfUploaded"  :auto-upload="true">
+                            <el-button class="chap-button" slot="trigger" size="small" type="primary">Sélectionnez un PDF</el-button>
+                            <div class="el-upload__tip" slot="tip">Fichier PDF seulement</div>
+                        </el-upload>
+                    </el-form-item>
+                </el-form>
+
                 <el-row :gutter="20">
                     <div class="self__perms">
                         <big-title title="Mes permanences"></big-title>
@@ -77,6 +86,7 @@ import BigTitle from '../../utils/BigTitle';
 import EditTable from './volunteers/EditTable';
 import CPNewsletter from './volunteers/CPNewsletter';
 import moment from 'moment';
+import api from '../../../../config/api';
 import { mapGetters } from 'vuex';
 import _ from 'lodash';
 export default {
@@ -117,6 +127,16 @@ export default {
                     type: 'error'
                 });
             })
+        },
+        pdfUploaded(res){
+            this.$notify({
+                    title: 'PDF téléchargé !',
+                    message: 'Le PDF a bien été téléchargé !',
+                    type: 'success'
+                });
+        },
+        submitPDF() {
+            this.$refs.uploadPDF.submit();
         }
     },
     created() {
@@ -150,6 +170,7 @@ export default {
     },
     data() {
         return {
+            apiRoot: api.rootUrl,
             user: {},
             subs: [],
             loaded: false,
@@ -160,7 +181,7 @@ export default {
                     date: moment()
                 }
             },
-
+            pdf: '',
             createUserForm: {
                 username: '',
                 password: '',

@@ -26,7 +26,14 @@
                         <movie-list-popular :limit="4"></movie-list-popular>
                     </div>
                     <div class="timeline__schedule">
+
+                        <a class="view__pdf chap-button" target="_blank" :href="`${apiPDF}`">
+                            <span>
+                                <icon name="file-pdf-o"></icon> Voir le programme</span>
+                        </a>
+
                         <big-title title="Au programme" orientation="top"></big-title>
+
                         <div class="movie__planning">
                             <movie-timeline :movies="movies" :maxRow="isMax" display="homeSchedule" @refresh="loadMovies" :completed="complete"></movie-timeline>
                         </div>
@@ -73,6 +80,7 @@ export default {
             movies: [],
             carouselMovies: [],
             apiRoot: api.ftpUrl,
+            apiPDF: api.pdfUrl,
             announce: {},
             loaded: false,
             complete: true,
@@ -104,6 +112,15 @@ h2,
 h3,
 h4 {
     font-family: 'inconsolataBold', monospace;
+}
+
+.view__pdf {
+    float: right;
+    position: relative;
+    z-index: 99;
+    text-decoration: none;
+    border: 1px solid #000;
+    color: #000;
 }
 
 .home__announce {
