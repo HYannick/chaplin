@@ -18,8 +18,8 @@
                     </el-row>
     
                     <el-form-item>
-                        <el-button type="primary" native-type="submit">Se connecter</el-button>
-                        <el-button @click="back">Annuler</el-button>
+                        <el-button class="chap-button" type="primary" native-type="submit">Se connecter</el-button>
+                        <el-button class="chap-button" @click="back">Annuler</el-button>
                     </el-form-item>
                 </el-form>
             </el-col>

@@ -6,14 +6,8 @@
                 <el-form ref="form" :rules="rules" label-position="top" :model="form" label-width="120px" class="form-add">
                     <el-row :gutter="20">
                         <el-col :xs="24" :sm="24" :md="8" :lg="8">
-                            <el-form-item label="Movie Cover">
-                                <el-upload class="avatar-uploader" name="cover" :action="`${apiRoot}/upload/cover`" :show-file-list="false" :on-success="handleAvatarSuccess" :on-change="handleCoverPreview" :auto-upload="false" ref="upCover">
-                                    <img v-if="cover" :src="cover" class="avatar">
-                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                                </el-upload>
-                                <el-button style="margin-top: 10px" type="primary" @click="submitCover">Ajouter</el-button>
-                                <el-button style="margin-top: 10px" type="danger" @click="changeCover">Supprimer</el-button>
-                            </el-form-item>
+                            <cover-uploader :movie="id" @reset="resetCover" @uploaded="addToForm"></cover-uploader>
+
                             <el-form-item label="Auteur(s)">
                                 <cs-tags v-model="form.authors"></cs-tags>
                                 <cs-tagslist v-model="form.authors"></cs-tagslist>
@@ -106,7 +100,7 @@
                                         <el-dialog v-model="dialogVisible" size="large">
                                             <img width="100%" :src="dialogImageUrl" alt="">
                                         </el-dialog>
-                                        <el-button style="margin-top: 10px" @click="submitImages">Ajouter</el-button>
+                                        <el-button class="chap-button" style="margin-top: 10px" @click="submitImages">Ajouter</el-button>
                                     </el-form-item>
                                 </el-col>
 
@@ -116,9 +110,9 @@
                     </el-row>
 
                     <el-form-item>
-                        <el-button type="primary" @click="onSubmit('form')">Mettre à jour</el-button>
-                        <el-button type="danger" @click="deleteMovie">Supprimer</el-button>
-                        <el-button @click="back">Annuler</el-button>
+                        <el-button class="chap-button" type="primary" @click="onSubmit('form')">Mettre à jour</el-button>
+                        <el-button class="chap-button" type="danger" @click="deleteMovie">Supprimer</el-button>
+                        <el-button class="chap-button" @click="back">Annuler</el-button>
                     </el-form-item>
                 </el-form>
             </el-col>
@@ -135,6 +129,7 @@ import api from '../../../config/api';
 import genres from './datas/genres.json';
 import Tags from '../utils/tags/Tags';
 import TagsList from '../utils/tags/TagsList';
+import CoverUploader from '../utils/CoverUploader';
 import DatePicker from '../utils/datepicker/DatePicker';
 import moment from 'moment';
 import Services from '../../services/services';
@@ -182,7 +177,8 @@ export default {
     components: {
         'cs-datepicker': DatePicker,
         'cs-tags': Tags,
-        'cs-tagslist': TagsList
+        'cs-tagslist': TagsList,
+        'cover-uploader': CoverUploader
     },
     computed: {
         getTrailerUrl() {
@@ -212,7 +208,6 @@ export default {
                 this.fileList.push({ 'name': image, 'url': `${api.ftpUrl}/${image}` })
             });
             this.cover = `${api.ftpUrl}/${res.data.cover}`;
-
         });
     },
     methods: {
@@ -225,39 +220,21 @@ export default {
         submitCover() {
             this.$refs.upCover.submit();
         },
-        changeCover() {
-            Services.deleteCover(this.form.cover).then(res => {
-                this.cover = '';
-                this.form.cover = '';
-                this.$notify({
-                    title: 'Suppression',
-                    message: 'Affiche supprimée !',
-                    type: 'success'
-                });
-            }).catch(err => {
-                this.$notify({
-                    title: 'Erreur',
-                    message: 'Une erreur s\'est produite',
-                    type: 'error'
-                });
-            })
+        addToForm(res) {
+            this.form.cover = res;
         },
+        resetCover() {
+            this.form.cover = '';
+        },
+
         submitImages() {
-            if (this.form.imageSet.length != 0) {
+            if (this.form.imageSet.length) {
                 this.$refs.upload.submit();
             } else {
                 console.error('No files added')
             }
         },
-        handleAvatarSuccess(res, file) {
-            this.cover = URL.createObjectURL(file.raw);
-            this.form.cover = res.cover[0].filename;
-            this.$notify({
-                title: 'Ajout d\'affiche',
-                message: 'Affiche ajoutée !',
-                type: 'success'
-            });
-        },
+
         handleListSuccess(res, file) {
             this.$notify({
                 title: 'Ajout d\'images',
@@ -266,36 +243,45 @@ export default {
             });
         },
         pushImages(file, fileList) {
-
             let list = fileList.map(file => file.name);
-
             this.form.imageSet = list;
         },
         handleRemove(file, fileList) {
-            const dataSet = this.form.imageSet.filter((image => {
-                return image !== file.name
+            /*
+                console.log(fileList)
+                console.log(file.name)
+                console.log(this.form.imageSet)
+                const indexOfFile = this.form.imageSet.indexOf(file.name)
+                console.log(indexOfFile)
+                if (this.form.imageSet.length && indexOfFile !== -1) {
+                    Services.deleteCover(file.name).then(res => {
+                        this.$notify({
+                            title: 'Suppression',
+                            message: 'Image supprimée !',
+                            type: 'success'
+                        });
+                        this.form.imageSet.splice(indexOfFile, 1)
+                    }).catch(err => {
+                        this.$notify({
+                            title: 'Erreur',
+                            message: 'Une erreur s\'est produite',
+                            type: 'error'
+                        });
+                    })
+
+
+                }
+            */
+            const dataSet = this.imageSet.filter((image => {
+                return image.name !== file.name
             }));
-            this.form.imageSet = dataSet;
+            this.imageSet = dataSet;
         },
         handlePictureCardPreview(file) {
             this.dialogImageUrl = file.url;
             this.dialogVisible = true;
         },
-        handleCoverPreview(file) {
-            this.cover = file.url;
-        },
-        beforeAvatarUpload(file) {
-            const isJPG = file.type === 'image/jpeg';
-            const isLt2M = file.size / 1024 / 1024 < 2;
 
-            if (!isJPG) {
-                this.$message.error('Avatar picture must be JPG format !');
-            }
-            if (!isLt2M) {
-                this.$message.error('Avatar picture size can not exceed 2MB !');
-            }
-            return isJPG && isLt2M;
-        },
         updateDate(date) {
             this.form.dates = date;
         },
@@ -394,10 +380,13 @@ export default {
 .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 178px;
-    height: 178px;
+    width: 100%;
     line-height: 178px;
     text-align: center;
+    min-height: 330px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .avatar {

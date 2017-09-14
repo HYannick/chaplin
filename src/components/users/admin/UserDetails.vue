@@ -12,21 +12,21 @@
                     <p>
                         <span>Statut</span> | {{formattedRole}}</p>
                     <router-link v-show="auth.logged" :to="`/users/${user._id}/edit`">
-                        <el-button class="user__edit">Editer mon profil</el-button>
+                        <el-button class="user__edit chap-button">Editer mon profil</el-button>
                     </router-link>
                 </div>
 
                 <el-form v-if="auth.logged && auth.role == 'admin'" ref="form" class="pushline" :model="form" label-position="top" label-width="120px">
                     <el-form-item label="Annonce">
                         <el-input placeholder="Ecrivez une annonce :)" v-model="form.pushline.title">
-                            <el-button slot="append" @click="onSubmit">Poster</el-button>
+                            <el-button class="chap-button" slot="append" @click="onSubmit">Poster</el-button>
                         </el-input>
                     </el-form-item>
                 </el-form>
                 <el-row :gutter="20">
                     <div class="self__perms">
                         <big-title title="Mes permanences"></big-title>
-                        <div v-if="subs.length !== 0">
+                        <div v-if="subs.length">
                             <el-col :xs="24" :sm="12" :md="6" :lg="6" v-for="(sub, index) in subs" :key="sub.date">
                                 <div class="perm">
                                     <movie-card :movie="sub.movies[0]"></movie-card>
@@ -41,7 +41,9 @@
                                 </div>
                             </el-col>
                         </div>
-                        <div v-else><h5 style="text-align: center">Aucune permanence.</h5></div>
+                        <div v-else>
+                            <h5 style="text-align: center">Aucune permanence.</h5>
+                        </div>
                     </div>
                 </el-row>
                 <el-row :gutter="20">
@@ -131,7 +133,7 @@ export default {
                     return sub.date <= now;
                 }).map(toRemove => toRemove._id)
 
-                if (legacySubs.length !== 0) {
+                if (legacySubs.length) {
                     Services.deleteSubs({ legacySubs }, this.auth.token).then(res => {
                         console.log(res);
                     })
@@ -172,6 +174,14 @@ export default {
 </script>
 
 <style lang="scss">
+.el-tabs__item.is-active {
+    color: #000;
+}
+
+.el-tabs__active-bar {
+    background-color: #000;
+}
+
 .user__wrapper,
 .self__perms {
     margin-top: 30px;
@@ -245,6 +255,8 @@ export default {
     }
 }
 
+
+
 .user__infos {
     display: table;
     margin-bottom: 30px;
@@ -257,38 +269,6 @@ export default {
             width: 70px;
             display: block;
             float: left;
-        }
-    }
-    .user__edit {
-        border-radius: 0;
-        margin-top: 5px;
-        position: relative;
-        font-size: 18px;
-        transition: 0.3s;
-        padding: 10px 30px;
-        z-index: 1;
-        outline: none;
-        shadow: inset 0 0 0 2px #000;
-        &:hover {
-            color: #fff;
-            border-color: #fff;
-            &:before {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 1;
-            }
-        }
-        &:before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            z-index: -1;
-            transform: translate(-50%, -50%) scale(0);
-            width: 100%;
-            height: 100%;
-            background: #000;
-            opacity: 00;
-            transition: 0.3s;
         }
     }
 }

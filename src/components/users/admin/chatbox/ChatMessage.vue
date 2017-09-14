@@ -4,12 +4,12 @@
             <div class="msg__box">
                 <el-form ref="form" class="send__message" :rules="rules" :model="form">
                     <el-form-item prop="message">
-                        <el-input type="textarea" :autosize="{ minRows: 6, maxRows: 10}" placeholder="Entrez un message. Les liens sont automatiquements transformés en image ou en lien." v-model="form.message" @keydown.native="type($event)" @blur="stopType">
+                        <el-input type="textarea" :autosize="{ minRows: 6, maxRows: 10}" placeholder="Entrez un message. Les liens sont automatiquement transformés en image ou en lien." v-model="form.message" @keydown.native="type($event)" @blur="stopType">
 
                         </el-input>
                         <div class="form__footer">
                             <span>Appuyez sur Ctrl + Entrée pour envoyer.</span>
-                            <el-button class="send__btn" @click="onSubmit('form')">
+                            <el-button class="send__btn chap-button" @click="onSubmit('form')">
                                 <icon name="paper-plane"></icon>
                                 Envoyer
                             </el-button>

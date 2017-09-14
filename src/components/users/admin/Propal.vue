@@ -159,13 +159,19 @@ export default {
 
 <style scoped lang="scss">
 .container__grid {
+    display: -ms-grid;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 1em;
     grid-auto-rows: minmax(100px, auto);
+    -ms-grid-columns: 1fr 1fr 1fr 1fr;
+    -ms-grid-gap: 1em;
+    -ms-grid-auto-rows: minmax(100px, auto);
     .first {
         grid-column: 1/3;
         grid-row: 1/3;
+        -ms-grid-column: 1;
+        -ms-grid-row: 3;
     }
 }
 
@@ -297,10 +303,13 @@ export default {
 .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 178px;
-    height: 178px;
+    width: 100%;
     line-height: 178px;
     text-align: center;
+    min-height: 330px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .avatar {

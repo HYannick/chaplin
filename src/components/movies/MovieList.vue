@@ -9,7 +9,7 @@
                     <el-col :span="6">
                         <div class="add__link">
                             <router-link v-show="auth.logged && auth.role == 'admin'" to="/movies/add">
-                                <el-button>Ajouter un film</el-button>
+                                <el-button class="chap-button" >Ajouter un film</el-button>
                             </router-link>
                         </div>
                     </el-col>

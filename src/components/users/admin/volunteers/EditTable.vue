@@ -46,8 +46,8 @@
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">Annuler</el-button>
-                <el-button type="primary" @click="submitUser()">Confirm</el-button>
+                <el-button class="chap-button" @click="dialogFormVisible = false">Annuler</el-button>
+                <el-button class="chap-button" type="primary" @click="submitUser()">Editer</el-button>
             </span>
         </el-dialog>
     </div>

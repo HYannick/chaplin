@@ -6,15 +6,7 @@
                 <el-form ref="form" :rules="rules" label-position="top" :model="form" label-width="120px" class="form-add-proposal">
                     <el-row :gutter="20">
                         <el-col :md="12">
-                            <el-form-item label="Affiche du film">
-                                <el-upload class="avatar-uploader" name="cover" :action="`${apiRoot}/upload/cover`" :show-file-list="false" :on-success="handleAvatarSuccess" :on-change="handleCoverPreview" :auto-upload="false" ref="upCover">
-                                    <img v-if="cover" :src="cover" class="avatar">
-                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                                    {{form.cover}}
-                                </el-upload>
-                                <el-button style="margin-top: 10px" type="primary" size="small" @click="submitCover">Ajouter</el-button>
-                                <el-button style="margin-top: 10px" type="danger" size="small" @click="changeCover">Supprimer</el-button>
-                            </el-form-item>
+                            <cover-uploader @reset="resetCover" @uploaded="addToForm"></cover-uploader>
                         </el-col>
                         <el-col :md="12">
                             <el-form-item label="Titre" prop="title">
@@ -24,7 +16,6 @@
                         <el-col :md="12">
                             <el-form-item label="Lien" prop="url">
                                 <el-input placeholder="Entrez une url" v-model="form.url">
-                                    <template slot="prepend">Http://</template>
                                 </el-input>
                             </el-form-item>
 
@@ -32,8 +23,8 @@
                     </el-row>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
-                    <el-button type="primary" @click="onSubmit('form')">Ajouter</el-button>
-                    <el-button @click="dialogFormVisible = false">Annuler</el-button>
+                    <el-button type="primary" class="chap-button"  @click="onSubmit('form')">Ajouter</el-button>
+                    <el-button class="chap-button"  @click="dialogFormVisible = false">Annuler</el-button>
                 </span>
             </el-dialog>
 
@@ -43,43 +34,25 @@
 
 <script>
 import Services from '../../../services/services';
+import CoverUploader from '../../utils/CoverUploader';
 import api from '../../../../config/api';
 import { mapGetters } from 'vuex';
 export default {
     computed: {
         ...mapGetters(['auth']),
     },
+    components: {
+        'cover-uploader': CoverUploader
+    },
     methods: {
         submitCover() {
             this.$refs.upCover.submit();
         },
-        changeCover() {
-            this.cover = '';
+        addToForm(res) {
+            this.form.cover = res;
         },
-        handleCoverPreview(file) {
-            this.cover = file.url;
-        },
-        handleAvatarSuccess(res, file) {
-            console.log(res);
-            this.cover = URL.createObjectURL(file.raw);
-            this.form.cover = res.cover[0].filename;
-            this.$notify({
-                title: 'Ajout d\'affiche',
-                message: 'Affiche enregistrée !',
-                type: 'success'
-            });
-        },
-        beforeAvatarUpload(file) {
-            const isJPG = file.type === 'image/jpeg';
-            const isLt2M = file.size / 1024 / 1024 < 2;
-
-            if (!isJPG) {
-                this.$message.error('Avatar picture must be JPG format !');
-            }
-            if (!isLt2M) {
-                this.$message.error('Avatar picture size can not exceed 2MB !');
-            }
-            return isJPG && isLt2M;
+        resetCover() {
+            this.form.cover = '';
         },
         back() {
             this.$router.push('/movies');
@@ -199,7 +172,7 @@ export default {
     position: relative;
     overflow: hidden;
     width: 100%;
-    height: 400px;
+    min-height: 330px;
     background: #fbfdff;
 }
 
@@ -219,14 +192,13 @@ export default {
 .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 178px;
-    height: 178px;
-    position: absolute;
+    width: 100%;
     line-height: 178px;
     text-align: center;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    min-height: 330px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .avatar {

@@ -14,7 +14,7 @@
         <ch-footer></ch-footer>
       </el-col>
     </el-row>
-      
+
   </div>
 </template>
 
@@ -30,11 +30,82 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import './assets/fonts/font-face.css';
 @import url('https://fonts.googleapis.com/css?family=Cutive+Mono|Dosis|Exo+2|Inconsolata|Josefin+Sans|Roboto+Mono');
 body {
   background: #fff;
+}
+.el-button.is-disabled, .el-button.is-disabled:focus, .el-button.is-disabled:hover{
+  background: transparent;
+  opacity: 0.5;
+  color: grey !important;
+  &:hover{
+    &:before{
+      background: transparent;
+    }
+  }
+}
+.chap-button.el-button--danger {
+  color: #ff4949;
+  &:before {
+    background-color: #ff4949;
+    border-color: #ff4949;
+  }
+}
+
+.chap-button.el-button--primary {
+  color: #20a0ff;
+  &:before {
+    background-color: #20a0ff;
+    border-color: #20a0ff;
+  }
+}
+
+.chap-button.el-button--success {
+  color: #13ce66;
+  &:before {
+    background-color: #13ce66;
+    border-color: #13ce66;
+  }
+}
+
+.chap-button {
+  border-radius: 0;
+  margin-top: 5px;
+  position: relative;
+  font-size: 18px;
+  transition: 0.3s;
+  padding: 10px 30px;
+  z-index: 1;
+  outline: none;
+  background: transparent;
+
+  @media screen and (max-width: 468px) {
+    width: 100%;
+    margin-left: 0 !important;
+  }
+  &:hover {
+    color: #fff;
+    border-color: #fff;
+    &:before {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+  }
+  &:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+    transform: translate(-50%, -50%) scale(0);
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 00;
+    transition: 0.3s;
+  }
 }
 
 .fixed__side {

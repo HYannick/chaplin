@@ -21,10 +21,10 @@ export default {
             const mySubs = res.data.filter(sub => {
                 return sub.date == date && sub.time == time && sub.enrolled[0]._id == this.userId;
             });
-            if (otherSubs.length !== 0) {
+            if (otherSubs.length) {
                 this.isFull = true;
             }
-            if (mySubs.length !== 0) {
+            if (mySubs.length) {
                 this.isSub = true;
             }
         })

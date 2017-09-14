@@ -15,7 +15,7 @@
                             <el-row :gutter="20">
                                 <div class="author">{{msg.author}}</div>
                                 <div class="message" ref="message">
-                                    <div v-if="!msg.message.includes('jpg')">
+                                    <div v-if="!msg.message.includes('http')">
                                         <pre>{{msg.message}}</pre>
                                     </div>
                                     <div v-else v-html="formatMessage(msg.message)"></div>
@@ -130,14 +130,13 @@ export default {
             const __urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
             const __imgRegex = /\.(?:jpe?g|gif|png)$/i;
             const exp = __urlRegex;
-
             return $string.replace(exp, function(match) {
                 __imgRegex.lastIndex = 0;
                 if (__imgRegex.test(match)) {
-                    return '<img style="max-width: 100%" src="' + match + '" class="thumb" /><br>';
+                    return '<img style="max-width: 100%" src="' + match + '" class="chat__thumb" /><br>';
                 }
                 else {
-                    return '<a href="' + match + '" target="_blank">' + match + '</a>';
+                    return '<a class="chat__link" href="' + match + '" target="_blank">' + match + '</a>';
                 }
             }
             );
@@ -164,6 +163,9 @@ export default {
 <style lang="scss" scoped>
 .chat__wrapper {
     margin-top: 50px;
+}
+.chat__link{
+    color: #fff;
 }
 .connected__users{
     @media screen and (max-width: 458px) {
@@ -221,6 +223,9 @@ export default {
                 .message {
                     background: #312736;
                     color: rgb(210, 210, 210);
+                    a{
+                        font-size: 28px;
+                    }
                 }
                 .date {
                     color: #fff;

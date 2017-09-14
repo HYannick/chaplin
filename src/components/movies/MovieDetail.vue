@@ -39,10 +39,10 @@
                                     <div class="cover">
                                         <image-loader classname="lazy" :imageUrl="cover"></image-loader>
                                         <router-link class="edit__button" v-show="auth.logged && auth.role == 'admin'" :to="`/movies/${movie._id}/edit`">
-                                            <el-button type="primary">Edit</el-button>
+                                            <el-button class="chap-button" type="primary">Editer</el-button>
                                         </router-link>
                                         <a class="viewTrailer__mobile" :href="`https://www.youtube.com/watch?v=${movie.trailer}`">
-                                            <el-button type="primary">Bande d'annonce</el-button>
+                                            <el-button class="chap-button" type="primary">Bande d'annonce</el-button>
                                         </a>
                                     </div>
                                 </el-col>
@@ -81,16 +81,20 @@
                         <el-col :span="24">
                             <div class="timesheet">
                                 <big-title title="Horaires" orientation="center"></big-title>
-                                <div class="timesheet__item" v-for="(timesheet,index) in dates" :key="index">
-                                    <p class="timesheet__date">{{timesheet.date | capitalize}}</p>
-                                    <p class="timesheet__time">{{timesheet.time}}</p>
-                                    <p class="timesheet__dubbing">{{timesheet.dubbing}}</p>
+                                <div v-if="dates.length">
+                                    <div class="timesheet__item" v-for="(timesheet,index) in dates" :key="index">
+                                        <p class="timesheet__date">{{timesheet.date | capitalize}}</p>
+                                        <p class="timesheet__time">{{timesheet.time}}</p>
+                                        <p class="timesheet__dubbing">{{timesheet.dubbing}}</p>
+                                    </div>
                                 </div>
+                                <div v-else style="text-align: center">Aucun horaire pour le moment.</div>
+
                             </div>
                         </el-col>
                     </el-row>
                     <el-row :gutter="15">
-                        <div class="gallery">
+                        <div class="gallery" v-if="imageSet.length">
                             <big-title title="Galerie" orientation="center"></big-title>
                             <el-col :span="24">
                                 <div class="movie__gallery movie__gallery-first">
@@ -110,9 +114,9 @@
                         </div>
 
                     </el-row>
-                    <el-row v-show="related.length !== 0">
+                    <el-row>
                         <el-col :span="24">
-                            <div class="related__movies">
+                            <div class="related__movies" v-if="related.length">
                                 <big-title title="Films similaires" orientation="center"></big-title>
                                 <el-row :gutter="20">
                                     <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(movie, index) in related" :key="movie._id">
@@ -198,7 +202,7 @@ export default {
                 Service.getMovie(id).then(res => {
                     this.movie = res.data;
                     this.dates = this.movie.dates.filter(date => moment(date.fullDate).unix() >= now).map(({ date, fullDate, time, dubbing }) => {
-                        return { 'unix':date , 'date': moment(fullDate).format('dddd DD MMMM'), time, dubbing: dubbing || 'VF' }
+                        return { 'unix': date, 'date': moment(fullDate).format('dddd DD MMMM'), time, dubbing: dubbing || 'VF' }
                     })
                     this.imageSet = this.movie.imageSet.map(image => `${api.ftpUrl}/${image}`)
                     this.bgCover = `${api.ftpUrl}/${this.movie.imageSet[0]}`;
@@ -269,7 +273,7 @@ export default {
         margin: 0 auto;
         width: 100%;
         @media screen and (max-width: 768px) {
-             font-size: 26px;
+            font-size: 26px;
             text-align: center;
         }
         p {

@@ -15,7 +15,7 @@
                                     <h5>{{ props.row.title }}</h5>
                                     <p>Synopsis: {{ props.row.desc }}</p>
                                     <router-link :to="`/movies/${props.row.id}`">
-                                        <el-button>Voir fiche</el-button>
+                                        <el-button class="chap-button" >Voir fiche</el-button>
                                     </router-link>
                                 </el-col>
                             </el-row>

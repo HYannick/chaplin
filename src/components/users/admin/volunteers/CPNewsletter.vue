@@ -3,7 +3,7 @@
         <div class="nl__head">
             <h5>Liste d'inscrits ({{emailList.length}})</h5>
 
-            <el-button class="send__news" @click="dialogVisible = true">
+            <el-button class="send__news chap-button" @click="dialogVisible = true">
                 Envoyer une newsletter
             </el-button>
         </div>
@@ -18,7 +18,7 @@
             <el-input class="mailing__list" v-model="mailing">
             </el-input>
             <span slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="copy">Copier</el-button>
+                <el-button class="chap-button"  type="primary" @click="copy">Copier</el-button>
             </span>
         </el-dialog>
     </div>

@@ -6,7 +6,7 @@
                     <el-form ref="form" :rules="rules" class="newsletter" label-position="left" label-width="250px" :model="form">
                         <el-form-item class="ns_container" label="S'inscrire à la newsletter" prop="email">
                             <el-input placeholder="Adresse email" v-model="form.email">
-                                <el-button slot="append" @click="onSubmit('form')">S'inscrire</el-button>
+                                <el-button class="chap-button" slot="append" @click="onSubmit('form')">S'inscrire</el-button>
                             </el-input>
                         </el-form-item>
                     </el-form>
@@ -38,8 +38,8 @@
             <el-dialog title="Mentions Légales" :visible.sync="dialogVisible" size="small">
                 <m-legals></m-legals>
                 <span slot="footer" class="dialog-footer">
-                    <el-button @click="dialogVisible = false">Annuler</el-button>
-                    <el-button type="primary" @click="dialogVisible = false">Confirm</el-button>
+                    <el-button class="chap-button" @click="dialogVisible = false">Annuler</el-button>
+                    <el-button class="chap-button" type="primary" @click="dialogVisible = false">Confirm</el-button>
                 </span>
             </el-dialog>
         </div>

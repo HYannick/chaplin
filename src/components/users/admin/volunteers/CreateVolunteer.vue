@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-button class="add__volunteer" @click="dialogVisible =true">Ajouter un volontaire</el-button>
+        <el-button class="add__volunteer chap-button" @click="dialogVisible =true">Ajouter un volontaire</el-button>
         <el-dialog title="Ajouter un volontaire" :visible.sync="dialogVisible" size="tiny">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-position="top">
                 <el-form-item label="Nom" :label-width="formLabelWidth" prop="username">
@@ -20,8 +20,8 @@
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">Annuler</el-button>
-                <el-button type="primary" @click="addUser('ruleForm')">Ajouter</el-button>
+                <el-button class="chap-button"  @click="dialogVisible = false">Annuler</el-button>
+                <el-button class="chap-button"  type="primary" @click="addUser('ruleForm')">Ajouter</el-button>
                 
             </span>
         </el-dialog>
