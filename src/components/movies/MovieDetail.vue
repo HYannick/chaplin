@@ -57,11 +57,11 @@
                                         <h5>Détails</h5>
                                         <ul class="movie__authors">
                                             <li>De |</li>
-                                            <li v-for="(author, index) in movie.authors" :key="index">{{author}}</li>
+                                            <li>{{movie.authors.join(' / ')}}</li>
                                         </ul>
                                         <ul class="movie__actors">
                                             <li>Avec |</li>
-                                            <li v-for="(actor, index) in movie.actors" :key="index">{{actor}}</li>
+                                            <li>{{movie.actors.join(' / ')}}</li>
                                         </ul>
                                         <ul class="movie__authors">
                                             <li>Origine |</li>

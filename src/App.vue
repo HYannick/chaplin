@@ -28,6 +28,7 @@ export default {
     'ch-footer': Footer
   }
 }
+
 </script>
 
 <style lang="scss">
@@ -36,6 +37,13 @@ export default {
 body {
   background: #fff;
 }
+
+.bordering {
+    border-radius: 10px;
+    border: 4px solid #eef1f6;
+    padding-top: 15px;
+}
+
 .el-button.is-disabled, .el-button.is-disabled:focus, .el-button.is-disabled:hover{
   background: transparent;
   opacity: 0.5;

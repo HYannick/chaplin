@@ -5,7 +5,7 @@
                 <h4>Ajouter un film</h4>
                 <el-form ref="form" label-position="top" :rules="rules" :model="form" label-width="120px" class="form-add">
                     <el-row :gutter="20">
-                        <el-col :xs="24" :sm="24" :md="8" :lg="8">
+                        <el-col :xs="24" :sm="24" :md="8" :lg="8" style="padding-top:20px">
                             <cover-uploader @reset="resetCover" @uploaded="addToForm"></cover-uploader>
 
                             <el-form-item label="Auteur(s)">
@@ -26,7 +26,7 @@
                             </el-form-item>
 
                         </el-col>
-                        <el-col :xs="24" :sm="24" :md="16" :lg="16">
+                        <el-col :xs="24" :sm="24" :md="16" :lg="16" class="bordering">
                             <el-row :gutter="20">
                                 <el-col :span="12">
                                     <el-form-item label="Titre" prop="title">
@@ -42,7 +42,7 @@
                                     <el-table :data="form.dates" style="width: 100%; margin-bottom: 15px">
                                         <el-table-column prop="date" label="Date" :formatter="formatDate">
                                         </el-table-column>
-                                        <el-table-column prop="time" label="Time">
+                                        <el-table-column prop="time" label="Heure">
                                         </el-table-column>
                                         <el-table-column prop="dubbing" label="Doublage" :formatter="formatDubbing">
                                         </el-table-column>
@@ -60,15 +60,7 @@
                                         <el-input v-model="form.releaseDate"></el-input>
                                     </el-form-item>
                                 </el-col>
-                                <el-col :xs="24" :sm="24" :md="12" :lg="12">
-                                    <el-form-item label="Options">
-                                        <el-checkbox-group v-model="form.checkList">
-                                            <el-checkbox label="VF"></el-checkbox>
-                                            <el-checkbox label="VOSTR"></el-checkbox>
-                                            <el-checkbox label="3D"></el-checkbox>
-                                        </el-checkbox-group>
-                                    </el-form-item>
-                                </el-col>
+
                                 <el-col :xs="24" :sm="24" :md="12" :lg="12">
                                     <el-form-item label="Langues">
                                         <el-input v-model="form.language"></el-input>
@@ -91,7 +83,7 @@
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="24">
-                                    <el-form-item label="Movie Gallery">
+                                    <el-form-item label="Galerie d'images">
                                         <el-upload name="images" :action="`${apiRoot}/upload/images`" list-type="picture-card" :on-success="handleListSuccess" :on-change="pushImages" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :auto-upload="false" ref="upload">
                                             <i class="el-icon-plus"></i>
                                         </el-upload>
@@ -104,7 +96,7 @@
                             </el-row>
                         </el-col>
                     </el-row>
-                    <el-form-item>
+                    <el-form-item style="float: right; margin-top: 15px">
                         <el-button class="chap-button" type="primary" @click="onSubmit('form')">Créer</el-button>
                         <el-button class="chap-button" @click="resetForm('form')">Reset</el-button>
                         <el-button class="chap-button" @click="back">Annuler</el-button>
@@ -133,6 +125,7 @@ export default {
     data() {
         return {
             apiRoot: api.rootUrl,
+            maxUpload: false,
             form: {
                 title: '',
                 synopsis: '',
@@ -238,21 +231,21 @@ export default {
             this.imageSet.push(file);
         },
         handleRemove(file, fileList) {
-           /* if (this.form.imageSet.length) {
-                Services.deleteCover(file.name).then(res => {
-                    this.$notify({
-                        title: 'Suppression',
-                        message: 'Image supprimée !',
-                        type: 'success'
-                    });
-                }).catch(err => {
-                    this.$notify({
-                        title: 'Erreur',
-                        message: 'Une erreur s\'est produite',
-                        type: 'error'
-                    });
-                })
-            }*/
+            /* if (this.form.imageSet.length) {
+                 Services.deleteCover(file.name).then(res => {
+                     this.$notify({
+                         title: 'Suppression',
+                         message: 'Image supprimée !',
+                         type: 'success'
+                     });
+                 }).catch(err => {
+                     this.$notify({
+                         title: 'Erreur',
+                         message: 'Une erreur s\'est produite',
+                         type: 'error'
+                     });
+                 })
+             }*/
             const dataSet = this.imageSet.filter((image => {
                 return image.name !== file.name
             }));
@@ -327,6 +320,16 @@ export default {
 .el-select {
     width: 100%;
 }
+
+.el-upload {
+    .avatar {
+        position: absolute;
+        transform: translate(-50%, -50%) scale(1.2);
+        top: 50%;
+        left: 50%;
+    }
+}
+
 .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
@@ -334,9 +337,13 @@ export default {
     position: relative;
     overflow: hidden;
     width: 100%;
-    min-height: 330px;
+    min-height: 500px;
+    @media screen and (max-width: 1024px) {
+        min-height: 330px;
+    }
     background: #fbfdff;
 }
+
 .el-upload-list--picture-card .el-upload-list__item-thumbnail {
     width: 200%;
     height: initial;

@@ -5,7 +5,7 @@
                 <h4>Modifier le film | {{form.title}}</h4>
                 <el-form ref="form" :rules="rules" label-position="top" :model="form" label-width="120px" class="form-add">
                     <el-row :gutter="20">
-                        <el-col :xs="24" :sm="24" :md="8" :lg="8">
+                        <el-col :xs="24" :sm="24" :md="8" :lg="8" style="padding-top:20px">
                             <cover-uploader :movie="id" @reset="resetCover" @uploaded="addToForm"></cover-uploader>
 
                             <el-form-item label="Auteur(s)">
@@ -33,7 +33,7 @@
                                 </el-switch>
                             </el-form-item>
                         </el-col>
-                        <el-col :xs="24" :sm="24" :md="16" :lg="16">
+                        <el-col :xs="24" :sm="24" :md="16" :lg="16" class="bordering">
                             <el-row :gutter="20">
                                 <el-col :span="12">
                                     <el-form-item label="Titre" prop="title">
@@ -93,7 +93,7 @@
                                     </el-form-item>
                                 </el-col>
                                 <el-col :span="24">
-                                    <el-form-item label="Movie Gallery">
+                                    <el-form-item label="Galerie d'images">
                                         <el-upload name="images" :action="`${apiRoot}/upload/images`" :file-list="fileList" list-type="picture-card" :on-change="pushImages" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :auto-upload="false" ref="upload" :on-success="handleListSuccess">
                                             <i class="el-icon-plus"></i>
                                         </el-upload>
@@ -108,8 +108,8 @@
                         </el-col>
 
                     </el-row>
-
-                    <el-form-item>
+                    
+                    <el-form-item style="float: right; margin-top: 15px">
                         <el-button class="chap-button" type="primary" @click="onSubmit('form')">Mettre à jour</el-button>
                         <el-button class="chap-button" type="danger" @click="deleteMovie">Supprimer</el-button>
                         <el-button class="chap-button" @click="back">Annuler</el-button>
@@ -353,7 +353,6 @@ export default {
 }
 
 
-
 .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
@@ -376,14 +375,24 @@ export default {
 .avatar-uploader .el-upload:hover {
     border-color: #20a0ff;
 }
-
+.el-upload {
+    .avatar {
+        position: absolute;
+        transform: translate(-50%, -50%) scale(1.2);
+        top: 50%;
+        left: 50%;
+    }
+}
 .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
     width: 100%;
     line-height: 178px;
     text-align: center;
-    min-height: 330px;
+    min-height: 500px;
+    @media screen and (max-width: 1024px) {
+        min-height: 330px;
+    } 
     display: flex;
     align-items: center;
     justify-content: center;

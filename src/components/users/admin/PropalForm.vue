@@ -23,8 +23,8 @@
                     </el-row>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
-                    <el-button type="primary" class="chap-button"  @click="onSubmit('form')">Ajouter</el-button>
-                    <el-button class="chap-button"  @click="dialogFormVisible = false">Annuler</el-button>
+                    <el-button type="primary" class="chap-button" @click="onSubmit('form')">Ajouter</el-button>
+                    <el-button class="chap-button" @click="dialogFormVisible = false">Annuler</el-button>
                 </span>
             </el-dialog>
 
@@ -164,7 +164,14 @@ export default {
         transition: 0.3s;
     }
 }
-
+.el-upload {
+    .avatar {
+        position: absolute;
+        transform: translate(-50%, -50%) scale(1.2);
+        top: 50%;
+        left: 50%;
+    }
+}
 .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
@@ -172,7 +179,10 @@ export default {
     position: relative;
     overflow: hidden;
     width: 100%;
-    min-height: 330px;
+    min-height: 500px;
+    @media screen and (max-width: 1024px) {
+        min-height: 330px;
+    }
     background: #fbfdff;
 }
 
@@ -195,7 +205,10 @@ export default {
     width: 100%;
     line-height: 178px;
     text-align: center;
-    min-height: 330px;
+    min-height: 500px;
+    @media screen and (max-width: 1024px) {
+        min-height: 330px;
+    }
     display: flex;
     align-items: center;
     justify-content: center;

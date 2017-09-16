@@ -15,22 +15,23 @@
                         <el-button class="user__edit chap-button">Editer mon profil</el-button>
                     </router-link>
                 </div>
-
-                <el-form v-if="auth.logged && auth.role == 'admin'" ref="form" class="pushline" :model="form" label-position="top" label-width="120px">
-                    <el-form-item label="Annonce">
-                        <el-input placeholder="Ecrivez une annonce :)" v-model="form.pushline.title">
-                            <el-button class="chap-button" slot="append" @click="onSubmit">Poster</el-button>
-                        </el-input>
-                    </el-form-item>
-                </el-form>
-                <el-form v-if="auth.logged && auth.role == 'admin'" label-position="top" class="pushline" label-width="120px">
-                    <el-form-item label="Upload PDF">
-                        <el-upload class="upload-demo" name="pdf" ref="uploadPDF" :multiple="false" :action="`${apiRoot}/upload/pdf`" :on-success="pdfUploaded"  :auto-upload="true">
-                            <el-button class="chap-button" slot="trigger" size="small" type="primary">Sélectionnez un PDF</el-button>
-                            <div class="el-upload__tip" slot="tip">Fichier PDF seulement</div>
-                        </el-upload>
-                    </el-form-item>
-                </el-form>
+                <div class="admin__wrapper">
+                    <el-form v-if="auth.logged && auth.role == 'admin'" ref="form" class="pushline" :model="form" label-position="top" label-width="120px">
+                        <el-form-item label="Annonce">
+                            <el-input placeholder="Ecrivez une annonce :)" v-model="form.pushline.title">
+                                <el-button class="chap-button" slot="append" @click="onSubmit">Publier</el-button>
+                            </el-input>
+                        </el-form-item>
+                    </el-form>
+                    <el-form v-if="auth.logged && auth.role == 'admin'" label-position="top" class="pushline" label-width="120px">
+                        <el-form-item label="Télécharger un PDF" style="margin-bottom:10px">
+                            <el-upload class="upload-demo" name="pdf" ref="uploadPDF" :multiple="false" :action="`${apiRoot}/upload/pdf`" :on-success="pdfUploaded" :auto-upload="true">
+                                <el-button class="chap-button" slot="trigger" size="small" type="primary">Sélectionnez un PDF</el-button>
+                                <div class="el-upload__tip" slot="tip">Fichier PDF uniquement</div>
+                            </el-upload>
+                        </el-form-item>
+                    </el-form>
+                </div>
 
                 <el-row :gutter="20">
                     <div class="self__perms">
@@ -128,12 +129,12 @@ export default {
                 });
             })
         },
-        pdfUploaded(res){
+        pdfUploaded(res) {
             this.$notify({
-                    title: 'PDF téléchargé !',
-                    message: 'Le PDF a bien été téléchargé !',
-                    type: 'success'
-                });
+                title: 'PDF téléchargé !',
+                message: 'Le PDF a bien été téléchargé !',
+                type: 'success'
+            });
         },
         submitPDF() {
             this.$refs.uploadPDF.submit();
@@ -195,6 +196,15 @@ export default {
 </script>
 
 <style lang="scss">
+.pushline {
+    border: 4px solid #f3f3f3;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    padding: 20px 20px 0;
+}
+li.el-upload-list__item.is-uploading {
+    margin-bottom: 20px;
+}
 .el-tabs__item.is-active {
     color: #000;
 }

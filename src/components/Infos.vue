@@ -16,8 +16,8 @@
                         <div class="pricing">
                             <h4>Tarif enfant</h4>
                             <p class="subtle">
-                                (moins de 13 ans)
-                                <br> Tout enfant de moins de 13 ans doit être accompagné d'un adulte. Merci.</p>
+                                Moins de 13 ans, obligatoirement accompagné d'un adulte
+                                <br> </p>
                             <p class="price">3€</p>
                         </div>
                     </div>
@@ -27,18 +27,18 @@
                         <div class="pricing">
                             <h4>Tarif réduit</h4>
                             <p class="subtle">
-                                (abonnés, jeunes de 13 à 25 ans, chômeurs, handicapés)
-                                <br>La carte "abonné" est vendue 8 euros, et donne accès au tarif de 4 euros pour toutes les séances.
-                                <br>Elle est valable du 1er octobre au jusqu'au 30 septembre de l'année suivante.
-                                <br>Elle est individuelle : apporter une photo. Merci.
+                                Abonnés, 13 - 25 ans, chômeurs et handicapés
+                                <br>Carte "abonné" : 8 euros
+                                <br>Chaque séance : 4 euros
+                                <br>Valable du 1er octobre au 30 septembre de l'année suivante
+                                <br>Pour l'inscription, apporter une photo (carte individuelle)
                             </p>
                             <p class="price">4€</p>
                         </div>
                     </div>
                     <p>
-                        Séance en 3D : Supplément
-                        <b>1€</b><br> Le cinéma accepte la
-                        <b>carte M'Ra</b> pour les Lycéens de la Région Rhône-Alpes.
+                         <b>Séances 3D</b> avec un supplément de 1€
+                        <br> <b>Carte Pass'Région</b> (anciennement carte M'ra) pour les lycéens de la Région Auvergne-Rhône-Alpes acceptée
                     </p>
                 </el-col>
             </el-row>
