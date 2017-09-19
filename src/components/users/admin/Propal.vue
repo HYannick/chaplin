@@ -108,7 +108,6 @@ export default {
 
         },
         findIndex(likes) {
-            console.log(likes)
             if (_.findLastIndex(this.proposals, ['nbLike', likes]) === 0) {
                 return true;
             }
@@ -185,7 +184,7 @@ export default {
     padding: 5px;
     text-align: center;
     opacity: 0;
-    transition: 0.3s;
+    transition: 0.3s ease-out;
 }
 
 .like__footer {
@@ -195,7 +194,7 @@ export default {
     color: #fff;
     padding: 10px;
     width: 100%;
-    transition: 0.3s;
+    transition: 0.3s ease-out;
     &--block {
         flex-grow: 1;
         text-align: center;
@@ -260,7 +259,7 @@ export default {
     }
     .lazy {
         opacity: 0.6;
-        transition: 0.3s;
+        transition: 0.3s ease-out;
     }
 }
 

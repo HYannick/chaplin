@@ -50,9 +50,9 @@
                         </el-menu-item>
                     </div>
                 </transition>
-                <div class="social__network">
+                <!--<div class="social__network">
                     <facebook-icon url="https://www.facebook.com/"></facebook-icon>
-                </div>
+                </div>-->
             </el-menu>
     
         </div>

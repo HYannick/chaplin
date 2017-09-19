@@ -287,7 +287,7 @@ export default {
                                 message: 'Film posté !',
                                 type: 'success'
                             });
-                            this.$router.push('/movies');
+                            this.$router.push(`/users/${this.auth.userId}/movies`);
                             console.log(res);
                         })
                         .catch(err => {

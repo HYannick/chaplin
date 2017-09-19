@@ -66,13 +66,12 @@ export default {
         onSubmit(formName) {
             this.dialogFormVisible = false
             console.log('Submitting ...');
-            console.log(this.form)
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     Services.postProposal(this.form)
                         .then(res => {
                             this.$refs[formName].resetFields();
-                            this.cover = '';
+                            this.form.cover = '';
                             this.$emit('reload-proposals');
                             this.$notify({
                                 title: 'Film à jour',

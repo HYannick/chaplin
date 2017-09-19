@@ -25,8 +25,8 @@ export default {
         'movie-card': MovieCard
     },
     created() {
-        Service.getMovies().then(res => {
-            this.movies = _.shuffle(res.data.filter(movie => movie.diffused == true)).slice(0, this.limit)
+        Service.getDiffusedMovies(this.limit).then(res => {
+            this.movies = _.shuffle(res.data.movieList)
         });
     },
     data() {

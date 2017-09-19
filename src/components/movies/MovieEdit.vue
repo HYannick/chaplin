@@ -328,7 +328,7 @@ export default {
                             message: 'Film supprimé !',
                             type: 'success'
                         });
-                        this.$router.push('/movies')
+                         this.$router.push(`/users/${this.auth.userId}/movies`);
                     })
                 })
                 .catch(err => {
@@ -361,6 +361,10 @@ export default {
     overflow: hidden;
     width: 100%;
     background: #fbfdff;
+    min-height: 500px;
+    @media screen and (max-width: 1024px) {
+        min-height: 330px;
+    } 
 }
 
 .el-upload-list--picture-card .el-upload-list__item-thumbnail {
@@ -369,6 +373,7 @@ export default {
     position: absolute;
     top: 50%;
     left: 50%;
+    
     transform: translate(-50%, -50%);
 }
 
