@@ -71,11 +71,18 @@
                                 </el-col>
 
                                 <el-col :xs="24" :sm="24" :md="12" :lg="12">
-                                    <el-form-item label="Langues">
-                                        <el-input v-model="form.language"></el-input>
+                                    <el-form-item label="Origine(s)">
+                                        <el-input v-model="form.language" placeholder="Nationalité(s) du film"></el-input>
                                     </el-form-item>
                                 </el-col>
+
                                 <el-col :span="24">
+                                    <el-form-item label="Information">
+                                        <el-input type="textarea" :autosize="{ minRows: 1, maxRows: 3}" placeholder="Informations sur le film (réalisateur/acteurs présent(s), événement spécial à l'occasion ...)" v-model="form.information"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="Avertissement">
+                                        <el-input type="textarea" :autosize="{ minRows: 1, maxRows: 3}" placeholder="Limite d'âge, scènes sensibles ..." v-model="form.disclaimer"></el-input>
+                                    </el-form-item>
                                     <el-form-item label="Description">
                                         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 8}" v-model="form.desc"></el-input>
                                     </el-form-item>
@@ -86,7 +93,7 @@
                                 </el-col>
                                 <el-col :span="24">
                                     <el-form-item label="Bande d'annonce">
-                                        <el-input v-model="form.trailer"></el-input>
+                                        <el-input v-model="form.trailer" placeholder="entrez un lien Youtube uniquement."></el-input>
                                         <transition name="el-fade-in-linear">
                                             <youtube v-show="form.trailer !== ''" :video-id="getTrailerUrl" player-height="400px" player-width="100%"></youtube>
                                         </transition>
@@ -108,7 +115,7 @@
                         </el-col>
 
                     </el-row>
-                    
+
                     <el-form-item style="float: right; margin-top: 15px">
                         <el-button class="chap-button" type="primary" @click="onSubmit('form')">Mettre à jour</el-button>
                         <el-button class="chap-button" type="danger" @click="deleteMovie">Supprimer</el-button>
@@ -148,6 +155,8 @@ export default {
                 checkList: [],
                 duration: '',
                 imageSet: [],
+                information: '',
+                disclaimer: '',
                 actors: [],
                 genres: [],
                 releaseDate: '',
@@ -328,7 +337,7 @@ export default {
                             message: 'Film supprimé !',
                             type: 'success'
                         });
-                         this.$router.push(`/users/${this.auth.userId}/movies`);
+                        this.$router.push(`/users/${this.auth.userId}/movies`);
                     })
                 })
                 .catch(err => {
@@ -364,7 +373,7 @@ export default {
     min-height: 500px;
     @media screen and (max-width: 1024px) {
         min-height: 330px;
-    } 
+    }
 }
 
 .el-upload-list--picture-card .el-upload-list__item-thumbnail {
@@ -373,13 +382,14 @@ export default {
     position: absolute;
     top: 50%;
     left: 50%;
-    
+
     transform: translate(-50%, -50%);
 }
 
 .avatar-uploader .el-upload:hover {
     border-color: #20a0ff;
 }
+
 .el-upload {
     .avatar {
         position: absolute;
@@ -388,6 +398,7 @@ export default {
         left: 50%;
     }
 }
+
 .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
@@ -397,7 +408,7 @@ export default {
     min-height: 500px;
     @media screen and (max-width: 1024px) {
         min-height: 330px;
-    } 
+    }
     display: flex;
     align-items: center;
     justify-content: center;

@@ -49,6 +49,14 @@
                                 <el-col :xs="24" :sm="24" :md="10" :lg="10">
                                     <div class="short__desc">
                                         <h5>Synopsis</h5>
+                                        <div class="sub__infos">
+                                            <span class="information">
+                                                <pre>{{movie.information}}</pre>
+                                            </span>
+                                            <span class="disclaimer">
+                                                <pre>{{movie.disclaimer}}</pre>
+                                            </span>
+                                        </div>
                                         <p>{{movie.synopsis}}</p>
                                     </div>
                                 </el-col>
@@ -240,6 +248,24 @@ export default {
 <style lang="scss">
 * {
     font-family: 'inconsolataRegular', monospace;
+}
+.sub__infos{
+    margin: 5px 0 15px;
+}
+.information {
+    font-family: 'inconsolataBold', monospace;
+    font-weight: bold;
+    display: block;
+    opacity: 0.7;
+}
+
+.disclaimer {
+    font-family: 'inconsolataBold', monospace;
+    font-style: italic;
+    font-weight: bold;
+    display: block;
+    font-size: 12px;
+    color: #FF4949;
 }
 
 .gallery,

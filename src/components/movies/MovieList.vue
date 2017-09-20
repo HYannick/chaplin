@@ -14,10 +14,10 @@
                         </div>
                     </el-col>
                     <!--
-                        <el-col :span="6">
-                            <el-autocomplete class="inline-input" v-model="search" :fetch-suggestions="querySearch" placeholder="Please Input" :trigger-on-focus="false" @select="handleSelect"></el-autocomplete>
-                        </el-col>
-                    -->
+                                <el-col :span="6">
+                                    <el-autocomplete class="inline-input" v-model="search" :fetch-suggestions="querySearch" placeholder="Please Input" :trigger-on-focus="false" @select="handleSelect"></el-autocomplete>
+                                </el-col>
+                            -->
                 </el-row>
                 <el-row :gutter="20">
                     <transition-group class="container__grid" name="list" v-on:enter="enter" v-on:leave="leave" tag="div">
@@ -142,18 +142,22 @@ export default {
 <style lang="scss">
 .movie__item {
     position: relative;
-    background: #000;
     border-radius: 5px;
     margin-bottom: 15px;
     overflow: hidden;
+    transition:0.3s;
     .movie__card {
         margin: 0;
+        .caption {
+            border-radius: 5px;
+        }
     }
     .lazy {
         opacity: 1;
         transition: 0.3s;
     }
     &:hover {
+        background: #333;
         .lazy {
             transform: scale(1.1);
             opacity: 0.7;
@@ -185,8 +189,6 @@ export default {
         }
     }
 }
-
-
 
 .add__link {
     float: right;

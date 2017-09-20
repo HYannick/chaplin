@@ -30,8 +30,14 @@
                                 <el-col :xs="24" :sm="24" :md="10" :lg="10">
                                     <div class="timeline__item">
                                         <h5 class="m-title">{{movie.title}}</h5>
+                                        <span class="information">
+                                            <pre>{{movie.information}}</pre>
+                                        </span>
+                                        <span class="disclaimer">
+                                            <pre>{{movie.disclaimer}}</pre>
+                                        </span>
                                         <br>
-                                        <p class="m-desc"> {{movie.desc}}</p>
+                                        <p class="m-desc">{{movie.desc}}</p>
                                         <router-link :to="`/movies/${movie._id}`" class="goTo" tag="a">En savoir plus</router-link>
                                     </div>
                                 </el-col>
@@ -188,6 +194,20 @@ export default {
 }
 
 .timeline__item {
+    .information {
+        font-family: 'inconsolataBold', monospace;
+        font-weight: bold;
+        display: block;
+        opacity: 0.7;
+    }
+    .disclaimer {
+        font-family: 'inconsolataBold', monospace;
+        font-style: italic;
+        font-weight: bold;
+        display: block;
+        font-size: 12px;
+        color: #FF4949;
+    }
     .m-title {
         font-family: 'inconsolataBold', monospace;
         font-weight: bold;

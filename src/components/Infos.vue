@@ -3,7 +3,7 @@
         <div>
             <big-title title="Nos tarifs" orientation="top"></big-title>
             <el-row :gutter="20" class="price__table">
-                <el-col :md="{span: 12, offset:12}" class="prices">
+                <el-col :md="{span: 12, offset:12}" :lg="{span: 12, offset:12}" class="prices">
                     <div class="pricing__wrapper">
                         <div class="pricing">
                             <h4>Plein tarif</h4>

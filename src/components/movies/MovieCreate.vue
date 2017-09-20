@@ -62,11 +62,18 @@
                                 </el-col>
 
                                 <el-col :xs="24" :sm="24" :md="12" :lg="12">
-                                    <el-form-item label="Langues">
-                                        <el-input v-model="form.language"></el-input>
+                                    <el-form-item label="Origine(s)">
+                                        <el-input v-model="form.language" placeholder="Nationalité(s) du film"></el-input>
                                     </el-form-item>
                                 </el-col>
+
                                 <el-col :span="24">
+                                    <el-form-item label="Information">
+                                        <el-input type="textarea" :autosize="{ minRows: 1, maxRows: 3}" placeholder="Informations sur le film (réalisateur/acteurs présent(s), événement spécial à l'occasion ...)" v-model="form.information"></el-input>
+                                    </el-form-item>
+                                    <el-form-item label="Avertissement">
+                                        <el-input type="textarea" :autosize="{ minRows: 1, maxRows: 3}" placeholder="Limite d'âge, scènes sensibles ..." v-model="form.disclaimer"></el-input>
+                                    </el-form-item>
                                     <el-form-item label="Description">
                                         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 8}" v-model="form.desc"></el-input>
                                     </el-form-item>
@@ -76,7 +83,7 @@
                                 </el-col>
                                 <el-col :span="24">
                                     <el-form-item label="Bande d'annonce">
-                                        <el-input v-model="form.trailer"></el-input>
+                                        <el-input v-model="form.trailer" placeholder="entrez un lien Youtube uniquement."></el-input>
                                         <transition name="el-fade-in-linear">
                                             <youtube v-show="form.trailer !== ''" :video-id="getTrailerUrl" player-height="400px" player-width="100%"></youtube>
                                         </transition>
@@ -130,6 +137,8 @@ export default {
                 title: '',
                 synopsis: '',
                 cover: '',
+                information: '',
+                disclaimer: '',
                 bgCover: '',
                 language: '',
                 checkList: [],
