@@ -85,7 +85,7 @@
                                     <el-form-item label="Bande d'annonce">
                                         <el-input v-model="form.trailer" placeholder="entrez un lien Youtube uniquement."></el-input>
                                         <transition name="el-fade-in-linear">
-                                            <youtube v-show="form.trailer !== ''" :video-id="getTrailerUrl" player-height="400px" player-width="100%"></youtube>
+                                            <youtube v-show="form.trailer !== ''"   :video-id="getTrailerUrl" player-height="400px" player-width="100%"></youtube>
                                         </transition>
                                     </el-form-item>
                                 </el-col>
