@@ -2,18 +2,15 @@
     <transition name="el-fade-in-linear">
         <div>
             <big-title title="Nos tarifs" orientation="top"></big-title>
-            <el-row :gutter="20">
-                
-                <el-col :xs="24" :sm="24" :md="{span: 12, offset:6}" :lg="{span: 12, offset:6}">
-                    <div class="pricing__wrapper pricing__wrapper-first">
+            <el-row :gutter="20" class="price__table">
+                <el-col :md="{span: 12, offset:12}" class="prices">
+                    <div class="pricing__wrapper">
                         <div class="pricing">
                             <h4>Plein tarif</h4>
                             <p class="price">5€</p>
                         </div>
                     </div>
-                </el-col>
-                <el-col :xs="24" :sm="24" :md="{span: 12, offset:6}" :lg="{span: 12, offset:6}">
-                    <div class="pricing__wrapper pricing__wrapper-second">
+                    <div class="pricing__wrapper">
                         <div class="pricing">
                             <h4>Tarif enfant</h4>
                             <p class="subtle">
@@ -22,9 +19,7 @@
                             <p class="price">3€</p>
                         </div>
                     </div>
-                </el-col>
-                <el-col :xs="24" :sm="24" :md="{span: 12, offset:6}" :lg="{span: 12, offset:6}">
-                    <div class="pricing__wrapper pricing__wrapper-third">
+                    <div class="pricing__wrapper">
                         <div class="pricing">
                             <h4>Tarif réduit</h4>
                             <p class="subtle">
@@ -33,19 +28,13 @@
                             <p class="price">4€</p>
                         </div>
                     </div>
-                    <p>
-                        <b>Séances 3D</b> avec un supplément de 1€
-                        <br>
-                        <b>Carte Pass'Région</b> (anciennement carte M'ra) pour les lycéens de la Région Auvergne-Rhône-Alpes acceptée
-                    </p>
-                </el-col>
-                <el-col :xs="24" :sm="24" :md="{span: 12, offset:6}" :lg="{span: 12, offset:6}">
                     <div class="subscribed__card">
                         <h4>Carte
                             <b>abonné</b>
                         </h4>
-                        <h5><b>8</b>€</h5>
-                        <p>                           
+                        <h5>
+                            <b>8</b>€</h5>
+                        <p>
                             <br>Chaque séance :
                             <b>4</b> euros
                             <br>
@@ -54,7 +43,13 @@
                             <span>Pour l'inscription, apporter une photo (carte individuelle)</span>
                         </p>
                     </div>
-
+                    <div class="pricing__wrapper">
+                        <p>
+                            <b>Séances 3D</b> avec un supplément de 1€
+                            <br>
+                            <b>Carte Pass'Région</b> (anciennement carte M'ra) pour les lycéens de la Région Auvergne-Rhône-Alpes acceptée
+                        </p>
+                    </div>
                 </el-col>
             </el-row>
         </div>
@@ -68,15 +63,6 @@ import BigTitle from './utils/BigTitle';
 export default {
     components: {
         'big-title': BigTitle,
-    },
-    created() {
-
-
-    },
-    data() {
-        return {
-
-        }
     }
 }
 </script>
@@ -89,14 +75,32 @@ export default {
     font-family: 'inconsolata', monospace;
 }
 
+.price__flex {
+    @media screen and (min-width: 768px) {
+        display: flex;
+    }
+}
+
+.price__table {
+    @media screen and (min-width: 768px) {
+        background: url('/static/img/chaplin__tarifs.png') left center no-repeat;
+    }
+}
+
+.prices {
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 30px 30px rgba(255, 255, 255, 0.8);
+}
+
 .subscribed__card {
     border: 4px solid #f3f3f3;
     box-shadow: 10px 15px 10px 0px #d2d2d2;
     border-radius: 10px;
     padding: 15px;
-    background: url('/static/img/pricing3.png') right center no-repeat;
+    background: url('/static/img/pricing3.png') right center no-repeat #fff;
     position: relative;
-    h4, h5 {
+    h4,
+    h5 {
         margin: 0;
     }
     h5 {
@@ -116,46 +120,37 @@ export default {
 }
 
 .pricing__wrapper {
-    width: 100%;
-    height: 350px;
-    background: #333;
     margin-bottom: 20px;
     position: relative;
-    .subtle{
+    &:last-child {
+        margin-top: 30px;
+    }
+    .subtle {
         font-size: 16px;
         font-style: italic;
-    }
-    &-first {
-        background: url('/static/img/pricing1.png') left center no-repeat;
-        .pricing {
-            max-width: 300px;
-            right: 30%;
-        }
-    }
-    &-second {
-        background: url('/static/img/pricing2.png') left center no-repeat;
-        .pricing {
-            max-width: 300px;
-            right: 0;
-        }
-    }
-    &-third {
-        background: url('/static/img/pricing3.png') left center no-repeat;
-        .pricing {
-            max-width: 500px;
-            right: 0;
-        }
+        margin-bottom: 5px;
     }
 
     .pricing {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background: rgba(255, 255, 255, 0.8);
         padding: 15px;
         h4 {
             font-weight: bold;
-            margin-bottom: 20px;
+            margin: 0;
+            position: relative;
+            display: table;
+            margin-bottom: 10px;
+            &:before {
+                content: '';
+                background: #696969;
+                position: absolute;
+                top: 25px;
+                right: -5px;
+                opacity: 0.5;
+                z-index: 99;
+                width: 90%;
+                transition: 0.3s;
+                height: 20px;
+            }
         }
         .price {
             font-size: 30px;
