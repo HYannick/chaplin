@@ -12,7 +12,7 @@
                                 <div class="propal">
                                     <div class="like__header">
                                         <span class="submitter">
-                                            <b>{{propal.submitter.username || propal.submitter.email}}</b>
+                                            <b>{{propal.submitter.username || propal.submitter.emailça}}</b>
                                         </span>
                                         <h5 class="prop-title">
                                             <a :href="propal.url" target="_blank">{{propal.title}}</a>
