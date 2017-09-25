@@ -42,7 +42,7 @@
                                     </div>
                                 </el-col>
                                 <div class="next__schedule" data-title="Toutes les séances" v-show="display !== 'upcoming'">
-                                    <p v-for="(date, index) in availabilities(movie)" :key="index">{{date | capitalize}}</p>
+                                    <p v-for="(date, index) in availabilities(movie)" :key="index">{{date.day | capitalize}} <span class="sched__time">{{date.time}}</span></p>
                                 </div>
                             </div>
 
@@ -108,10 +108,14 @@ export default {
                 if (display === 'side') {
                     return {
                         day: moment.unix(item.date).format('DD'),
-                        month: moment.unix(item.date).format('MMM').slice(0, -1)
+                        month: moment.unix(item.date).format('MMM').slice(0, -1),
                     }
                 } else {
-                    return moment.unix(item.date).format('dddd DD MMMM')
+                    console.log(moment.unix(item.date))
+                    return {
+                        day: moment.unix(item.date).format('dddd DD MMMM'),
+                        time: item.time
+                    }
                 }
             });
         }
@@ -291,7 +295,7 @@ export default {
 .next__schedule {
     background: #fff;
     padding: 70px 10px 20px;
-    text-align: center;
+    text-align: left;
     font-weight: bold;
     font-size: 16px;
     font-family: 'inconsolataBold', monospace;
@@ -303,11 +307,11 @@ export default {
     @media screen and (min-width: 768px) {
         position: absolute;
         z-index: 10;
-        right: 20px;
+        right: 0;
         top: 40%;
         box-shadow: none;
         transform: translateY(-50%);
-        max-width: 190px;
+        max-width: 220px;
         padding: 20px 10px;
     }
 
@@ -316,6 +320,7 @@ export default {
         font-family: 'inconsolataBold', monospace;
         font-size: 18px;
         font-weight: bolder;
+        text-align: center;
         position: absolute;
         width: 100%;
         left: 50%;
@@ -334,9 +339,16 @@ export default {
         }
     }
     p {
+        font-size: 14px;
         margin: 0;
         display: block;
         transform: scale(1, 1.4);
+        position: relative;
+        span{
+            position: absolute;
+            right: 0;
+            opacity: 0.7;
+        }
     }
 }
 

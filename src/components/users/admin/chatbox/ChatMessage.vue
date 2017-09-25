@@ -43,7 +43,7 @@ export default {
             this.$socket.emit('stop typing', this.auth.username)
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    const now = moment().format('DD MMMM hh[:]mm');
+                    const now = moment().format('DD MMMM HH[:]mm');
                     this.form.date = now;
                     this.$socket.emit('chat', this.form)
                     this.$refs[formName].resetFields();
