@@ -21,7 +21,6 @@ import Icon from 'vue-awesome/components/Icon';
 import api from '../config/api';
 // globally (in your main .js file)
 Vue.component('icon', Icon)
-
 Vue.use(VueSocketio, api.socketUrl);
 Vue.use(VueYouTubeEmbed);
 Vue.use(BigTitle);

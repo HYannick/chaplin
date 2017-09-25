@@ -33,9 +33,9 @@
 </template>
 
 <script>
-import Services from '../../../services/services';
-import CoverUploader from '../../utils/CoverUploader';
-import api from '../../../../config/api';
+import Services from '../../../../services/services';
+import CoverUploader from '../../../utils/CoverUploader';
+import api from '../../../../../config/api';
 import { mapGetters } from 'vuex';
 export default {
     computed: {

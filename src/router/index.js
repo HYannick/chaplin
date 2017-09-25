@@ -6,7 +6,7 @@ import User from '@/components/users/User';
 import UserDetails from '@/components/users/admin/UserDetails';
 import Perms from '@/components/users/admin/Perms';
 import Chat from '@/components/users/admin/chatbox/ChatBox';
-import Propal from '@/components/users/admin/Propal';
+import Propal from '@/components/users/admin/proposals/Propal';
 import UserEdit from '@/components/users//admin/UserEdit';
 
 

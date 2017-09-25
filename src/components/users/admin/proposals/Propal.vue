@@ -3,9 +3,13 @@
         <div>
             <propal-form @reload-proposals="reloadP"></propal-form>
             <el-row>
-                <h4>Propositions</h4>
                 <el-row :gutter="10">
-
+                    <div class="header__proposals">
+                        <h4 style="float: left">Propositions</h4>
+                        <recap-propal :proposals="proposals"></recap-propal>
+                    </div>
+                </el-row>
+                <el-row :gutter="10">
                     <transition-group class="container__grid" name="list" v-on:enter="enter" v-on:leave="leave" tag="div">
                         <div :class="['propal__wrapper', {first: findIndex(propal.likes.length)}, `item-${index}`, {sorted: sorted}]" v-for="(propal, index) in proposals" :key="propal._id">
                             <div class="proposal">
@@ -21,6 +25,9 @@
 
                                     <div class="nb__likes">
                                         <p class="prop-likes">{{propal.likes.length}}</p>
+                                    </div>
+                                    <div class="approvals">
+                                        <span v-for="(user, index) in propal.likes" :key="index">{{user.username}}</span>
                                     </div>
                                     <image-loader classname="lazy" :imageUrl="`${apiFtp}/${propal.cover}`"></image-loader>
 
@@ -44,17 +51,19 @@
 </template>
 
 <script>
-import Services from '../../../services/services';
-import api from '../../../../config/api';
+import Services from '../../../../services/services';
+import api from '../../../../../config/api';
 import { mapGetters } from 'vuex';
-import ImageLoader from '../../utils/imageLoader/ImageLoader';
+import ImageLoader from '../../../utils/imageLoader/ImageLoader';
 import PropalForm from './PropalForm';
+import RecapPropal from './RecapPropal';
 import anime from 'animejs';
 import _ from 'lodash';
 export default {
     components: {
         'image-loader': ImageLoader,
-        'propal-form': PropalForm
+        'propal-form': PropalForm,
+        'recap-propal': RecapPropal
     },
     computed: {
         ...mapGetters(['auth']),
@@ -139,6 +148,9 @@ export default {
 
         back() {
             this.$router.push(`/users/${this.auth.userId}`);
+        },
+        print() {
+
         }
     },
     created() {
@@ -146,6 +158,7 @@ export default {
     },
     data() {
         return {
+            dialogFormVisible: false,
             apiRoot: api.rootUrl,
             apiFtp: api.ftpUrl,
             like: 0,
@@ -157,6 +170,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.print__proposals {
+    float: right;
+}
+.header__proposals{
+    margin-bottom: 30px;
+    display: table;
+    width: 100%;
+}
 .container__grid {
     display: -ms-grid;
     display: grid;
@@ -221,7 +242,8 @@ export default {
     }
 }
 
-.nb__likes {
+.nb__likes,
+.approvals {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -237,6 +259,16 @@ export default {
     }
 }
 
+.approvals {
+    opacity: 0;
+    transition: 0.3s;
+    span {
+        font-size: 14px;
+        text-align: center;
+        display: block;
+    }
+}
+
 .propal {
     position: relative;
     overflow: hidden;
@@ -245,7 +277,7 @@ export default {
     &:hover {
         .lazy {
             transform: scale(1.1);
-            opacity: 0.5;
+            opacity: 0.2;
         }
         .like__header {
             opacity: 1;
@@ -254,6 +286,9 @@ export default {
             bottom: 0;
         }
         .nb__likes {
+            opacity: 0;
+        }
+        .approvals {
             opacity: 1;
         }
     }
