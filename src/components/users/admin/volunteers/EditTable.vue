@@ -131,7 +131,6 @@ export default {
             if (this.userPassword.length) {
                 this.userForm.password = this.userPassword;
             }
-            console.log(this.userForm.password)
             Services.updateUser(this._idToEdit, this.userForm).then((res) => {
                 this.$notify({
                     title: 'Mise à jour',
