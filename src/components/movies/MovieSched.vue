@@ -111,7 +111,6 @@ export default {
                         month: moment.unix(item.date).format('MMM').slice(0, -1),
                     }
                 } else {
-                    console.log(moment.unix(item.date))
                     return {
                         day: moment.unix(item.date).format('dddd DD MMMM'),
                         time: item.time
@@ -304,7 +303,7 @@ export default {
     display: table;
     box-shadow: inset 0 0 0 2px #000;
     position: relative;
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 770px) {
         position: absolute;
         z-index: 10;
         right: 0;

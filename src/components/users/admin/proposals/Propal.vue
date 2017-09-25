@@ -138,7 +138,8 @@ export default {
             this.$router.push('/movies');
         },
         isLiked(propal) {
-            return propal.likes.indexOf(this.auth.userId) !== -1
+            const mapped = propal.likes.map(likes => likes._id);
+            return mapped.indexOf(this.auth.userId) !== -1
         },
         vote(id, propal) {
             Services.likeProposal(id, this.auth.userId).then(proposals => {
