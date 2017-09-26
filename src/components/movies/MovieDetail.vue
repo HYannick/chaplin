@@ -51,10 +51,10 @@
                                         <h5>Synopsis</h5>
                                         <div class="sub__infos">
                                             <span class="information">
-                                                {{movie.information}}
+                                                <pre>{{movie.information}}</pre>
                                             </span>
                                             <span class="disclaimer">
-                                                {{movie.disclaimer}}
+                                                <pre>{{movie.disclaimer}}</pre>
                                             </span>
                                         </div>
                                         <p>{{movie.synopsis}}</p>
