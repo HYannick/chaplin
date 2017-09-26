@@ -51,10 +51,10 @@
                                         <h5>Synopsis</h5>
                                         <div class="sub__infos">
                                             <span class="information">
-                                                <pre>{{movie.information}}</pre>
+                                                {{movie.information}}
                                             </span>
                                             <span class="disclaimer">
-                                                <pre>{{movie.disclaimer}}</pre>
+                                                {{movie.disclaimer}}
                                             </span>
                                         </div>
                                         <p>{{movie.synopsis}}</p>
@@ -173,7 +173,6 @@ export default {
             movie: {},
             bgCover: "",
             cover: "",
-            related: [],
             imageSet: [],
             volunteers: [],
             dates: [],
