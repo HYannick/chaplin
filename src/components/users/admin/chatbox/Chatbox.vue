@@ -11,7 +11,7 @@
             <el-col :xs="24" :sm="24" :md="22" :lg="22">
                 <ul class="chat__list" ref="chatList">
                     <li class="chat__item" v-for="(msg, index) in msgs" :key="index">
-                        <div class="chat__item-msg" :class="{left: msg.author === auth.username}">
+                        <div class="chat__item-msg">
                             <el-row :gutter="20">
                                 <div class="author">{{msg.author}}</div>
                                 <div class="message" ref="message">
@@ -200,23 +200,8 @@ export default {
         width: 90%;
         max-width: 100%;
         margin: 0 auto 30px;
-        .chat__item-msg {
-            float: right;
-            pre {
-                white-space: pre-wrap;
-                /* Since CSS 2.1 */
-                white-space: -moz-pre-wrap;
-                /* Mozilla, since 1999 */
-                white-space: -pre-wrap;
-                /* Opera 4-6 */
-                white-space: -o-pre-wrap;
-                /* Opera 7 */
-                word-wrap: break-word;
-                /* Internet Explorer 5.5+ */
-            }
-            &.left {
-                float: left;
-                .author {
+        &:nth-child(odd) {
+ .author {
                     background: #fff;
                     color: #312736;
                 }
@@ -231,6 +216,20 @@ export default {
                     color: #fff;
                     background: #312736;
                 }
+        }
+        .chat__item-msg {
+            float: left;
+            pre {
+                white-space: pre-wrap;
+                /* Since CSS 2.1 */
+                white-space: -moz-pre-wrap;
+                /* Mozilla, since 1999 */
+                white-space: -pre-wrap;
+                /* Opera 4-6 */
+                white-space: -o-pre-wrap;
+                /* Opera 7 */
+                word-wrap: break-word;
+                /* Internet Explorer 5.5+ */
             }
         }
     }

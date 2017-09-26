@@ -67,7 +67,7 @@ export default {
             center: { lat: 45.500044, lng: 6.0509035 },
             rules: {
                 email: [
-                    { type: 'email', required: true, message: 'Veuillez enter un email valide', trigger: 'change' }
+                    { type: 'email', required: true, message: 'Veuillez entrer un email valide', trigger: 'blur' }
                 ],
             },
             markers: [{
