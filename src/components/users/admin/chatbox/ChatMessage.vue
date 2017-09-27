@@ -4,7 +4,7 @@
             <div class="msg__box">
                 <el-form ref="form" class="send__message" :rules="rules" :model="form">
                     <el-form-item prop="message">
-                        <el-input type="textarea" :autosize="{ minRows: 6, maxRows: 10}" placeholder="Entrez un message. Les liens sont automatiquement transformés en image ou en lien." v-model="form.message" @keydown.native="type($event)" @blur="stopType">
+                        <el-input type="textarea" :autosize="{ minRows: 6, maxRows: 10}" placeholder="Entrez un message. Les liens sont automatiquement transformés en image ou en lien. Pour les vidéos Il suffit de prendre un lien Youtube ( ex: https://www.youtube.com/watch?v=mmxBoFzdqVI). Il sera automatiquement généré." v-model="form.message" @keydown.native="type($event)" @blur="stopType">
 
                         </el-input>
                         <div class="form__footer">
