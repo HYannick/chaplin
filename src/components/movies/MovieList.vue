@@ -19,9 +19,72 @@
                                 </el-col>
                             -->
                 </el-row>
+                <el-row>
+                    <el-col :span="24">
+                        <div class="search__Title">
+                            <el-form ref="searchTitle" :model="searchTitle" label-width="120px" label-position="top">
+                                <el-row :gutter="20">
+                                    <el-col :span="24">
+                                        <el-form-item label="Titre">
+                                            <el-autocomplete class="autocomplete__search" v-model="searchTitle.title"
+                                                             popper-class="movie-autocomplete"
+                                                             icon="search"
+                                                             custom-item="movie-item"
+                                                             :fetch-suggestions="querySearchAsync"
+                                                             @select="searchByTitle"></el-autocomplete>
+                                        </el-form-item>
+                                    </el-col>
+                                </el-row>
+                            </el-form>
+                        </div>
+                    </el-col>
+                </el-row>
                 <el-row :gutter="20">
-                    <transition-group class="container__grid" name="list" v-on:enter="enter" v-on:leave="leave" tag="div">
-                        <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(movie, index) in searchRes   " :key="movie._id">
+                    <el-col :span="24">
+                        <div class="search__filters">
+                            <el-form ref="filteredRes" :model="filterResults" label-width="120px"
+                                     label-position="top">
+                                <el-row :gutter="20">
+                                    <el-col :xs="24" :sm="24" :md="12" :lg="12">
+                                        <el-form-item label="Origine">
+                                            <el-input v-model="filterResults.language"></el-input>
+                                        </el-form-item>
+                                    </el-col>
+                                    <el-col :xs="24" :sm="24" :md="12" :lg="12">
+                                        <el-form-item label="Genre">
+                                            <el-select v-model="filterResults.genres" multiple placeholder="Select">
+                                                <el-option v-for="item in genres" :key="item.value" :label="item.label"
+                                                           :value="item.value">
+                                                </el-option>
+                                            </el-select>
+                                        </el-form-item>
+                                    </el-col>
+                                    <el-col :xs="12" :sm="12" :md="6" :lg="6">
+                                        <el-form-item label="En salle">
+                                            <el-switch on-text="" off-text=""
+                                                       v-model="filterResults.diffused"></el-switch>
+                                        </el-form-item>
+                                    </el-col>
+                                    <el-col :xs="12" :sm="12" :md="6" :lg="6">
+                                        <el-form-item label="Prochainement">
+                                            <el-switch on-text="" off-text=""
+                                                       v-model="filterResults.upcoming"></el-switch>
+                                        </el-form-item>
+                                    </el-col>
+                                    <el-col :xs="24" :sm="24" :md="24" :lg="24">
+                                        <el-form-item>
+                                            <el-button type="primary" @click="renderFiltered">Filtrer</el-button>
+                                            <el-button>Cancel</el-button>
+                                        </el-form-item>
+                                    </el-col>
+                                </el-row>
+                            </el-form>
+                        </div>
+                    </el-col>
+                    <transition-group class="container__grid" name="list" v-on:enter="enter" v-on:leave="leave"
+                                      tag="div">
+                        <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(movie, index) in searchRes   "
+                                :key="movie._id">
                             <div class="movie__item">
                                 <div class="admin__layer">
                                     <router-link tag="a" class="admin__layer--block" :to="`/movies/${movie._id}/edit`">
@@ -42,129 +105,220 @@
 </template>
 
 <script>
-import Service from '../../services/services.js';
-import MovieCard from './MovieCard';
-import anime from 'animejs';
-import { mapGetters } from 'vuex';
-export default {
-    components: {
-        'movie-card': MovieCard
-    },
-    data() {
-        return {
-            movies: [],
-            searchRes: [],
-            search: ''
+    import Vue from 'vue';
+    import Service from '../../services/services.js';
+    import MovieCard from './MovieCard';
+    import anime from 'animejs';
+    import {mapGetters} from 'vuex';
+    import genres from './datas/genres.json';
+    import api from '../../../config/api';
+    Vue.component('movie-item', {
+        functional: true,
+        render: function (h, ctx) {
+            var item = ctx.props.item;
+            return h('li', ctx.data, [
+                h('img', {attrs: {class: 'poster', src: `${api.ftpUrl}/${item.cover}`}}),
+                h('div', {attrs: {class: 'infos'}}, [
+                    h('div', {attrs: {class: 'title'}}, [item.title]),
+                    h('p', {attrs: {class: 'desc'}}, ['De | ' + item.authors.join(' - ')]),
+                    h('p', {attrs: {class: 'desc'}}, ['Avec | ' + item.actors.join(' - ')]),
+                ])
+            ]);
+        },
+        props: {
+            item: {type: Object, required: true}
         }
-    },
-    computed: {
-        ...mapGetters(['auth'])
-    },
-    created() {
-        Service.getMovies().then(movies => {
-            this.movies = movies.data
-            this.searchRes = movies.data
-        });
-    },
-    methods: {
-        enter(el, done) {
-            const self = this;
-            const proposal = el;
-            anime({
-                targets: proposal,
-                translateX: 0,
-                opacity: 1,
-                complete: function(anim) {
-                    done();
+    });
+
+    export default {
+        components: {
+            'movie-card': MovieCard
+        },
+        data() {
+            return {
+                movies: [],
+                searchRes: [],
+                search: '',
+                genres,
+                searchTitle: {
+                    title: ''
+                },
+                filterResults: {
+                    language: '',
+                    genres: [],
+                    diffused: false,
+                    upcoming: false
                 }
-
-            })
-
+            }
         },
-        leave(el, done) {
-            const proposal = el;
-            anime({
-                targets: proposal,
-                opacity: 0,
-                complete: function(anim) {
-                    done();
-                }
-            })
-
+        computed: {
+            ...mapGetters(['auth'])
         },
-        deleteMovie(id) {
-            this.$confirm('Etes vous sûr de vouloir supprimer ce film ?')
-                .then(_ => {
-                    Service.removeMovie(id).then(res => {
-                        this.movies = res.data
-                        this.searchRes = res.data
-                        this.$notify({
-                            title: 'Suppression',
-                            message: 'Film supprimé !',
-                            type: 'success'
-                        });
-                    })
-                })
-                .catch(err => {
-                    this.$notify({
-                        title: 'Erreur',
-                        message: 'Une erreur s\'est produite',
-                        type: 'error'
-                    });
-                });
-        },
-        querySearch(queryString, cb) {
-            var movies = this.movies;
-            var results = queryString ? movies.filter(this.createFilter(queryString)) : movies;
-            // call callback function to return suggestions
-            this.searchRes = this.search !== '' ? movies.filter(this.createFilter(queryString)) : movies;
-            var res = results.map(result => {
-                result.value = result.title;
-                return result;
+        created() {
+            Service.getMovies().then(movies => {
+                this.movies = movies.data
+                this.searchRes = movies.data
             });
-            cb(res);
         },
-        createFilter(queryString) {
-            return (movie) => {
-                return (movie.title.toLowerCase().includes(queryString.toLowerCase()));
-            };
-        },
+        methods: {
+            querySearchAsync(queryString, cb) {
+                const movies = this.movies;
+                const results = queryString ? movies.filter(this.createFilter(queryString)) : movies;
+                cb(results);
+            },
+            createFilter(queryString) {
+                return (movie) => {
+                    console.log(movie.title)
+                    return (movie.title.indexOf(queryString.toLowerCase()) === 0);
+                };
+            },
+            searchByTitle(item){
+                this.$router.push(`/movies/${item._id}`)
+            },
+            renderFiltered(){
+                if(!this.filterResults.genres.length) {
+                    this.filterResults.genres = this.genres.map(genre => genre.value)
+                }
+                Service.getFilteredMovies(this.filterResults).then(result => this.searchRes = result.data.movies);
+            },
+            enter(el, done) {
+                const self = this;
+                const proposal = el;
+                anime({
+                    targets: proposal,
+                    translateX: 0,
+                    opacity: 1,
+                    complete: function (anim) {
+                        done();
+                    }
 
-        handleSelect(item) {
-            console.log(item)
+                })
+
+            },
+            leave(el, done) {
+                const proposal = el;
+                anime({
+                    targets: proposal,
+                    opacity: 0,
+                    complete: function (anim) {
+                        done();
+                    }
+                })
+
+            },
+            deleteMovie(id) {
+                this.$confirm('Etes vous sûr de vouloir supprimer ce film ?')
+                        .then(_ => {
+                            Service.removeMovie(id).then(res => {
+                                this.movies = res.data
+                                this.searchRes = res.data
+                                this.$notify({
+                                    title: 'Suppression',
+                                    message: 'Film supprimé !',
+                                    type: 'success'
+                                });
+                            })
+                        })
+                        .catch(err => {
+                            this.$notify({
+                                title: 'Erreur',
+                                message: 'Une erreur s\'est produite',
+                                type: 'error'
+                            });
+                        });
+            },
+            querySearch(queryString, cb) {
+                var movies = this.movies;
+                var results = queryString ? movies.filter(this.createFilter(queryString)) : movies;
+                // call callback function to return suggestions
+                this.searchRes = this.search !== '' ? movies.filter(this.createFilter(queryString)) : movies;
+                var res = results.map(result => {
+                    result.value = result.title;
+                    return result;
+                });
+                cb(res);
+            },
+            createFilter(queryString) {
+                return (movie) => {
+                    return (movie.title.toLowerCase().includes(queryString.toLowerCase()));
+                };
+            },
+
+            handleSelect(item) {
+                console.log(item)
+            }
         }
-    }
 
-}
+    }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
-.movie__item {
-    position: relative;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    overflow: hidden;
-    transition:0.3s;
+    .autocomplete__search {
+        width: 100%;
+    }
+
+    .movie-autocomplete {
+
+    li {
+        display: flex;
+        align-items: flex-start;
+        padding: 15px;
+        width: 100%;
+
+    .poster {
+        width: 100px;
+    }
+    .title{
+        margin-bottom: 10px;
+    }
+    .desc {
+        line-height: 15px;
+        opacity: 0.8;
+        font-size: 12px;
+        margin:0;
+    }
+    .infos {
+        padding: 15px;
+
+
+
+    }
+    }
+    }
+    .movie__item {
+        position: relative;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        overflow: hidden;
+        transition: 0.3s;
+
     .movie__card {
         margin: 0;
-        .caption {
-            border-radius: 5px;
-        }
+
+    .caption {
+        border-radius: 5px;
+    }
+
     }
     .lazy {
         opacity: 1;
         transition: 0.3s;
     }
-    &:hover {
+
+    &
+    :hover {
         background: #333;
-        .lazy {
-            transform: scale(1.1);
-            opacity: 0.7;
-        }
-        .admin__layer {
-            bottom: 0px;
-        }
+
+    .lazy {
+        transform: scale(1.1);
+        opacity: 0.7;
+    }
+
+    .admin__layer {
+        bottom: 0px;
+    }
+
     }
     .admin__layer {
         position: absolute;
@@ -177,21 +331,23 @@ export default {
         width: 100%;
         z-index: 99;
         transition: 0.3s ease-out;
-        .admin__layer--block {
-            color: #fff;
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 5px;
-            width: 40px;
-            height: 40px;
-        }
-    }
-}
 
-.add__link {
-    float: right;
-    display: block;
-}
+    .admin__layer--block {
+        color: #fff;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 5px;
+        width: 40px;
+        height: 40px;
+    }
+
+    }
+    }
+
+    .add__link {
+        float: right;
+        display: block;
+    }
 </style>

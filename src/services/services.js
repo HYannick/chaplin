@@ -87,7 +87,10 @@ export default {
     getRelatedMovies(related, genres) {
         return axios.get(`${rootUrl}/movies/${related}/related?genre[]=${genres}`, autho)
     },
-
+    getFilteredMovies(filters) {
+        const {genres, diffused, upcoming, language, orderedBy} = filters;
+        return axios.get(`${rootUrl}/search?genres[]=${genres}&diffused=${diffused}&upcoming=${upcoming}&language=${language}`, autho)
+    },
     getMovie(id) {
         return axios.get(`${rootUrl}/movies/${id}`, autho)
     },
