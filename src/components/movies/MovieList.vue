@@ -21,14 +21,15 @@
                 </el-row>
                 <el-row>
                     <el-col :span="24">
-                        <div class="search__Title">
+                        <div class="search__title bordering">
                             <el-form ref="searchTitle" :model="searchTitle" label-width="120px" label-position="top">
                                 <el-row :gutter="20">
                                     <el-col :span="24">
-                                        <el-form-item label="Titre">
+                                        <el-form-item label="Rechercher un film">
                                             <el-autocomplete class="autocomplete__search" v-model="searchTitle.title"
                                                              popper-class="movie-autocomplete"
                                                              icon="search"
+                                                             placeholder="Rechercher par titre"
                                                              custom-item="movie-item"
                                                              :fetch-suggestions="querySearchAsync"
                                                              @select="searchByTitle"></el-autocomplete>
@@ -41,7 +42,7 @@
                 </el-row>
                 <el-row :gutter="20">
                     <el-col :span="24">
-                        <div class="search__filters">
+                        <!--<div class="search__filters">
                             <el-form ref="filteredRes" :model="filterResults" label-width="120px"
                                      label-position="top">
                                 <el-row :gutter="20">
@@ -79,11 +80,11 @@
                                     </el-col>
                                 </el-row>
                             </el-form>
-                        </div>
+                        </div>-->
                     </el-col>
                     <transition-group class="container__grid" name="list" v-on:enter="enter" v-on:leave="leave"
                                       tag="div">
-                        <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(movie, index) in searchRes   "
+                        <el-col :xs="12" :sm="12" :md="6" :lg="6" v-for="(movie, index) in searchRes"
                                 :key="movie._id">
                             <div class="movie__item">
                                 <div class="admin__layer">
@@ -254,6 +255,20 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
+    .search__title{
+        padding: 20px;
+        margin: 30px 0;
+        position: relative;
+        &:before{
+            content: 'Rechercher un titre';
+            position: absolute;
+            top: -40px;
+            left: 0px;
+            font-weight: bold;
+            font-size: 30px;
+            opacity: 0.2;
+        }
+    }
     .autocomplete__search {
         width: 100%;
     }
