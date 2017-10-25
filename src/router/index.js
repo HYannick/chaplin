@@ -19,11 +19,12 @@ import MovieEdit from '@/components/movies/MovieEdit';
 import MovieDetail from '@/components/movies/MovieDetail';
 import Infos from '@/components/Infos';
 import Signin from '@/components/Auth';
-
+import ComponentNotFound from '@/components/ComponentNotFound';
 Vue.use(Router);
 
 export default new Router({
     routes: [
+        { path: '*', name: '404', component: ComponentNotFound },
         { path: '/', name: 'Home', component: Home },
         { path: '/signin', name: 'Signin', component: Signin },
         { path: '/users', name: 'Users', component: UserList, meta: { requiresAuth: true, requiresAdmin: true } },
