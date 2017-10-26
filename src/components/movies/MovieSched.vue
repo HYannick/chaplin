@@ -37,7 +37,7 @@
                                             <pre>{{movie.disclaimer}}</pre>
                                         </span>
                                         <br>
-                                        <p class="m-desc">{{movie.desc}}</p>
+                                        <p class="m-desc">{{movie.desc | truncate(240)}}</p>
                                         <router-link :to="`/movies/${movie._id}`" class="goTo" tag="a">En savoir plus</router-link>
                                     </div>
                                 </el-col>
@@ -87,6 +87,10 @@ export default {
             if (!value) return ''
             value = value.toString()
             return value.charAt(0).toUpperCase() + value.slice(1)
+        },
+        truncate(text, stop, clamp) {
+            console.log(text, stop)
+            return text.slice(0, stop) + (stop < text.length ? clamp || '...' : '')
         }
     },
 

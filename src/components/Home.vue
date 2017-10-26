@@ -15,7 +15,7 @@
                         <div class="slide__desc">
                             <span>{{movie.releaseDate}}</span>
                             <h3>{{movie.title}}</h3>
-                            <p>{{movie.desc}}</p>
+                            <p>{{movie.desc | truncate(240)}}</p>
                             <router-link :to="`/movies/${movie._id}`" class="goTo" tag="a">En savoir plus</router-link>
                         </div>
                     </el-carousel-item>
@@ -66,6 +66,12 @@ export default {
         'preloader': Preloader,
         'big-title': BigTitle,
         'announce-icon': AnnounceIcon
+    },
+    filters : {
+      truncate(text, stop, clamp) {
+        console.log(text, stop)
+        return text.slice(0, stop) + (stop < text.length ? clamp || '...' : '')
+      }
     },
     created() {
         Service.getDiffusedMovies(4).then(res => {
@@ -153,7 +159,7 @@ pre {
         z-index: -1;
         background: #f3f3f3;
         width: 90%;
-        height: 20px;
+        height: 70%;
     }
 }
 

@@ -105,6 +105,9 @@ export default {
         return axios.delete(`${rootUrl}/movies/${id}`, autho)
     },
 
+    getScrapbooked(data) {
+        return axios.post(`${rootUrl}/scrapbooking/`, data, autho)
+    },
     getAnnounce() {
         return axios.get(`${rootUrl}/announce`, autho)
     },
