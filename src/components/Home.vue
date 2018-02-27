@@ -180,6 +180,7 @@ pre {
         opacity: 0.9;
     }
     display: table;
+    width: 100%;
 }
 
 .slide__desc {

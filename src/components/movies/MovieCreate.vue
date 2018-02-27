@@ -252,6 +252,7 @@
         }
       },
       addToForm(res) {
+        console.log(res)
         this.form.cover = res;
       },
       resetCover() {
@@ -287,8 +288,7 @@
         this.dialogVisible = true;
       },
       handleListSuccess(res, file) {
-        console.log(res);
-        this.form.imageSet.push(res.images[0].filename);
+        this.form.imageSet.push({name: res.original_filename, id: res.public_id});
         console.log(this.form.imageSet);
         this.$notify({
           title: 'Ajout d\'images',
