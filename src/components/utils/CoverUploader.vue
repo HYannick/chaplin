@@ -73,8 +73,8 @@ export default {
     },
     handleAvatarSuccess(res, file) {
       this.pending = false;
-      this.$emit('uploaded', res.cover[0].filename)
-      this.postedCover = res.cover[0].filename;
+      this.$emit('uploaded', res.public_id)
+      this.postedCover = res.public_id;
       this.coverInHere = true;
       this.$notify({
         title: 'Ajout d\'affiche',
