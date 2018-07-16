@@ -50,7 +50,6 @@
 import Service from '../services/services';
 import ImageLoader from './utils/imageLoader/ImageLoader';
 import MovieCard from './movies/MovieCard';
-import MovieTable from './movies/schedule/MovieTable';
 import MovieListPopular from './movies/MovieListPopular';
 import MovieSched from './movies/MovieSched';
 import Preloader from './utils/icons/Loader';

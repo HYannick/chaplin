@@ -103,6 +103,7 @@
                 <el-col :span="24">
                   <el-form-item label="Galerie d'images">
                     <el-upload name="images" :action="`${apiRoot}/upload/images`" list-type="picture-card"
+                               multiple
                                :on-success="handleListSuccess" :on-change="pushImages"
                                :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :auto-upload="false"
                                ref="upload">

@@ -101,7 +101,7 @@
                                 </el-col>
                                 <el-col :span="24">
                                     <el-form-item label="Galerie d'images">
-                                        <el-upload name="images" :action="`${apiRoot}/upload/images`" :file-list="fileList" list-type="picture-card" :on-change="pushImages" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :auto-upload="false" ref="upload" :on-success="handleListSuccess">
+                                        <el-upload name="images" :action="`${apiRoot}/upload/images`" multiple :file-list="fileList" list-type="picture-card" :on-change="pushImages" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :auto-upload="false" ref="upload" :on-success="handleListSuccess">
                                             <i class="el-icon-plus"></i>
                                         </el-upload>
                                         <el-dialog v-model="dialogVisible" size="large">
