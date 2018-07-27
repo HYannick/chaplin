@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import Services from '../../../services/services';
+import Services from '../../../services';
 import { mapState } from 'vuex';
 export default {
     computed: {
@@ -47,7 +47,7 @@ export default {
                         this.form.password = this.form.tempPassword;
                     }
                     const {username, email, password} = this.form;
-                    Services.updateUser(this.userId, {username, email, password})
+                    Services.users.updateUser(this.userId, {username, email, password})
                         .then(res => {
                             this.$notify({
                                 title: 'Film à jour',
@@ -79,7 +79,7 @@ export default {
         }
     },
     created() {
-        Services.getUser(this.userId, this.token).then(res => {
+        Services.users.getUser(this.userId, this.token).then(res => {
             this.form = res.data;
         });
     },

@@ -24,7 +24,7 @@
     </div>
 </template>
 <script>
-import Services from '../../../../services/services';
+import Services from '../../../../services';
 export default {
     data() {
         return {
@@ -38,7 +38,7 @@ export default {
         }
     },
     created() {
-        Services.getEmails().then(emailList => {
+        Services.newsletters.getEmails().then(emailList => {
             this.emailList = emailList.data
         })
     },
@@ -56,7 +56,7 @@ export default {
         deleteMail(id) {
             this.$confirm('Etes vous sûr de vouloir supprimer cet email ?')
                 .then(_ => {
-                    Services.removeEmail(id).then(emailList => {
+                    Services.newsletters.removeEmail(id).then(emailList => {
                         this.emailList = emailList.data
                         this.$notify({
                             title: 'Email supprimé',

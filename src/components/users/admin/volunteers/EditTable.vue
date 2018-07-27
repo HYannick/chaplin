@@ -54,7 +54,7 @@
 </template>
 <script>
 import { EventBus } from '../../../utils/event-bus';
-import Services from '../../../../services/services';
+import Services from '../../../../services';
 import CreateVolunteer from './CreateVolunteer'
 import { mapState } from 'vuex';
 export default {
@@ -96,7 +96,7 @@ export default {
             return row.verified.toString();
         },
         refreshList() {
-            Services.getUsers(this.token).then(users => {
+            Services.users.getUsers(this.token).then(users => {
                 this.userList = users.data
             })
         },
@@ -109,7 +109,7 @@ export default {
 
             this.$confirm('Etes vous sûr de vouloir supprimer ce bénévole ?')
                 .then(_ => {
-                    Services.deleteUser(user._id).then((res) => {
+                    Services.users.deleteUser(user._id).then((res) => {
                         this.userList = res.data;
                         this.$notify({
                             title: 'Suppression',
@@ -131,7 +131,7 @@ export default {
             if (this.userPassword.length) {
                 this.userForm.password = this.userPassword;
             }
-            Services.updateUser(this._idToEdit, this.userForm).then((res) => {
+            Services.users.updateUser(this._idToEdit, this.userForm).then((res) => {
                 this.$notify({
                     title: 'Mise à jour',
                     message: 'Bénévole mis à jour !',

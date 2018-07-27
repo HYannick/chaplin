@@ -49,7 +49,7 @@
 <script>
 import * as VueGoogleMaps from 'vue2-google-maps';
 import Vue from 'vue';
-import Service from '../services/services';
+import Services from '../services';
 import Mlegals from './Mlegals';
 Vue.use(VueGoogleMaps, {
     load: {
@@ -82,11 +82,9 @@ export default {
     },
     methods: {
         onSubmit(formName) {
-            console.log(formName)
             this.$refs[formName].validate((valid) => {
-                console.log(valid)
                 if (valid) {
-                    Service.postEmail(this.form).then(() => {
+                    Services.newsletters.postEmail(this.form).then(() => {
                         this.$refs[formName].resetFields();
                         this.$notify({
                             title: 'Inscription réussie',

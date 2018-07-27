@@ -61,7 +61,7 @@
 </template>
 <script>
 import { mapState, mapActions } from 'vuex';
-import Services from '../services/services';
+import Services from '../services';
 import FacebookIcon from './utils/icons/Facebook';
 import TwitterIcon from './utils/icons/Twitter';
 import PinterestIcon from './utils/icons/Pinterest';
@@ -85,7 +85,7 @@ export default {
 
     created() {
         if (this.logged) {
-            Services.getUser(this.userId, this.currentToken).then(res => {
+            Services.users.getUser(this.userId, this.currentToken).then(res => {
                 this.user = res.data;
             }).catch(err => {
                 console.log(err)

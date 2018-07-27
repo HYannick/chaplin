@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import Service from '../services/services';
+import Services from '../services';
 import ImageLoader from './utils/imageLoader/ImageLoader';
 import MovieCard from './movies/MovieCard';
 import MovieListPopular from './movies/MovieListPopular';
@@ -68,17 +68,16 @@ export default {
     },
     filters : {
       truncate(text, stop, clamp) {
-        console.log(text, stop)
         return text.slice(0, stop) + (stop < text.length ? clamp || '...' : '')
       }
     },
     created() {
-        Service.getDiffusedMovies(4).then(res => {
+        Services.movies.getDiffusedMovies(4).then(res => {
             this.movies = res.data.movieList;
             this.carouselMovies = res.data.movieList;
             this.loaded = true;
         });
-        Service.getAnnounce().then(res => this.announce = res.data[0] || { title: '', date: '' })
+        Services.announces.getAnnounce().then(res => this.announce = res.data[0] || { title: '', date: '' })
     },
     data() {
         return {
@@ -95,7 +94,7 @@ export default {
     methods: {
         loadMovies(limit) {
             this.complete = false;
-            Service.getDiffusedMovies(limit).then(res => {
+            Services.announces.getDiffusedMovies(limit).then(res => {
                 this.complete = true;
                 this.movies = res.data.movieList;
                 this.isMax = res.data.max;

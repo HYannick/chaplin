@@ -31,7 +31,7 @@
 
 <script>
 import axios from 'axios';
-import Services from '../services/services';
+import Services from '../services';
 import { mapMutations, mapActions, mapState } from 'vuex';
 export default {
     data() {
@@ -67,12 +67,10 @@ export default {
             this.$refs[formName].resetFields();
         },
         onSubmit(formName) {
-            console.log('Submitting ...')
             this.$refs[formName].validate((valid) => {
               
                 if (valid) {
                     this.login(this.user);
-                    console.log('test');
                 } else {
                     this.$notify({
                         title: 'Error',

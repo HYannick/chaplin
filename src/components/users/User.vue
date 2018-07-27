@@ -23,7 +23,7 @@
     </div>
 </template>
 <script>
-import Services from '../../services/services';
+import Services from '../../services';
 import BigTitle from '../utils/BigTitle'
 import { mapState } from 'vuex';
 export default {
@@ -32,7 +32,7 @@ export default {
     },
     created() {
 
-        Services.getUser(this.userId, this.token).then(res => {
+        Services.users.getUser(this.userId, this.token).then(res => {
             this.user = res.data;
         });
 

@@ -1,8 +1,8 @@
-import Services from '../services/services';
+import Services from '../services';
 import { Notification } from 'element-ui';
 
 export const login = ({ commit }, payload) => {
-    Services.signin(payload)
+    Services.auth.signin(payload)
         .then(res => {
             // - Save the JWT Token
             localStorage.setItem('token', res.data.token);

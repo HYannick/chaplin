@@ -28,7 +28,7 @@
     </div>
 </template>
 <script>
-import Services from '../../../../services/services';
+import Services from '../../../../services';
 export default {
     data() {
         return {
@@ -62,7 +62,7 @@ export default {
         addUser(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    Services.createUser(this.ruleForm).then((res) => {
+                    Services.users.createUser(this.ruleForm).then((res) => {
                         this.$emit('created');
                         this.dialogVisible = false;
                         this.$notify({

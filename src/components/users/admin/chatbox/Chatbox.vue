@@ -36,7 +36,7 @@
     </transition>
 </template>
 <script>
-    import Services from '../../../../services/services';
+    import Services from '../../../../services';
     import ChatMessage from './ChatMessage';
     import {mapState} from 'vuex';
 
@@ -116,7 +116,7 @@
         },
         created() {
             this.login(this.username);
-            Services.getMsg().then(res => {
+            Services.chat.getMsg().then(res => {
                 this.msgs = res.data
                 this.visible = true;
                 setTimeout(() => {

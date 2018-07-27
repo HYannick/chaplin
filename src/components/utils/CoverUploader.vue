@@ -15,7 +15,7 @@
 
 <script>
   import api from '../../../config/api';
-  import Services from '../../services/services';
+  import Services from '../../services';
   import MinLoader from '../utils/icons/MinLoader';
   import axios from 'axios'
   import {mapState} from "vuex";
@@ -39,7 +39,7 @@
     },
     created() {
       if (this.movie) {
-        Services.getMovie(this.movie).then(res => {
+        Services.movies.getMovie(this.movie).then(res => {
           this.cover = `${api.ftpUrl}/${res.data.cover}`;
           this.coverInHere = true;
           this.postedCover = res.data.cover;
@@ -49,7 +49,7 @@
     methods: {
       changeCover() {
         if (this.postedCover.length) {
-          Services.deleteCover(this.postedCover).then(res => {
+          Services.uploads.deleteCover(this.postedCover).then(res => {
             this.$emit('resetCover')
             this.cover = '';
             this.coverInHere = false;
@@ -72,7 +72,6 @@
 
       },
       uploadProgress(e, file, fileList) {
-        console.log(e)
         this.pending = true;
         this.coverInHere = false;
       },
@@ -82,8 +81,6 @@
       },
       handleAvatarSuccess(res, file) {
         this.pending = false;
-        this.$emit('uploaded', res.public_id)
-        this.postedCover = res.public_id;
         this.coverInHere = true;
         this.$notify({
           title: 'Ajout d\'affiche',
@@ -96,23 +93,17 @@
       },
       async postCover(target) {
         const {file} = target
-        const uploadConfig = await Services.getSignedUrl()
-        this.postedCover = uploadConfig.key
-        console.log(uploadConfig.data)
-        console.log(file.type)
+        const uploadConfig = await Services.uploads.getSignedUrl()
+        this.postedCover = uploadConfig.data.key
         try {
           const config = {
-            headers: {'Content-Type': file.type}
+            headers: {'Content-Type': 'image/jpeg'}
           }
           await axios.put(uploadConfig.data.signedUrl, file, config)
-          this.$notify({
-            title: 'Image uploaded!',
-            message: ``,
-            type: 'success'
-          })
+          this.$emit('uploaded', uploadConfig.data.key)
+          this.postedCover = uploadConfig.key
           this.updatePreview(file)
         } catch (e) {
-          console.log(e)
           this.$notify({
             title: 'An error occured while uploading!',
             message: e.message,

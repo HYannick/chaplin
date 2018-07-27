@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import Service from '../../services/services.js';
+import Services from '../../services';
 import DiffusedMovies from './MovieSched';
 import BigTitle from '../utils/BigTitle';
 import _ from 'lodash';
@@ -22,7 +22,7 @@ export default {
         'big-title': BigTitle
     },
     created() {
-        Service.getUpcomingMovies(4).then(res => {
+        Services.movies.getUpcomingMovies(4).then(res => {
             this.movies = res.data.movieList;
             this.loaded = true;
             if (this.movies.length >= 2) {
@@ -40,7 +40,7 @@ export default {
     methods: {
         loadMovies(limit) {
             this.complete = false;
-            Service.getUpcomingMovies(limit).then(res => {
+            Services.movies.getUpcomingMovies(limit).then(res => {
                 this.complete = true;
                 this.movies = res.data.movieList;
                 if (this.movies.length >= 2) {

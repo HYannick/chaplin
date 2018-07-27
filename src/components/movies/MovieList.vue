@@ -106,151 +106,151 @@
 </template>
 
 <script>
-    import Vue from 'vue';
-    import Service from '../../services/services.js';
-    import MovieCard from './MovieCard';
-    import anime from 'animejs';
-    import {mapState} from 'vuex';
-    import genres from './datas/genres.json';
-    import api from '../../../config/api';
+  import Vue from 'vue';
+  import Services from '../../services';
+  import MovieCard from './MovieCard';
+  import anime from 'animejs';
+  import {mapState} from 'vuex';
+  import genres from './datas/genres.json';
+  import api from '../../../config/api';
 
-    Vue.component('movie-item', {
-        functional: true,
-        render: function (h, ctx) {
-            var item = ctx.props.item;
-            return h('li', ctx.data, [
-                h('img', {attrs: {class: 'poster', src: `${api.ftpUrl}/${item.cover}`}}),
-                h('div', {attrs: {class: 'infos'}}, [
-                    h('div', {attrs: {class: 'title'}}, [item.title]),
-                    h('p', {attrs: {class: 'desc'}}, ['De | ' + item.authors.join(' - ')]),
-                    h('p', {attrs: {class: 'desc'}}, ['Avec | ' + item.actors.join(' - ')]),
-                ])
-            ]);
-        },
-        props: {
-            item: {type: Object, required: true}
-        }
-    });
-
-    export default {
-        components: {
-            'movie-card': MovieCard
-        },
-        data() {
-            return {
-                movies: [],
-                searchRes: [],
-                search: '',
-                genres,
-                searchTitle: {
-                    title: ''
-                },
-                filterResults: {
-                    language: '',
-                    genres: [],
-                    diffused: false,
-                    upcoming: false
-                }
-            }
-        },
-        computed: {
-            ...mapState(['logged', 'role'])
-        },
-        created() {
-            Service.getMovies().then(movies => {
-                this.movies = movies.data
-                this.searchRes = movies.data
-            });
-        },
-        methods: {
-            querySearchAsync(queryString, cb) {
-                const movies = this.movies;
-                const results = queryString ? movies.filter(this.createFilter(queryString)) : movies;
-                cb(results);
-            },
-            createFilter(queryString) {
-                return (movie) => {
-                    return (movie.title.indexOf(queryString.toLowerCase()) === 0);
-                };
-            },
-            searchByTitle(item) {
-                this.$router.push(`/movies/${item._id}`)
-            },
-            renderFiltered() {
-                if (!this.filterResults.genres.length) {
-                    this.filterResults.genres = this.genres.map(genre => genre.value)
-                }
-                Service.getFilteredMovies(this.filterResults).then(result => this.searchRes = result.data.movies);
-            },
-            enter(el, done) {
-                const self = this;
-                const proposal = el;
-                anime({
-                    targets: proposal,
-                    translateX: 0,
-                    opacity: 1,
-                    complete: function (anim) {
-                        done();
-                    }
-
-                })
-
-            },
-            leave(el, done) {
-                const proposal = el;
-                anime({
-                    targets: proposal,
-                    opacity: 0,
-                    complete: function (anim) {
-                        done();
-                    }
-                })
-
-            },
-            deleteMovie(id) {
-                this.$confirm('Etes vous sûr de vouloir supprimer ce film ?')
-                    .then(_ => {
-                        Service.removeMovie(id).then(res => {
-                            this.movies = res.data
-                            this.searchRes = res.data
-                            this.$notify({
-                                title: 'Suppression',
-                                message: 'Film supprimé !',
-                                type: 'success'
-                            });
-                        })
-                    })
-                    .catch(err => {
-                        this.$notify({
-                            title: 'Erreur',
-                            message: 'Une erreur s\'est produite',
-                            type: 'error'
-                        });
-                    });
-            },
-            querySearch(queryString, cb) {
-                const movies = this.movies;
-                const results = queryString ? movies.filter(this.createFilter(queryString)) : movies;
-                // call callback function to return suggestions
-                this.searchRes = this.search !== '' ? movies.filter(this.createFilter(queryString)) : movies;
-                const res = results.map(result => {
-                    result.value = result.title;
-                    return result;
-                });
-                cb(res);
-            },
-            createFilter(queryString) {
-                return (movie) => {
-                    return (movie.title.toLowerCase().includes(queryString.toLowerCase()));
-                };
-            },
-
-            handleSelect(item) {
-                console.log(item)
-            }
-        }
-
+  Vue.component('movie-item', {
+    functional: true,
+    render: function (h, ctx) {
+      var item = ctx.props.item;
+      return h('li', ctx.data, [
+        h('img', {attrs: {class: 'poster', src: `${api.ftpUrl}/${item.cover}`}}),
+        h('div', {attrs: {class: 'infos'}}, [
+          h('div', {attrs: {class: 'title'}}, [item.title]),
+          h('p', {attrs: {class: 'desc'}}, ['De | ' + item.authors.join(' - ')]),
+          h('p', {attrs: {class: 'desc'}}, ['Avec | ' + item.actors.join(' - ')]),
+        ])
+      ]);
+    },
+    props: {
+      item: {type: Object, required: true}
     }
+  });
+
+  export default {
+    components: {
+      'movie-card': MovieCard
+    },
+    data() {
+      return {
+        movies: [],
+        searchRes: [],
+        search: '',
+        genres,
+        searchTitle: {
+          title: ''
+        },
+        filterResults: {
+          language: '',
+          genres: [],
+          diffused: false,
+          upcoming: false
+        }
+      }
+    },
+    computed: {
+      ...mapState(['logged', 'role'])
+    },
+    created() {
+      Services.movies.getMovies().then(movies => {
+        this.movies = movies.data
+        this.searchRes = movies.data
+      });
+    },
+    methods: {
+      querySearchAsync(queryString, cb) {
+        const movies = this.movies;
+        const results = queryString ? movies.filter(this.createFilter(queryString)) : movies;
+        cb(results);
+      },
+      createFilter(queryString) {
+        return (movie) => {
+          return (movie.title.indexOf(queryString.toLowerCase()) === 0);
+        };
+      },
+      searchByTitle(item) {
+        this.$router.push(`/movies/${item._id}`)
+      },
+      renderFiltered() {
+        if (!this.filterResults.genres.length) {
+          this.filterResults.genres = this.genres.map(genre => genre.value)
+        }
+        Services.movies.getFilteredMovies(this.filterResults).then(result => this.searchRes = result.data.movies);
+      },
+      enter(el, done) {
+        const self = this;
+        const proposal = el;
+        anime({
+          targets: proposal,
+          translateX: 0,
+          opacity: 1,
+          complete: function (anim) {
+            done();
+          }
+
+        })
+
+      },
+      leave(el, done) {
+        const proposal = el;
+        anime({
+          targets: proposal,
+          opacity: 0,
+          complete: function (anim) {
+            done();
+          }
+        })
+
+      },
+      deleteMovie(id) {
+        this.$confirm('Etes vous sûr de vouloir supprimer ce film ?')
+          .then(_ => {
+            Services.movies.removeMovie(id).then(res => {
+              this.movies = res.data
+              this.searchRes = res.data
+              this.$notify({
+                title: 'Suppression',
+                message: 'Film supprimé !',
+                type: 'success'
+              });
+            })
+          })
+          .catch(err => {
+            this.$notify({
+              title: 'Erreur',
+              message: 'Une erreur s\'est produite',
+              type: 'error'
+            });
+          });
+      },
+      querySearch(queryString, cb) {
+        const movies = this.movies;
+        const results = queryString ? movies.filter(this.createFilter(queryString)) : movies;
+        // call callback function to return suggestions
+        this.searchRes = this.search !== '' ? movies.filter(this.createFilter(queryString)) : movies;
+        const res = results.map(result => {
+          result.value = result.title;
+          return result;
+        });
+        cb(res);
+      },
+      createFilter(queryString) {
+        return (movie) => {
+          return (movie.title.toLowerCase().includes(queryString.toLowerCase()));
+        };
+      },
+
+      handleSelect(item) {
+        console.log(item)
+      }
+    }
+
+  }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

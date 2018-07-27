@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import Service from '../../services/services.js';
+import Services from '../../services';
 import MovieCard from './MovieCard';
 import _ from 'lodash';
 export default {
@@ -25,7 +25,7 @@ export default {
         'movie-card': MovieCard
     },
     created() {
-        Service.getDiffusedMovies(this.limit).then(res => {
+        Services.movies.getDiffusedMovies(this.limit).then(res => {
             this.movies = _.shuffle(res.data.movieList)
         });
     },

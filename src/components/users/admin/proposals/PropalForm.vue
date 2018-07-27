@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import Services from '../../../../services/services';
+import Services from '../../../../services';
 import CoverUploader from '../../../utils/CoverUploader';
 import api from '../../../../../config/api';
 import { mapState } from 'vuex';
@@ -68,7 +68,7 @@ export default {
             console.log('Submitting ...');
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    Services.postProposal(this.form)
+                    Services.proposals.postProposal(this.form)
                         .then(res => {
                             this.$refs[formName].resetFields();
                             this.form.cover = '';

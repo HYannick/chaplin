@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import Services from '../../../../services/services';
+import Services from '../../../../services';
 import api from '../../../../../config/api';
 import { mapState } from 'vuex';
 import ImageLoader from '../../../utils/imageLoader/ImageLoader';
@@ -98,7 +98,7 @@ export default {
         deletePropal(id) {
             this.$confirm('Etes vous sûr de vouloir supprimer cette proposition ?')
                 .then(_ => {
-                    Services.deleteProposal(id).then((res) => {
+                    Services.proposals.deleteProposal(id).then((res) => {
                         this.reloadP();
                         this.$notify({
                             title: 'Succès',
@@ -130,7 +130,7 @@ export default {
             return _.sortBy(proposals, ['nbLike']).reverse();
         },
         reloadP() {
-            Services.getProposals().then(proposals => {
+            Services.proposals.getProposals().then(proposals => {
                 this.proposals = this.sortProposals(proposals.data)
             });
         },
@@ -142,7 +142,7 @@ export default {
             return mapped.indexOf(this.userId) !== -1
         },
         vote(id, propal) {
-            Services.likeProposal(id, this.userId).then(proposals => {
+            Services.proposals.likeProposal(id, this.userId).then(proposals => {
                 this.proposals = this.sortProposals(proposals.data)
             });
         },

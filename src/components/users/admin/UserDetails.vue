@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import Services from '../../../services/services';
+import Services from '../../../services';
 import MinLoader from '../../utils/icons/MinLoader';
 import MovieCard from '../../movies/MovieCard';
 import BigTitle from '../../utils/BigTitle';
@@ -115,7 +115,7 @@ export default {
         onSubmit() {
             const now = moment().unix();
             this.form.pushline.date = now
-            Services.postAnnounce(this.form.pushline).then(res => {
+            Services.announces.postAnnounce(this.form.pushline).then(res => {
                 this.$notify({
                     title: 'Annonce à jour',
                     message: 'L\'annonce a bien été mise à jour !',
@@ -142,9 +142,9 @@ export default {
     },
     created() {
         const now = moment().unix();
-        Services.getUser(this.userId, this.token).then(res => {
+        Services.users.getUser(this.userId, this.token).then(res => {
             this.user = res.data;
-            Services.getUserSubscription(this.user._id).then(subs => {
+            Services.subscriptions.getUserSubscription(this.user._id).then(subs => {
                 this.subs = _.sortBy(subs.data.filter(sub => {
                     return sub.date >= now;
                 }), ['date']);
@@ -154,7 +154,7 @@ export default {
                 }).map(toRemove => toRemove._id)
 
                 if (legacySubs.length) {
-                    Services.deleteSubs({ legacySubs }, this.token).then(res => {
+                    Services.subscriptions.deleteSubs({ legacySubs }, this.token).then(res => {
                         console.log(res);
                     })
                 }
@@ -163,7 +163,7 @@ export default {
         });
 
         if (this.logged && this.role === 'admin') {
-            Services.getAnnounce().then(res => {
+            Services.announces.getAnnounce().then(res => {
                 this.form.pushline = res.data[0] || { title: '', date: '' }
             })
         }
