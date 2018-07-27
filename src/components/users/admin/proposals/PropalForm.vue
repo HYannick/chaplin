@@ -36,10 +36,10 @@
 import Services from '../../../../services/services';
 import CoverUploader from '../../../utils/CoverUploader';
 import api from '../../../../../config/api';
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 export default {
     computed: {
-        ...mapGetters(['auth']),
+        ...mapState(['userId']),
     },
     components: {
         'cover-uploader': CoverUploader
@@ -99,11 +99,11 @@ export default {
         },
 
         back() {
-            this.$router.push(`/users/${this.auth.userId}`);
+            this.$router.push(`/users/${this.userId}`);
         }
     },
     created() {
-        this.form.submitter = this.auth.userId;
+        this.form.submitter = this.userId;
     },
     data() {
         return {

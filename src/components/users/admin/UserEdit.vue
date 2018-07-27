@@ -30,10 +30,10 @@
 
 <script>
 import Services from '../../../services/services';
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 export default {
     computed: {
-        ...mapGetters(['auth']),
+        ...mapState(['userId', 'token']),
     },
     methods: {
         resetForm(formName) {
@@ -47,14 +47,14 @@ export default {
                         this.form.password = this.form.tempPassword;
                     }
                     const {username, email, password} = this.form;
-                    Services.updateUser(this.auth.userId, {username, email, password})
+                    Services.updateUser(this.userId, {username, email, password})
                         .then(res => {
                             this.$notify({
                                 title: 'Film à jour',
                                 message: 'Le film a bien été mis à jour !',
                                 type: 'success'
                             });
-                            this.$router.push(`/users/${this.auth.userId}`)
+                            this.$router.push(`/users/${this.userId}`)
                         })
                         .catch(err => {
                             this.$notify({
@@ -75,11 +75,11 @@ export default {
         },
 
         back() {
-            this.$router.push(`/users/${this.auth.userId}`);
+            this.$router.push(`/users/${this.userId}`);
         }
     },
     created() {
-        Services.getUser(this.auth.userId, this.auth.token).then(res => {
+        Services.getUser(this.userId, this.token).then(res => {
             this.form = res.data;
         });
     },

@@ -38,7 +38,7 @@
                                 <el-col :xs="24" :sm="24" :md="6" :lg="6">
                                     <div class="cover">
                                         <image-loader classname="lazy" :imageUrl="cover"></image-loader>
-                                        <router-link class="edit__button" v-show="auth.logged && auth.role == 'admin'" :to="`/movies/${movie._id}/edit`">
+                                        <router-link class="edit__button" v-show="logged && role == 'admin'" :to="`/movies/${movie._id}/edit`">
                                             <el-button class="chap-button" type="primary">Editer</el-button>
                                         </router-link>
                                         <a class="viewTrailer__mobile" :href="`https://www.youtube.com/watch?v=${movie.trailer}`">
@@ -145,7 +145,7 @@ import Service from '../../services/services.js';
 import MovieCard from './MovieCard';
 import ImageLoader from '../utils/imageLoader/ImageLoader';
 import BigTitle from '../utils/BigTitle';
-import { mapGetters, mapActions } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import api from '../../../config/api';
 import moment from 'moment';
 export default {
@@ -194,7 +194,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['auth'])
+        ...mapState(['logged', 'role'])
     },
     beforeRouteUpdate(to, from, next) {
         this.getMovieReady(to.params.id)

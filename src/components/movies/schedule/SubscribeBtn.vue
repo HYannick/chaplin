@@ -8,12 +8,12 @@
 </template>
 <script>
 import Services from '../../../services/services';
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 export default {
     props: ['row', 'userId'],
 
     created() {
-        Services.getSubscriptions(this.auth.token).then(res => {
+        Services.getSubscriptions(this.token).then(res => {
             const { id, date, time } = this.row;
             const otherSubs = res.data.filter(sub => {
                 return sub.date == date && sub.time == time && sub.enrolled[0]._id !== this.userId;
@@ -31,7 +31,7 @@ export default {
     },
 
     computed: {
-        ...mapGetters(['auth']),
+        ...mapState(['token']),
     },
     methods: {
         handleClick(row) {

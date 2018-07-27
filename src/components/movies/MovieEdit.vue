@@ -131,7 +131,7 @@
 
 <script>
 import axios from 'axios';
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 import api from '../../../config/api';
 import genres from './datas/genres.json';
 import Tags from '../utils/tags/Tags';
@@ -193,10 +193,10 @@ export default {
         getTrailerUrl() {
             return this.$youtube.getIdFromURL(this.form.trailer)
         },
-        ...mapGetters(['auth'])
+        ...mapState(['logged', 'role', 'userId'])
     },
     beforeUpdate() {
-        if (!this.auth.logged || this.auth.role !== 'admin') {
+        if (!this.logged || this.role !== 'admin') {
             this.$router.push('/signin');
         }
     },
@@ -337,7 +337,7 @@ export default {
                             message: 'Film supprimé !',
                             type: 'success'
                         });
-                        this.$router.push(`/users/${this.auth.userId}/movies`);
+                        this.$router.push(`/users/${this.userId}/movies`);
                     })
                 })
                 .catch(err => {

@@ -27,9 +27,9 @@
                     </el-table-column>
                     <el-table-column prop="title" label="Film">
                     </el-table-column>
-                    <el-table-column v-if="auth.logged" prop="volunteer" label="Bénévole" :width="100">
+                    <el-table-column v-if="logged" prop="volunteer" label="Bénévole" :width="100">
                     </el-table-column>
-                    <el-table-column v-if="auth.logged" label="" :width="80">
+                    <el-table-column v-if="logged" label="" :width="80">
                         <template scope="props">
                             <subscribe-button :row="props.row" :userId="userLogged" @change="refreshTable"></subscribe-button>
                         </template>
@@ -46,7 +46,7 @@ import MinLoader from '../../utils/icons/MinLoader';
 import moment from 'moment';
 import api from '../../../../config/api';
 import ImageLoader from '../../utils/imageLoader/ImageLoader';
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 import _ from 'lodash';
 import Month from '../../utils/datepicker/modules/month';
 import SubscribeBtn from './SubscribeBtn';
@@ -63,7 +63,7 @@ export default {
     },
 
     computed: {
-        ...mapGetters(['auth']),
+        ...mapState(['userId', 'logged', 'token']),
     },
     methods: {
         dateInCard(date) {
@@ -74,7 +74,7 @@ export default {
         },
         refreshTable() {
             const now = moment().unix();
-            Services.getMovies(this.auth.userId, this.auth.token).then(res => {
+            Services.getMovies(this.userId, this.token).then(res => {
                 this.movies = res.data;
 
                 const mapped = this.movies.filter(movie => {

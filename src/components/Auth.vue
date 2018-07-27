@@ -32,7 +32,7 @@
 <script>
 import axios from 'axios';
 import Services from '../services/services';
-import { mapMutations, mapActions, mapGetters } from 'vuex';
+import { mapMutations, mapActions, mapState } from 'vuex';
 export default {
     data() {
         return {
@@ -52,10 +52,10 @@ export default {
 
     },
     computed: {
-         ...mapGetters(['auth']),
+         ...mapState(['logged']),
     },
     beforeUpdate(){
-        if(this.auth.logged){
+        if(this.logged){
             this.$router.push(`/`);
         }
     },

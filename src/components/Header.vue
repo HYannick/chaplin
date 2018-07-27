@@ -31,7 +31,7 @@
                 </el-menu-item>
     
                 <transition name="el-fade-in-linear">
-                    <div v-if="!auth.logged">
+                    <div v-if="!logged">
                         <el-menu-item index="6">
                             <router-link to="/signin">
                                 Se connecter
@@ -41,7 +41,7 @@
     
                     <div v-else>
                         <el-menu-item index="7">
-                            <router-link :to="`/users/${auth.userId}`">
+                            <router-link :to="`/users/${userId}`">
                                 Profil
                             </router-link>
                         </el-menu-item>
@@ -60,7 +60,7 @@
     </transition>
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import Services from '../services/services';
 import FacebookIcon from './utils/icons/Facebook';
 import TwitterIcon from './utils/icons/Twitter';
@@ -76,19 +76,16 @@ export default {
             activeIndex: '1',
             activeIndex2: '1',
             user: {},
-            token: ''
+            currentToken: ''
         };
     },
     computed: {
-        ...mapGetters([
-            'auth'
-        ]),
-
+        ...mapState(['logged','token', 'userId']),
     },
 
     created() {
-        if (this.auth.logged) {
-            Services.getUser(this.auth.userId, this.token).then(res => {
+        if (this.logged) {
+            Services.getUser(this.userId, this.currentToken).then(res => {
                 this.user = res.data;
             }).catch(err => {
                 console.log(err)
@@ -97,7 +94,7 @@ export default {
 
     },
     beforeUpdate() {
-        this.token = this.auth.token;
+        this.currentToken = this.token;
     },
     methods: {
         ...mapActions(['logout']),

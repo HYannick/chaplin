@@ -11,7 +11,7 @@
             <el-col :xs="24" :sm="24" :md="22" :lg="22">
                 <ul class="chat__list" ref="chatList">
                     <li class="chat__item" v-for="(msg, index) in msgs" :key="index">
-                        <div class="chat__item-msg" :class="{left: msg.author === auth.username}">
+                        <div class="chat__item-msg" :class="{left: msg.author === username}">
                             <el-row :gutter="20">
                                 <div class="author">{{msg.author}}</div>
                                 <div class="message" ref="message">
@@ -38,7 +38,7 @@
 <script>
     import Services from '../../../../services/services';
     import ChatMessage from './ChatMessage';
-    import {mapGetters} from 'vuex';
+    import {mapState} from 'vuex';
 
     function scrollTo(element, to, duration) {
         var start = element.scrollTop,
@@ -69,7 +69,7 @@
 
     export default {
         computed: {
-            ...mapGetters(['auth'])
+            ...mapState(['username'])
         },
         components: {
             'chat-message': ChatMessage
@@ -115,7 +115,7 @@
             }
         },
         created() {
-            this.login(this.auth.username);
+            this.login(this.username);
             Services.getMsg().then(res => {
                 this.msgs = res.data
                 this.visible = true;

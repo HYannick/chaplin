@@ -32,11 +32,11 @@
                                     <image-loader classname="lazy" :imageUrl="`${apiFtp}/${propal.cover}`"></image-loader>
 
                                     <div class="like__footer">
-                                        <div class="like__footer--block" v-if="propal.submitter._id !== auth.userId" @click="vote(propal._id, propal)">
+                                        <div class="like__footer--block" v-if="propal.submitter._id !== userId" @click="vote(propal._id, propal)">
                                             <icon :name="(isLiked(propal)) ? 'heart' : 'heart-o'" label="like" scale="1.5"></icon>
                                             <span>Voter</span>
                                         </div>
-                                        <div class="like__footer--block" @click="deletePropal(propal._id)" v-if="auth.logged && auth.role == 'admin'">
+                                        <div class="like__footer--block" @click="deletePropal(propal._id)" v-if="logged && role == 'admin'">
                                             <icon name="trash" label="trash" scale="1.5"></icon>
                                         </div>
                                     </div>
@@ -53,7 +53,7 @@
 <script>
 import Services from '../../../../services/services';
 import api from '../../../../../config/api';
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 import ImageLoader from '../../../utils/imageLoader/ImageLoader';
 import PropalForm from './PropalForm';
 import RecapPropal from './RecapPropal';
@@ -66,7 +66,7 @@ export default {
         'recap-propal': RecapPropal
     },
     computed: {
-        ...mapGetters(['auth']),
+        ...mapState(['userId', 'role', 'logged']),
     },
     methods: {
         enter(el, done) {
@@ -139,16 +139,16 @@ export default {
         },
         isLiked(propal) {
             const mapped = propal.likes.map(likes => likes._id);
-            return mapped.indexOf(this.auth.userId) !== -1
+            return mapped.indexOf(this.userId) !== -1
         },
         vote(id, propal) {
-            Services.likeProposal(id, this.auth.userId).then(proposals => {
+            Services.likeProposal(id, this.userId).then(proposals => {
                 this.proposals = this.sortProposals(proposals.data)
             });
         },
 
         back() {
-            this.$router.push(`/users/${this.auth.userId}`);
+            this.$router.push(`/users/${this.userId}`);
         },
         print() {
 

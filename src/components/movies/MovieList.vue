@@ -8,7 +8,7 @@
                     </el-col>
                     <el-col :span="6">
                         <div class="add__link">
-                            <router-link v-show="auth.logged && auth.role == 'admin'" to="/movies/add">
+                            <router-link v-show="logged && role == 'admin'" to="/movies/add">
                                 <el-button class="chap-button">Ajouter un film</el-button>
                             </router-link>
                         </div>
@@ -110,7 +110,7 @@
     import Service from '../../services/services.js';
     import MovieCard from './MovieCard';
     import anime from 'animejs';
-    import {mapGetters} from 'vuex';
+    import {mapState} from 'vuex';
     import genres from './datas/genres.json';
     import api from '../../../config/api';
 
@@ -154,7 +154,7 @@
             }
         },
         computed: {
-            ...mapGetters(['auth'])
+            ...mapState(['logged', 'role'])
         },
         created() {
             Service.getMovies().then(movies => {
@@ -170,7 +170,6 @@
             },
             createFilter(queryString) {
                 return (movie) => {
-                    console.log(movie.title)
                     return (movie.title.indexOf(queryString.toLowerCase()) === 0);
                 };
             },

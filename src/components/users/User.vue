@@ -6,11 +6,11 @@
             </el-col>
             <el-col :span="12">
                 <el-menu theme="light" :default-active="activeIndex" class="el-menu-demo profile__nav" mode="horizontal">
-                    <router-link :to="`/users/${auth.userId}/`">Profil</router-link>
-                    <router-link :to="`/users/${auth.userId}/perms`">Permanences</router-link>
-                    <router-link :to="`/users/${auth.userId}/propal`">Propositions</router-link>
-                    <router-link :to="`/users/${auth.userId}/chat`">Chat</router-link>
-                    <router-link v-show="auth.logged && auth.role == 'admin'" :to="`/users/${auth.userId}/movies`">Films</router-link>
+                    <router-link :to="`/users/${userId}/`">Profil</router-link>
+                    <router-link :to="`/users/${userId}/perms`">Permanences</router-link>
+                    <router-link :to="`/users/${userId}/propal`">Propositions</router-link>
+                    <router-link :to="`/users/${userId}/chat`">Chat</router-link>
+                    <router-link v-show="logged && role == 'admin'" :to="`/users/${userId}/movies`">Films</router-link>
                 </el-menu>
             </el-col>
         </el-row>
@@ -25,25 +25,25 @@
 <script>
 import Services from '../../services/services';
 import BigTitle from '../utils/BigTitle'
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 export default {
     components: {
         'big-title': BigTitle
     },
     created() {
 
-        Services.getUser(this.auth.userId, this.auth.token).then(res => {
+        Services.getUser(this.userId, this.token).then(res => {
             this.user = res.data;
         });
 
     },
     beforeUpdate() {
-        if (!this.auth.logged) {
+        if (!this.logged) {
             this.$router.push('/signin');
         }
     },
     computed: {
-        ...mapGetters(['auth']),
+        ...mapState(['userId', 'token', 'logged', 'role']),
     },
     methods: {
         handleClick(tab, event) {

@@ -141,7 +141,7 @@
   import api from '../../../config/api';
   import Services from '../../services/services';
   import {getIdFromURL, getTimeFromURL} from 'vue-youtube-embed';
-  import {mapGetters} from 'vuex';
+  import {mapState} from 'vuex';
   import genres from './datas/genres.json';
 
   export default {
@@ -224,10 +224,10 @@
           return moment.unix(date).format('LLLL');
         })
       },
-      ...mapGetters(['auth'])
+      ...mapState(['logged', 'role', 'userId'])
     },
     beforeUpdate() {
-      if (!this.auth.logged || this.auth.role !== 'admin') {
+      if (!this.logged || this.role !== 'admin') {
         this.$router.push('/signin');
       }
     },
@@ -319,7 +319,7 @@
                   message: 'Film posté !',
                   type: 'success'
                 });
-                this.$router.push(`/users/${this.auth.userId}/movies`);
+                this.$router.push(`/users/${this.userId}/movies`);
                 console.log(res);
               })
               .catch(err => {

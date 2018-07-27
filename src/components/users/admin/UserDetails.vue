@@ -11,19 +11,19 @@
                         <span>Email</span>| {{user.email}}</p>
                     <p>
                         <span>Statut</span> | {{formattedRole}}</p>
-                    <router-link v-show="auth.logged" :to="`/users/${user._id}/edit`">
+                    <router-link v-show="logged" :to="`/users/${user._id}/edit`">
                         <el-button class="user__edit chap-button">Editer mon profil</el-button>
                     </router-link>
                 </div>
                 <div class="admin__wrapper">
-                    <el-form v-if="auth.logged && auth.role == 'admin'" ref="form" class="pushline" :model="form" label-position="top" label-width="120px">
+                    <el-form v-if="logged && role == 'admin'" ref="form" class="pushline" :model="form" label-position="top" label-width="120px">
                         <el-form-item label="Annonce">
                             <el-input placeholder="Ecrivez une annonce :)" v-model="form.pushline.title">
                                 <el-button class="chap-button" slot="append" @click="onSubmit">Publier</el-button>
                             </el-input>
                         </el-form-item>
                     </el-form>
-                    <el-form v-if="auth.logged && auth.role == 'admin'" label-position="top" class="pushline" label-width="120px">
+                    <el-form v-if="logged && role == 'admin'" label-position="top" class="pushline" label-width="120px">
                         <el-form-item label="Télécharger un PDF" style="margin-bottom:10px">
                             <el-upload class="upload-demo" name="pdf" ref="uploadPDF" :multiple="false" :action="`${apiRoot}/upload/pdf`" :on-success="pdfUploaded" :auto-upload="true">
                                 <el-button class="chap-button" slot="trigger" size="small" type="primary">Sélectionnez un PDF</el-button>
@@ -57,7 +57,7 @@
                     </div>
                 </el-row>
                 <el-row :gutter="20">
-                    <div class="self__perms" v-if="auth.logged && auth.role == 'admin'">
+                    <div class="self__perms" v-if="logged && role == 'admin'">
                         <big-title title="Gestion des bénévoles" back="Bénévoles"></big-title>
                         <el-tabs v-model="activeName">
                             <el-tab-pane label="Liste des bénévoles" name="first">
@@ -88,7 +88,7 @@ import EditTable from './volunteers/EditTable';
 import CPNewsletter from './volunteers/CPNewsletter';
 import moment from 'moment';
 import api from '../../../../config/api';
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 import _ from 'lodash';
 export default {
     components: {
@@ -99,7 +99,7 @@ export default {
         'min-loader': MinLoader
     },
     computed: {
-        ...mapGetters(['auth']),
+        ...mapState(['logged', 'role', 'userId', 'token']),
         formattedRole() {
             if (this.user.role === 'admin') {
                 return 'Administrateur'
@@ -142,10 +142,9 @@ export default {
     },
     created() {
         const now = moment().unix();
-        Services.getUser(this.auth.userId, this.auth.token).then(res => {
+        Services.getUser(this.userId, this.token).then(res => {
             this.user = res.data;
             Services.getUserSubscription(this.user._id).then(subs => {
-                console.log(subs.data)
                 this.subs = _.sortBy(subs.data.filter(sub => {
                     return sub.date >= now;
                 }), ['date']);
@@ -155,7 +154,7 @@ export default {
                 }).map(toRemove => toRemove._id)
 
                 if (legacySubs.length) {
-                    Services.deleteSubs({ legacySubs }, this.auth.token).then(res => {
+                    Services.deleteSubs({ legacySubs }, this.token).then(res => {
                         console.log(res);
                     })
                 }
@@ -163,7 +162,7 @@ export default {
             })
         });
 
-        if (this.auth.logged && this.auth.role === 'admin') {
+        if (this.logged && this.role === 'admin') {
             Services.getAnnounce().then(res => {
                 this.form.pushline = res.data[0] || { title: '', date: '' }
             })

@@ -45,7 +45,7 @@ router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth) && to.matched.some(record => record.meta.requiresAdmin)) {
         // this route requires auth, check if logged in
         // if not, redirect to login page.
-        if (!store.getters.auth.logged || store.getters.auth.role !== 'admin') {
+        if (!store.state.logged || store.state.role !== 'admin') {
             next({
                 path: '/signin',
                 query: { redirect: to.fullPath }
@@ -54,7 +54,7 @@ router.beforeEach((to, from, next) => {
             next()
         }
     } else if (to.matched.some(record => record.meta.requiresAuth)) {
-        if (!store.getters.auth.logged) {
+        if (!store.state.logged) {
             next({
                 path: '/signin',
                 query: { redirect: to.fullPath }

@@ -23,24 +23,24 @@
 </template>
 <script>
 import moment from 'moment';
-import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 export default {
     props: ['author'],
     computed: {
-        ...mapGetters(['auth'])
+        ...mapState(['username'])
     },
     methods: {
         type(e) {
-            this.$socket.emit('typing', this.auth.username)
+            this.$socket.emit('typing', this.username)
             if (e.ctrlKey && e.keyCode == 13) {
                 this.onSubmit('form')
             }
         },
         stopType() {
-            this.$socket.emit('stop typing', this.auth.username)
+            this.$socket.emit('stop typing', this.username)
         },
         onSubmit(formName) {
-            this.$socket.emit('stop typing', this.auth.username)
+            this.$socket.emit('stop typing', this.username)
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     const now = moment().format('DD MMMM HH[:]mm');
@@ -55,7 +55,7 @@ export default {
 
     },
     created() {
-        this.form.author = this.auth.username;
+        this.form.author = this.username;
     },
     data() {
         return {
