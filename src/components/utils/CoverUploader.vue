@@ -40,7 +40,7 @@
     created() {
       if (this.movie) {
         Services.movies.getMovie(this.movie).then(res => {
-          this.cover = `${api.ftpUrl}/${res.data.cover}`;
+          this.cover = `${api.s3Url}/${res.data.cover}`;
           this.coverInHere = true;
           this.postedCover = res.data.cover;
         });

@@ -104,7 +104,7 @@
       },
 
       transformUrl(movie) {
-        return `${api.ftpUrl}/${movie.imageSet[1]}`
+        return `${api.s3Url}/${movie.imageSet[1]}`
       },
       availabilities(movie, display) {
         const now = moment();

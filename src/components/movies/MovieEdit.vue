@@ -225,9 +225,9 @@
       Services.movies.getMovie(this.id).then(res => {
         this.form = res.data;
         res.data.imageSet.forEach(image => {
-          this.fileList.push({'name': image, 'url': `${api.ftpUrl}/${image}`})
+          this.fileList.push({'name': image, 'url': `${api.s3Url}/${image}`})
         });
-        this.cover = `${api.ftpUrl}/${res.data.cover}`;
+        this.cover = `${api.s3Url}/${res.data.cover}`;
       });
     },
     methods: {

@@ -161,7 +161,7 @@ export default {
         return {
             dialogFormVisible: false,
             apiRoot: api.rootUrl,
-            apiFtp: api.ftpUrl,
+            apiFtp: api.s3Url,
             like: 0,
             proposals: [],
             sorted: false,

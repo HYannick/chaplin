@@ -4,8 +4,11 @@
             <el-col :span="24">
                 <div class="diffused__movies " :class="{visible : loaded}">
                     <big-title title="En salle" orientation="bottom"></big-title>
-                    <diffused-movies :movies="movies" :maxRow="isMax" display="diffusedList" @refresh="loadMovies"
-                                     :completed="complete"></diffused-movies>
+                    <diffused-movies :movies="movies"
+                                     :maxRow="isMax"
+                                     display="diffusedList"
+                                     :completed="complete"
+                                     @refresh="loadMovies"></diffused-movies>
                 </div>
             </el-col>
         </el-row>

@@ -119,7 +119,7 @@
     render: function (h, ctx) {
       var item = ctx.props.item;
       return h('li', ctx.data, [
-        h('img', {attrs: {class: 'poster', src: `${api.ftpUrl}/${item.cover}`}}),
+        h('img', {attrs: {class: 'poster', src: `${api.s3Url}/${item.cover}`}}),
         h('div', {attrs: {class: 'infos'}}, [
           h('div', {attrs: {class: 'title'}}, [item.title]),
           h('p', {attrs: {class: 'desc'}}, ['De | ' + item.authors.join(' - ')]),

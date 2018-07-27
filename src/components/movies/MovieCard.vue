@@ -29,7 +29,7 @@ export default {
 
     data() {
         return {
-            cover: `${api.ftpUrl}/${this.movie.cover}`,
+            cover: `${api.s3Url}/${this.movie.cover}`,
             loadedImage: false
         }
     }

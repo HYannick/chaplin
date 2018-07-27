@@ -73,7 +73,7 @@
       dateInCard(date) {
         return moment.unix(date).format('dddd DD MMMM YYYY')
       },
-      formatDate(row, column) {
+      formatDate(row) {
         return moment.unix(row.date).format('dddd DD MMM');
       },
       refreshTable() {
@@ -97,16 +97,13 @@
             const {dubbing} = item
             const data = this.movies.filter(movie => {
               return movie.dates.indexOf(item) !== -1;
-            }).map(({title, _id, cover, desc, volunteers}) => {
-              return {
-                title,
-                _id,
-                cover,
-                desc,
-                volunteers
-              }
-
-            });
+            }).map(({title, _id, cover, desc, volunteers}) => ({
+              title,
+              _id,
+              cover,
+              desc,
+              volunteers
+            }))
             const vol = data[0].volunteers.filter(volunteer => {
               return volunteer.date === date.toString() && volunteer.time === time
             })
@@ -129,7 +126,7 @@
     },
     data() {
       return {
-        imgUrl: api.ftpUrl,
+        imgUrl: api.s3Url,
         user: {},
         movies: [],
         tableData: [],

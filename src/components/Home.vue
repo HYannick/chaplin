@@ -83,7 +83,7 @@ export default {
         return {
             movies: [],
             carouselMovies: [],
-            apiRoot: api.ftpUrl,
+            apiRoot: api.s3Url,
             apiPDF: api.pdfUrl,
             announce: {},
             loaded: false,

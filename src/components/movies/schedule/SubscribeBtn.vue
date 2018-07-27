@@ -15,12 +15,13 @@
 
     created() {
       Services.subscriptions.getSubscriptions(this.token).then(res => {
-        const {id, date, time} = this.row;
+        const {date, time} = this.row;
         const otherSubs = res.data.filter(sub => {
-          return sub.date === date && sub.time === time && sub.enrolled[0]._id !== this.userId;
+          return sub.date === date.toString() && sub.time === time && sub.enrolled[0]._id !== this.userId;
         });
+
         const mySubs = res.data.filter(sub => {
-          return sub.date === date && sub.time === time && sub.enrolled[0]._id === this.userId;
+          return sub.date === date.toString() && sub.time === time && sub.enrolled[0]._id === this.userId;
         });
         if (otherSubs.length) {
           this.isFull = true;

@@ -219,9 +219,9 @@
             this.dates = this.movie.dates.filter(date => moment(date.fullDate).unix() >= now).map(({date, fullDate, time, dubbing}) => {
               return {'unix': date, 'date': moment(fullDate).format('dddd DD MMMM'), time, dubbing: dubbing || 'VF'}
             })
-            this.imageSet = this.movie.imageSet.map(image => `${api.ftpUrl}/${image}`)
-            this.bgCover = `${api.ftpUrl}/${this.movie.imageSet[0]}`;
-            this.cover = `${api.ftpUrl}/${this.movie.cover}`;
+            this.imageSet = this.movie.imageSet.map(image => `${api.s3Url}/${image}`)
+            this.bgCover = `${api.s3Url}/${this.movie.imageSet[0]}`;
+            this.cover = `${api.s3Url}/${this.movie.cover}`;
             Services.movies.getRelatedMovies(id, this.movie.genres).then(movies => {
               this.show = true
               this.related = movies.data.slice(0, 4)
