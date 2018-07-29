@@ -79,7 +79,7 @@ export default {
         top: 50%;
         left: 50%;
         transform: translate(-60%, -50%) scale(1.1);
-        transition: 0.5s ease-in-out;
+        transition: 0.7s cubic-bezier(0.8, 0, 0.2, 1);
         opacity: 0;
     }
     &:before {
@@ -91,7 +91,7 @@ export default {
         z-index: 99;
         width: 100%;
         height: 100%;
-        transition: 0.5s ease-in-out;
+        transition: 0.7s cubic-bezier(0.8, 0, 0.2, 1);
     }
 }
 

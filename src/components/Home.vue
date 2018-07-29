@@ -94,7 +94,7 @@ export default {
     methods: {
         loadMovies(limit) {
             this.complete = false;
-            Services.announces.getDiffusedMovies(limit).then(res => {
+            Services.movies.getDiffusedMovies(limit).then(res => {
                 this.complete = true;
                 this.movies = res.data.movieList;
                 this.isMax = res.data.max;

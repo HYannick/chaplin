@@ -161,7 +161,6 @@
   import DatePicker from '../utils/datepicker/DatePicker';
   import moment from 'moment';
   import Services from '../../services';
-  import {getIdFromURL, getTimeFromURL} from 'vue-youtube-embed';
 
   export default {
     props: ['id'],
@@ -201,6 +200,7 @@
         cover: '',
         imageSet: [],
         now: moment().format(),
+        recycleBin: []
       }
 
     },
@@ -231,10 +231,10 @@
       });
     },
     methods: {
-      formatDate(row, column) {
+      formatDate(row) {
         return moment.unix(row.date).format('ddd DD MMM YYYY');
       },
-      formatDubbing(row, column) {
+      formatDubbing(row) {
         return row.dubbing || 'VF'
       },
       submitCover() {
@@ -249,6 +249,7 @@
 
       async postPreviews() {
         try {
+          await Services.deleteImageSet(this.recycleBin)
           await helpers.asyncForEach(this.imageSet, async item => {
             const config = {
               headers: {'Content-Type': item.type}
@@ -278,6 +279,7 @@
         const filterData = (array, file) => array.filter((image => (image.name ? image.name : image) !== file.name));
         this.imageSet = filterData(this.imageSet, file);
         this.form.imageSet = filterData(this.form.imageSet, file);
+        this.recycleBin.push(file.name)
       },
       handlePictureCardPreview(file) {
         this.dialogImageUrl = file.url;
@@ -295,7 +297,6 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.form.trailer = this.$youtube.getIdFromURL(this.form.trailer);
-            console.log('imgSet', this.form.imageSet)
             Services.movies.updateMovie(this.id, this.form)
               .then(() => {
                 this.$notify({
