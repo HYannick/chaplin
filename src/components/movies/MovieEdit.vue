@@ -249,7 +249,7 @@
 
       async postPreviews() {
         try {
-          await Services.deleteImageSet(this.recycleBin)
+          await Services.uploads.deleteImageSet(this.recycleBin)
           await helpers.asyncForEach(this.imageSet, async item => {
             const config = {
               headers: {'Content-Type': item.type}
@@ -264,6 +264,7 @@
             });
           })
         } catch(e) {
+          console.log(e.message)
           this.$notify({
             title: 'Erreur d\'images',
             message: e.message,

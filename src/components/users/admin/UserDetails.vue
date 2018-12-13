@@ -154,9 +154,7 @@ export default {
                 }).map(toRemove => toRemove._id)
 
                 if (legacySubs.length) {
-                    Services.subscriptions.deleteSubs({ legacySubs }, this.token).then(res => {
-                        console.log(res);
-                    })
+                    Services.subscriptions.deleteSubs({ legacySubs }, this.token)
                 }
                 this.loaded = true
             })

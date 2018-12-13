@@ -88,9 +88,6 @@
           type: 'success'
         });
       },
-      updatePreview(file) {
-
-      },
       async postCover(target) {
         const {file} = target
         const uploadConfig = await Services.uploads.getSignedUrl()
