@@ -1,6 +1,9 @@
-# sheep-chap
+# Chaplin
 
-> A Vue.js project
+A Vue.js project for the Chaplin cinema in Montmelian city!
+The previous website was old and I wanted to give it a refreshing look and more features.
+Here is how it looked like: http://www.montmeliancine.free.fr/
+
 
 ## Build Setup
 
