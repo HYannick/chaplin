@@ -1,9 +1,11 @@
 # Chaplin
 
-A Vue.js project for the Chaplin cinema in Montmelian city!
-The previous website was old and I wanted to give it a refreshing look and more features.
-Here is how it looked like: http://www.montmeliancine.free.fr/
+A Vue.js project for the Chaplin cinema in Montmelian city!  
+The previous website was old and I wanted to give it a refreshing look and more features.  e
 
+Here is how it looked like: http://www.montmeliancine.free.fr/ .  
+![old-version-1](static/old_vers_2.png)
+![old-version-1](static/old_vers_1.png)
 
 ## Build Setup
 
