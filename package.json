@@ -20,7 +20,7 @@
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "moment-range": "^3.0.3",
-    "node-sass": "^4.5.3",
+    "node-sass": "^7.0.0",
     "sass-loader": "^6.0.6",
     "socket.io": "^2.0.3",
     "v-clipboard": "^1.0.4",
